@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ATMobile.Forms;
 using HydrantWiki.Constants;
 using HydrantWiki.Interfaces;
 using HydrantWiki.Objects;
@@ -11,23 +10,21 @@ namespace HydrantWiki.Forms
     public class MainForm : MasterDetailPage, IMainForm
     {
         public bool FiredAppStarted = false;
-        private App m_App;
+        private HydrantWikiApp m_App;
 
-        public MainForm(App _app)
+        public MainForm(HydrantWikiApp _app)
         {
             m_App = _app;
 
-            Title = "ArcheryTrack";
+            Title = "HydrantWiki";
 
 
             var menuPage = new MenuPage();
-            menuPage.Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as Objects.MenuOption);
+            menuPage.Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuOption);
             Master = menuPage;
 
             Detail = new NavigationPage(new DefaultForm());
         }
-
-
 
         public Task<bool> ShowAlert(string _title, string _message, string _accept, string _cancel)
         {
@@ -36,8 +33,7 @@ namespace HydrantWiki.Forms
 
         private void NavigateTo(MenuOption menu)
         {
-            Page displayPage = null;
-
+            Page displayPage = (Page)Activator.CreateInstance(menu.TargetType); ;
 
             if (displayPage != null)
             {
@@ -50,8 +46,6 @@ namespace HydrantWiki.Forms
                 IsPresented = false;
             }
         }
-
-
 
         public void PushModal(ContentPage _form)
         {

@@ -2,7 +2,7 @@
 using HydrantWiki.Controls;
 using HydrantWiki.Constants;
 
-namespace ATMobile.Forms
+namespace HydrantWiki.Forms
 {
     public class MenuPage : ContentPage
     {

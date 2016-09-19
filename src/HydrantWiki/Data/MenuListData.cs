@@ -17,6 +17,23 @@ namespace HydrantWiki.Data
                 TargetType = typeof(DefaultForm)
             });
 
+            menuItems.Add(new MenuOption()
+            {
+                Title = "Tag Hydrant",
+                TargetType = typeof(TagHydrant)
+            });
+
+            menuItems.Add(new MenuOption()
+            {
+                Title = "Hydrant Map",
+                TargetType = typeof(HydrantMap)
+            });
+
+            menuItems.Add(new MenuOption()
+            {
+                Title = "Nearby Hydrants",
+                TargetType = typeof(NearbyHydrants)
+            });
 
             return menuItems;
         }
