@@ -53,6 +53,7 @@
     <Compile Include="Network\HWResponseStatus.cs" />
     <Compile Include="Network\HWRestResponse.cs" />
     <Compile Include="Network\HWRestMethods.cs" />
+    <Compile Include="Objects\GeoPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

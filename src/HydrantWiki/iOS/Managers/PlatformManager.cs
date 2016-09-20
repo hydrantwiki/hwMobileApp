@@ -2,6 +2,7 @@
 using HydrantWiki.Interfaces;
 using HydrantWiki.iOS.Helpers;
 using HydrantWiki.Network;
+using HydrantWiki.Objects;
 using RestSharp;
 
 namespace HydrantWiki.iOS.Managers
@@ -95,6 +96,11 @@ namespace HydrantWiki.iOS.Managers
             }
 
             throw new ArgumentException("Unexpected rest method");
+        }
+
+        public GeoPoint GetLocation()
+        {
+            return null;
         }
     }
 }
