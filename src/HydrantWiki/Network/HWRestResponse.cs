@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ATMobile.Network
+namespace HydrantWiki.Network
 {
-    public class ATRestResponse
+    public class HWRestResponse
     {
-        public ATRestResponse ()
+        public HWRestResponse()
         {
-            Headers = new Dictionary<string, string> ();
+            Headers = new Dictionary<string, string>();
         }
 
-        public ATResponseStatus Status { get; set; }
+        public HWResponseStatus Status { get; set; }
         public Dictionary<string, string> Headers { get; set; }
         public string Body { get; set; }
 

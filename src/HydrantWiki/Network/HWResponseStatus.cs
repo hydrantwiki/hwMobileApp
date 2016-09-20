@@ -1,7 +1,7 @@
 ﻿using System;
-namespace ATMobile.Network
+namespace HydrantWiki.Network
 {
-    public enum ATResponseStatus
+    public enum HWResponseStatus
     {
         None,
         Completed,
