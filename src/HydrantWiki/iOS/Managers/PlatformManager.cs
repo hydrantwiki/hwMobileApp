@@ -4,11 +4,16 @@ using HydrantWiki.iOS.Helpers;
 using HydrantWiki.Network;
 using HydrantWiki.Objects;
 using RestSharp;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
+using System.Threading.Tasks;
 
 namespace HydrantWiki.iOS.Managers
 {
     public class PlatformManager : IPlatformManager
     {
+        private IGeolocator m_Locator;
+
         public PlatformManager()
         {
         }
@@ -98,8 +103,60 @@ namespace HydrantWiki.iOS.Managers
             throw new ArgumentException("Unexpected rest method");
         }
 
-        public GeoPoint GetLocation()
+        public bool IsLocationListening {
+            get {
+                if (m_Locator == null) return true;
+
+                return m_Locator.IsListening;
+            }
+        }
+
+        public void StartListening()
         {
+            if (m_Locator != null)
+            {
+                m_Locator = new GeolocatorImplementation();
+                m_Locator.DesiredAccuracy = 10;
+
+                if (m_Locator.IsGeolocationEnabled)
+                {
+                    m_Locator.StartListeningAsync(0, 0, false);
+                } else {
+                    m_Locator = null;
+                }
+            }
+        }
+
+        public void StopListening()
+        {
+            if (m_Locator != null)
+            {
+                m_Locator.StopListeningAsync();
+                m_Locator = null;
+            }
+        }
+
+        public async Task<GeoPoint> GetLocation ()
+        {
+            if (m_Locator != null
+                && m_Locator.IsListening) {
+                var position = await m_Locator.GetPositionAsync (100);
+
+                if (position != null)
+                {
+                    GeoPoint geopoint = new GeoPoint{
+                        Latitude = position.Latitude,
+                        Longitude = position.Longitude,
+                        LocationTime = position.Timestamp,
+                        Accuracy = position.Accuracy,
+                        Elevation = position.Altitude,
+                        Speed = position.Speed
+                    };
+
+                    return geopoint;
+                }
+            }
+
             return null;
         }
     }

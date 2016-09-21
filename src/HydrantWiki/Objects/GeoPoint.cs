@@ -11,7 +11,9 @@ namespace HydrantWiki.Objects
 
         public double Accuracy {get;set;}
 
-        public DateTime LocationTime {get;set;}
+        public DateTimeOffset LocationTime {get;set;}
+
+        public double Speed {get;set;}
 
     }
 }
