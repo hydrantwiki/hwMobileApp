@@ -57,6 +57,7 @@
     <Compile Include="Controls\RecentHydrantsListView.cs" />
     <Compile Include="Cells\AbstractBaseCell.cs" />
     <Compile Include="Cells\HydrantCell.cs" />
+    <Compile Include="Managers\LocationManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
