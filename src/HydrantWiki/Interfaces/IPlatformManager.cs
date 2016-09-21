@@ -19,27 +19,5 @@ namespace HydrantWiki.Interfaces
         /// </summary>
         /// <value><c>true</c> if has network connectivity; otherwise, <c>false</c>.</value>
         bool HasNetworkConnectivity { get; }
-
-        /// <summary>
-        /// Returns coordinates of the device
-        /// </summary>
-        /// <returns>The location.</returns>
-        Task<GeoPoint> GetLocation ();
-
-        /// <summary>
-        /// Returns if the device is listeing to location updates
-        /// </summary>
-        /// <value><c>true</c> if is location listening; otherwise, <c>false</c>.</value>
-        bool IsLocationListening { get; }
-
-        /// <summary>
-        /// Start listening to geospatial updates.
-        /// </summary>
-        void StartListening();
-
-        /// <summary>
-        /// Stop listening to geospatial updates.
-        /// </summary>
-        void StopListening();
     }
 }

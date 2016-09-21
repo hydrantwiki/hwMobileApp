@@ -4,6 +4,7 @@ using System.IO;
 using Foundation;
 using HydrantWiki.iOS.Managers;
 using UIKit;
+using XLabs.Forms;
 
 namespace HydrantWiki.iOS
 {
