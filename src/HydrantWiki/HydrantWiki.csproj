@@ -60,6 +60,11 @@
     <Compile Include="Managers\LocationManager.cs" />
     <Compile Include="Daos\TagDao.cs" />
     <Compile Include="Daos\AbstractDao.cs" />
+    <Compile Include="Objects\AbstractObject.cs" />
+    <Compile Include="Objects\AbstractNamedObject.cs" />
+    <Compile Include="Objects\Tag.cs" />
+    <Compile Include="Objects\Hydrant.cs" />
+    <Compile Include="Objects\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
@@ -100,6 +105,9 @@
     </Reference>
     <Reference Include="XLabs.Forms">
       <HintPath>packages\XLabs.Forms.2.0.5782\lib\portable-net45+netcore45+wpa81+wp8\XLabs.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="LiteDB">
+      <HintPath>..\..\bin\LiteDB.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

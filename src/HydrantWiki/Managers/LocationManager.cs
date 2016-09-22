@@ -43,11 +43,13 @@ namespace HydrantWiki.Managers
                 {
                     Latitude = position.Latitude,
                     Longitude = position.Longitude,
-                    Elevation = position.Altitude,
+                    Altitude = position.Altitude,
                     Accuracy = position.Accuracy,
-                    LocationTime = position.Timestamp,
+                    DeviceDateTime = position.Timestamp,
                     Speed = position.Speed
-                }
+                };
+
+                return point;
             }
 
             return null;
