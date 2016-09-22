@@ -58,6 +58,8 @@
     <Compile Include="Cells\AbstractBaseCell.cs" />
     <Compile Include="Cells\HydrantCell.cs" />
     <Compile Include="Managers\LocationManager.cs" />
+    <Compile Include="Daos\TagDao.cs" />
+    <Compile Include="Daos\AbstractDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
@@ -69,6 +71,7 @@
     <Folder Include="Managers\" />
     <Folder Include="Objects\" />
     <Folder Include="Network\" />
+    <Folder Include="Daos\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
