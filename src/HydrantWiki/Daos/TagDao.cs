@@ -1,10 +1,27 @@
 ﻿using System;
+using HydrantWiki.Objects;
+using LiteDB;
+
 namespace HydrantWiki.Daos
 {
-    public class TagDao
+    public class TagDao : AbstractDao<Tag>
     {
-        public TagDao()
+        public TagDao(LiteDatabase _db)
+            : base(_db)
         {
+        }
+
+        public override string CollectionName
+        {
+            get
+            {
+                return "Tags";
+            }
+        }
+
+        public override void BuildIndexes()
+        {
+            m_Collection.EnsureIndex("TagTime");
         }
     }
 }

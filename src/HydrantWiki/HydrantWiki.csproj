@@ -65,6 +65,14 @@
     <Compile Include="Objects\Tag.cs" />
     <Compile Include="Objects\Hydrant.cs" />
     <Compile Include="Objects\User.cs" />
+    <Compile Include="Cells\TagCell.cs" />
+    <Compile Include="ResponseObjects\AuthenticationResponse.cs" />
+    <Compile Include="ResponseObjects\AvailableResponse.cs" />
+    <Compile Include="ResponseObjects\HydrantQueryResponse.cs" />
+    <Compile Include="ResponseObjects\TagCountResponse.cs" />
+    <Compile Include="ResponseObjects\TagResponse.cs" />
+    <Compile Include="Objects\PositionAverage.cs" />
+    <Compile Include="Objects\Credentials.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
@@ -77,6 +85,7 @@
     <Folder Include="Objects\" />
     <Folder Include="Network\" />
     <Folder Include="Daos\" />
+    <Folder Include="ResponseObjects\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
