@@ -30,6 +30,14 @@ namespace HydrantWiki.iOS.Managers
             }
         }
 
+        public string ApiHost
+        {
+            get
+            {
+                return "http://mobileapi.hydrantwiki.com";
+            }
+        }
+
         public HWRestResponse SendRestRequest(HWRestRequest _request)
         {
             //TODO save client in dictionary based on host

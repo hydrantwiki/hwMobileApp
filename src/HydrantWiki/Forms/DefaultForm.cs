@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using HydrantWiki.Managers;
+using Xamarin.Forms;
 
 namespace HydrantWiki.Forms
 {

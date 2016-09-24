@@ -72,7 +72,7 @@ namespace HydrantWiki.Objects
                     Latitude = latitude / count,
                     Longitude = longitude / count,
                     WasAveraged = true
-                }
+                };
 
                 if (altitudeCount > 0)
                 {

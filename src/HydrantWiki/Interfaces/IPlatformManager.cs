@@ -19,5 +19,7 @@ namespace HydrantWiki.Interfaces
         /// </summary>
         /// <value><c>true</c> if has network connectivity; otherwise, <c>false</c>.</value>
         bool HasNetworkConnectivity { get; }
+
+        string ApiHost { get; }
     }
 }

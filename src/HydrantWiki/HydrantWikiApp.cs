@@ -1,14 +1,15 @@
 ﻿using System;
 using HydrantWiki.Forms;
 using HydrantWiki.Interfaces;
+using HydrantWiki.Managers;
 using Xamarin.Forms;
 
 namespace HydrantWiki
 {
     public class HydrantWikiApp : Application
     {
-        public static string DataFolder;
-        public static IPlatformManager m_PlatformManager;
+        public string DataFolder;
+        public IPlatformManager m_PlatformManager;
 
         public HydrantWikiApp(
             string _dataFolder,
@@ -16,6 +17,9 @@ namespace HydrantWiki
         {
             DataFolder = _dataFolder;
             m_PlatformManager = _platformManager;
+
+            HWManager manager = HWManager.GetInstance();
+            manager.PlatformManager = m_PlatformManager;
 
             // The root page of your application
             MainPage = new MainForm(this);

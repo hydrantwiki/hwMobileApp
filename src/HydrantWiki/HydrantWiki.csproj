@@ -73,6 +73,7 @@
     <Compile Include="ResponseObjects\TagResponse.cs" />
     <Compile Include="Objects\PositionAverage.cs" />
     <Compile Include="Objects\Credentials.cs" />
+    <Compile Include="Managers\ApiManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
@@ -117,6 +118,9 @@
     </Reference>
     <Reference Include="LiteDB">
       <HintPath>..\..\bin\LiteDB.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
