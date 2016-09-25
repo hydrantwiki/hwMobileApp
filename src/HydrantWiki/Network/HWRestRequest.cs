@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace HydrantWiki.Network
 {
@@ -15,6 +16,8 @@ namespace HydrantWiki.Network
         public HWRestMethods Method { get; set; }
         public Dictionary<string, string> Headers { get; set; }
         public string Body { get; set; }
+
+        public HWFile File { get; set; }
     }
 }
 

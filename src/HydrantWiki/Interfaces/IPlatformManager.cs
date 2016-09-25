@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HydrantWiki.Network;
 using HydrantWiki.Objects;
+using Xamarin.Forms;
 
 namespace HydrantWiki.Interfaces
 {
@@ -21,5 +22,9 @@ namespace HydrantWiki.Interfaces
         bool HasNetworkConnectivity { get; }
 
         string ApiHost { get; }
+
+        string GetLocalImageFilename(string _filename);
+
+        Task SaveImage(ImageSource _imageSource, string _filename);
     }
 }

@@ -5,6 +5,10 @@ using HydrantWiki.Network;
 using HydrantWiki.Objects;
 using RestSharp;
 using System.Threading.Tasks;
+using System.IO;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
+using Foundation;
 
 namespace HydrantWiki.iOS.Managers
 {
@@ -38,6 +42,32 @@ namespace HydrantWiki.iOS.Managers
             }
         }
 
+        public string GetLocalImageFilename(string _filename)
+        {
+            string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string jpgFilename = Path.Combine(rootAppFolder, "Library", "HWMobileImage", _filename);
+            return jpgFilename;
+        }
+
+        public async Task SaveImage(ImageSource _imageSource, string _filename)
+        {
+            var renderer = new StreamImagesourceHandler();
+
+            var photo = await renderer.LoadImageAsync(_imageSource);
+
+            string jpgFilename = GetLocalImageFilename(_filename);
+
+            NSData imgData = photo.AsJPEG();
+            NSError err = null;
+
+            if (imgData.Save(jpgFilename, false, out err))
+            {
+                Console.WriteLine("saved as " + jpgFilename);
+            } else {
+                Console.WriteLine("NOT saved as " + jpgFilename + " because" + err.LocalizedDescription);
+            }
+        }
+
         public HWRestResponse SendRestRequest(HWRestRequest _request)
         {
             //TODO save client in dictionary based on host
@@ -55,6 +85,12 @@ namespace HydrantWiki.iOS.Managers
             if (_request.Body != null)
             {
                 request.AddBody(_request.Body);
+            }
+
+            if (_request.File != null)
+            {
+                request.AddFile("fileData", _request.File.FileStream.CopyTo, _request.File.Filename);
+                request.AlwaysMultipartFormData = true;
             }
 
             //Execute Rest Method

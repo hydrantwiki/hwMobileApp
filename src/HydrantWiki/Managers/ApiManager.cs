@@ -3,6 +3,7 @@ using HydrantWiki.Network;
 using HydrantWiki.Objects;
 using HydrantWiki.ResponseObjects;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace HydrantWiki.Managers
 {
@@ -15,6 +16,13 @@ namespace HydrantWiki.Managers
             m_HWManager = _manager;
         }
 
+        /// <summary>
+        /// Authenticates the user returning a user object with
+        /// the username, display name, and an authorization token
+        /// to be used on subsequent calls
+        /// </summary>
+        /// <param name="_username">Username.</param>
+        /// <param name="_password">Password.</param>
         public User Authenticate(string _username, string _password)
         {
             HWRestRequest request = new HWRestRequest();
@@ -35,5 +43,95 @@ namespace HydrantWiki.Managers
 
             return null;
         }
+
+        /// <summary>
+        /// Saves the tag tot he server
+        /// </summary>
+        /// <returns>A tag response object.</returns>
+        /// <param name="_user">User.</param>
+        /// <param name="_tag">Tag.</param>
+        public TagResponse SaveTag(User _user, Tag _tag)
+        {
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Post;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = "/api/tag";
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Body = JsonConvert.SerializeObject(_tag);
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            TagResponse responseObject =
+                JsonConvert.DeserializeObject<TagResponse>(response.Body);
+
+            return responseObject;
+        }
+
+        /// <summary>
+        /// Sends the image to the server.  Should be called after the Tag
+        /// </summary>
+        /// <returns>The tag image.</returns>
+        /// <param name="_user">User.</param>
+        /// <param name="_fileName">File name.</param>
+        public TagResponse SaveTagImage(User _user, string _fileName)
+        {
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Post;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = "/api/image";
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+
+            HWFile file = new HWFile
+            {
+                Filename = _fileName,
+                FullPathFilename = HWManager.GetInstance().PlatformManager.GetLocalImageFilename(_fileName)
+            };
+            request.File = file;
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            TagResponse responseObject =
+                JsonConvert.DeserializeObject<TagResponse>(response.Body);
+
+            return responseObject;
+        }
+
+        /// <summary>
+        /// Returns the number of tags that the current user has made
+        /// </summary>
+        /// <returns>The my tag count.</returns>
+        /// <param name="_user">User.</param>
+        public TagCountResponse GetMyTagCount(User _user)
+        {
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = "/api/tags/mine/count";
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            TagCountResponse responseObject =
+                JsonConvert.DeserializeObject<TagCountResponse>(response.Body);
+
+            return responseObject;
+        }
+
+        public HydrantQueryResponse GetHydrantsInCirle(
+            User _user, double _latitude, double _longitude, double _radius)
+        {
+            return null;
+        }
+
+        public HydrantQueryResponse GetHydrantsInBox(
+            User _user,
+            double _minLatitude,
+            double _maxLatitude,
+            double _minLongitude,
+            double _maxLongitude)
+        {
+            return null;
+        }
+
     }
 }

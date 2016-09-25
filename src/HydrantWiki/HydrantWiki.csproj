@@ -74,6 +74,7 @@
     <Compile Include="Objects\PositionAverage.cs" />
     <Compile Include="Objects\Credentials.cs" />
     <Compile Include="Managers\ApiManager.cs" />
+    <Compile Include="Network\HWFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

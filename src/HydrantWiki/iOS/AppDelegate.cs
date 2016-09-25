@@ -16,7 +16,7 @@ namespace HydrantWiki.iOS
             global::Xamarin.Forms.Forms.Init();
 
             string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string dataFolder = Path.Combine(rootAppFolder, "Library", "ATMobile");
+            string dataFolder = Path.Combine(rootAppFolder, "Library", "HWMobile");
 
             if (!Directory.Exists(dataFolder))
             {
