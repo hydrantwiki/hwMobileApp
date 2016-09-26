@@ -89,7 +89,7 @@ namespace HydrantWiki.iOS.Managers
 
             if (_request.File != null)
             {
-                request.AddFile("fileData", _request.File.FileStream.CopyTo, _request.File.Filename);
+                request.AddFile("fileData", _request.File.FullPathFilename, _request.File.Filename);
                 request.AlwaysMultipartFormData = true;
             }
 
