@@ -120,7 +120,20 @@ namespace HydrantWiki.Managers
         public HydrantQueryResponse GetHydrantsInCirle(
             User _user, double _latitude, double _longitude, double _radius)
         {
-            return null;
+            string url = string.Format("/api/hydrants/circle/{0}/{1}/{2}", _latitude, _longitude, _radius);
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = url;
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            HydrantQueryResponse responseObject =
+                JsonConvert.DeserializeObject<HydrantQueryResponse>(response.Body);
+
+            return responseObject;
         }
 
         public HydrantQueryResponse GetHydrantsInBox(
@@ -130,7 +143,21 @@ namespace HydrantWiki.Managers
             double _minLongitude,
             double _maxLongitude)
         {
-            return null;
+
+            string url = string.Format("/api/hydrants/box/{0}/{1}/{2}/{3}", _maxLongitude, _minLongitude, _maxLatitude, _minLatitude);
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = url;
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            HydrantQueryResponse responseObject =
+                JsonConvert.DeserializeObject<HydrantQueryResponse>(response.Body);
+
+            return responseObject;
         }
 
     }

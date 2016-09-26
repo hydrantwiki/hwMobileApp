@@ -75,6 +75,10 @@
     <Compile Include="Objects\Credentials.cs" />
     <Compile Include="Managers\ApiManager.cs" />
     <Compile Include="Network\HWFile.cs" />
+    <Compile Include="Forms\LoginForm.cs" />
+    <Compile Include="Controls\HWTextEntry.cs" />
+    <Compile Include="Daos\SettingDao.cs" />
+    <Compile Include="Objects\Setting.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
