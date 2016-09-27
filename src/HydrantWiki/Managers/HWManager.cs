@@ -46,6 +46,8 @@ namespace HydrantWiki.Managers
             }
         }
 
+        //Settings
+        public
 
     }
 }

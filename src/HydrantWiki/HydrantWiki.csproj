@@ -79,6 +79,7 @@
     <Compile Include="Controls\HWTextEntry.cs" />
     <Compile Include="Daos\SettingDao.cs" />
     <Compile Include="Objects\Setting.cs" />
+    <Compile Include="Managers\SettingManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
