@@ -8,7 +8,7 @@
         public const string DetailFormBackgroundColor = "EEEEEE";
 
         public const string NavBarTextColor = "FFFFFF";
-        public const string NavBarColor = "57BED6";
+        public const string NavBarColor = "4e3d3d";
 
         public const string MenuTitleTextColor = "000000";
         public const string MenuTitleColor = "57BED6";

@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
+using HydrantWiki.Daos;
 using HydrantWiki.Interfaces;
+using HydrantWiki.Objects;
+using LiteDB;
 
 namespace HydrantWiki.Managers
 {
@@ -7,13 +11,24 @@ namespace HydrantWiki.Managers
     {
         private static HWManager m_Manager;
 
+        private LiteDatabase m_Database;
+        private string m_DataFolder;
+        private string m_DatabaseFile;
+
         private IPlatformManager m_PlatformManager;
         private ApiManager m_ApiManager;
+        private SettingManager m_SettingManager;
 
         private HWManager()
         {
             m_ApiManager = new ApiManager(this);
+            m_SettingManager = new SettingManager(this);
+
+            m_DataFolder = HydrantWikiApp.DataFolder;
+            m_DatabaseFile = Path.Combine(m_DataFolder, "HWMobile.db");
+            m_Database = new LiteDatabase(m_DatabaseFile);
         }
+
 
         public static HWManager GetInstance()
         {
@@ -23,6 +38,14 @@ namespace HydrantWiki.Managers
             }
 
             return m_Manager;
+        }
+
+        public LiteDatabase Database
+        {
+            get
+            {
+                return m_Database;
+            }
         }
 
         public IPlatformManager PlatformManager
@@ -46,8 +69,45 @@ namespace HydrantWiki.Managers
             }
         }
 
-        //Settings
-        public
+        public SettingManager SettingManager
+        {
+            get
+            {
+                return m_SettingManager;
+            }
+        }
+
+
+        public bool AreUserCredentialsCached()
+        {
+            string username = m_SettingManager.GetUsername();
+            string authToken = m_SettingManager.GetAuthToken();
+
+            if (string.IsNullOrWhiteSpace(username)
+                || string.IsNullOrWhiteSpace(authToken))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool Login(string username, string password)
+        {
+            User user = m_ApiManager.Authenticate(username, password);
+
+            if (user != null)
+            {
+                m_SettingManager.SetUsername(user.Username);
+                m_SettingManager.SetDisplayName(user.DisplayName);
+                m_SettingManager.SetAuthToken(user.AuthorizationToken);
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+
 
     }
 }

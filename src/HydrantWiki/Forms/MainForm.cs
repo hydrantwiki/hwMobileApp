@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HydrantWiki.Constants;
 using HydrantWiki.Interfaces;
+using HydrantWiki.Managers;
 using HydrantWiki.Objects;
 using Xamarin.Forms;
 
@@ -17,7 +18,6 @@ namespace HydrantWiki.Forms
             m_App = _app;
 
             Title = "HydrantWiki";
-
 
             var menuPage = new MenuPage();
             menuPage.Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuOption);
@@ -50,6 +50,17 @@ namespace HydrantWiki.Forms
         public void PushModal(ContentPage _form)
         {
             Navigation.PushModalAsync(_form);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (!HWManager.GetInstance().AreUserCredentialsCached())
+            {
+                LoginForm login = new LoginForm();
+                Navigation.PushModalAsync(login);
+            }
         }
     }
 }

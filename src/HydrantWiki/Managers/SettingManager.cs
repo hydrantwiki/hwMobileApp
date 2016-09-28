@@ -1,44 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using ATMobile.Constants;
-using ATMobile.Daos;
-using ATMobile.Objects;
+using HydrantWiki.Constants;
+using HydrantWiki.Daos;
+using HydrantWiki.Objects;
 
-namespace ATMobile.Managers
+namespace HydrantWiki.Managers
 {
     public class SettingManager : IDisposable
     {
-        public ATManager m_Manager;
+        public HWManager m_Manager;
 
-        public SettingManager (ATManager _manager)
+        public SettingManager(HWManager _manager)
         {
             m_Manager = _manager;
         }
 
-        private List<Setting> GetSettings ()
+        private List<Setting> GetSettings()
         {
-            SettingDao dao = new SettingDao (m_Manager.Database);
-            return dao.GetAll ();
+            SettingDao dao = new SettingDao(m_Manager.Database);
+            return dao.GetAll();
         }
 
-        private void Persist (Setting _setting)
+        private void Persist(Setting _setting)
         {
-            SettingDao dao = new SettingDao (m_Manager.Database);
-            dao.Persist (_setting);
+            SettingDao dao = new SettingDao(m_Manager.Database);
+            dao.Persist(_setting);
         }
 
-        private Setting GetSetting (string _name)
+        private Setting GetSetting(string _name)
         {
-            SettingDao dao = new SettingDao (m_Manager.Database);
-            return dao.GetSetting (_name);
+            SettingDao dao = new SettingDao(m_Manager.Database);
+            return dao.GetSetting(_name);
         }
 
-        public string GetSettingValue (string _name)
+        public string GetSettingValue(string _name)
         {
-            SettingDao dao = new SettingDao (m_Manager.Database);
-            Setting setting = dao.GetSetting (_name);
+            SettingDao dao = new SettingDao(m_Manager.Database);
+            Setting setting = dao.GetSetting(_name);
 
-            if (setting != null) {
+            if (setting != null)
+            {
                 return setting.Value;
             }
 
@@ -46,97 +47,106 @@ namespace ATMobile.Managers
         }
 
 
-        public void SetSetting (string _name, string _value)
+        public void SetSetting(string _name, string _value)
         {
-            SettingDao dao = new SettingDao (m_Manager.Database);
-            Setting setting = dao.GetSetting (_name);
+            SettingDao dao = new SettingDao(m_Manager.Database);
+            Setting setting = dao.GetSetting(_name);
 
-            if (setting == null) {
-                setting = new Setting ();
+            if (setting == null)
+            {
+                setting = new Setting();
                 setting.Name = _name;
             }
 
             setting.Value = _value;
-            dao.Persist (setting);
+            dao.Persist(setting);
         }
 
-        public void SetSetting (string _name, Guid _value)
+        public void SetSetting(string _name, Guid _value)
         {
-            SetSetting (_name, _value.ToString ());
+            SetSetting(_name, _value.ToString());
         }
 
-        public void SetSetting (string _name, bool _value)
+        public void SetSetting(string _name, bool _value)
         {
-            SetSetting (_name, _value.ToString ());
+            SetSetting(_name, _value.ToString());
         }
 
-        public bool GetBoolSetting (string _name)
+        public bool GetBoolSetting(string _name)
         {
-            Setting setting = GetSetting (_name);
+            Setting setting = GetSetting(_name);
 
             if (setting == null) return false;
 
             bool output;
-            if (bool.TryParse (setting.Value, out output)) {
+            if (bool.TryParse(setting.Value, out output))
+            {
                 return output;
             }
 
             return false;
         }
 
-        public Guid? GetGuidSetting (string _name)
+        public Guid? GetGuidSetting(string _name)
         {
-            Setting setting = GetSetting (_name);
+            Setting setting = GetSetting(_name);
 
             if (setting == null) return null;
 
             Guid output;
-            if (Guid.TryParse (setting.Value, out output)) {
+            if (Guid.TryParse(setting.Value, out output))
+            {
                 return output;
             }
 
             return null;
         }
 
-        public Guid GetInstallId ()
+        public Guid GetInstallId()
         {
-            Guid? id = GetGuidSetting (SettingConstants.InstallId);
+            Guid? id = GetGuidSetting(SettingConstants.InstallId);
 
-            if (id == null) {
-                id = Guid.NewGuid ();
+            if (id == null)
+            {
+                id = Guid.NewGuid();
 
-                SetSetting (SettingConstants.InstallId, id.Value);
+                SetSetting(SettingConstants.InstallId, id.Value);
             }
 
             return id.Value;
         }
 
-        public string GetUsername ()
+        public string GetUsername()
         {
-            return GetSettingValue (SettingConstants.Username);
+            return GetSettingValue(SettingConstants.Username);
         }
 
-        public Guid? GetCurrentArcher ()
+        public void SetUsername(string username)
         {
-            return GetGuidSetting (SettingConstants.CurrentArcher);
+            SetSetting(SettingConstants.Username, username);
         }
 
-        public void SetCurrentArcher (Guid _currentArcherId)
+        public string GetDisplayName()
         {
-            SetSetting (SettingConstants.CurrentArcher, _currentArcherId);
+            return GetSettingValue(SettingConstants.DisplayName);
         }
 
-        public bool GetTargetFaceDataLoaded ()
+        public void SetDisplayName(string displayName)
         {
-            return GetBoolSetting (SettingConstants.TargetFaceDataLoaded);
+            SetSetting(SettingConstants.DisplayName, displayName);
         }
 
-        public void SetTargetFaceDataLoaded (bool _value)
+        public string GetAuthToken()
         {
-            SetSetting (SettingConstants.TargetFaceDataLoaded, _value);
+            return GetSettingValue(SettingConstants.Token);
         }
 
-        public void Dispose ()
+        public void SetAuthToken(string token)
+        {
+            SetSetting(SettingConstants.Token, token);
+        }
+
+        public void Dispose()
         {
             m_Manager = null;
         }

@@ -80,6 +80,9 @@
     <Compile Include="Daos\SettingDao.cs" />
     <Compile Include="Objects\Setting.cs" />
     <Compile Include="Managers\SettingManager.cs" />
+    <Compile Include="Constants\SettingConstants.cs" />
+    <Compile Include="Controls\HWButton.cs" />
+    <Compile Include="Constants\DisplayConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
@@ -93,6 +96,7 @@
     <Folder Include="Network\" />
     <Folder Include="Daos\" />
     <Folder Include="ResponseObjects\" />
+    <Folder Include="Delegates\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

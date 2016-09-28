@@ -8,7 +8,7 @@ namespace HydrantWiki
 {
     public class HydrantWikiApp : Application
     {
-        public string DataFolder;
+        public static string DataFolder;
         public IPlatformManager m_PlatformManager;
 
         public HydrantWikiApp(
