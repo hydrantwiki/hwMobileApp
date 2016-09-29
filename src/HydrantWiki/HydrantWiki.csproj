@@ -54,7 +54,7 @@
     <Compile Include="Network\HWRestResponse.cs" />
     <Compile Include="Network\HWRestMethods.cs" />
     <Compile Include="Objects\GeoPoint.cs" />
-    <Compile Include="Controls\RecentHydrantsListView.cs" />
+    <Compile Include="Controls\RecentTagsListView.cs" />
     <Compile Include="Cells\AbstractBaseCell.cs" />
     <Compile Include="Cells\HydrantCell.cs" />
     <Compile Include="Managers\LocationManager.cs" />
@@ -83,6 +83,7 @@
     <Compile Include="Constants\SettingConstants.cs" />
     <Compile Include="Controls\HWButton.cs" />
     <Compile Include="Constants\DisplayConstants.cs" />
+    <Compile Include="Controls\NearbyHydrantsListView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
@@ -131,6 +132,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Maps">
+      <HintPath>packages\Xamarin.Forms.Maps.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Maps.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

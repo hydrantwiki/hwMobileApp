@@ -14,6 +14,7 @@ namespace HydrantWiki.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            Xamarin.FormsMaps.Init();
 
             string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string dataFolder = Path.Combine(rootAppFolder, "Library", "HWMobile");
