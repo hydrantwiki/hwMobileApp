@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
 using Xamarin.Forms;
@@ -30,7 +31,7 @@ namespace HydrantWiki.Forms
             base.OnAppearing();
 
             //TODO load tags
-            LoadTagCount();
+            var tagCountTask = Task.Factory.StartNew(() => LoadTagCount());
         }
 
         private void LoadTagCount()
@@ -42,7 +43,11 @@ namespace HydrantWiki.Forms
                 if (response.Success)
                 {
                     HWManager.GetInstance().SettingManager.SetTagCount(response.TagCount);
-                    m_lblTags.Text = string.Format("Total Tags Collected - {0}", response.TagCount);
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        m_lblTags.Text = string.Format("Total Tags Collected - {0}", response.TagCount);
+                    });
 
                     return;
                 }
@@ -55,7 +60,11 @@ namespace HydrantWiki.Forms
 
             //Failed to get the count so pull the cached value
             int count = HWManager.GetInstance().SettingManager.GetTagCount();
-            m_lblTags.Text = string.Format("Total Tags Collected - {0} (Cached)", count);
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                m_lblTags.Text = string.Format("Total Tags Collected - {0} (Cached)", count);
+            });
         }
     }
 }
