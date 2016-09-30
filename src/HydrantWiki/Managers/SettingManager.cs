@@ -72,6 +72,11 @@ namespace HydrantWiki.Managers
             SetSetting(_name, _value.ToString());
         }
 
+        public void SetSetting(string _name, int _value)
+        {
+            SetSetting(_name, _value.ToString());
+        }
+
         public bool GetBoolSetting(string _name)
         {
             Setting setting = GetSetting(_name);
@@ -100,6 +105,21 @@ namespace HydrantWiki.Managers
             }
 
             return null;
+        }
+
+        public int GetIntSetting(string _name)
+        {
+            Setting setting = GetSetting(_name);
+
+            if (setting == null) return 0;
+
+            int output;
+            if (int.TryParse(setting.Value, out output))
+            {
+                return output;
+            }
+
+            return 0;
         }
 
         public Guid GetInstallId()
@@ -149,6 +169,48 @@ namespace HydrantWiki.Managers
         public void Dispose()
         {
             m_Manager = null;
+        }
+
+        public void SetTagCount(int _count)
+        {
+            SetSetting(SettingConstants.TagCount, _count);
+        }
+
+        public int GetTagCount()
+        {
+            return GetIntSetting(SettingConstants.TagCount);
+        }
+
+        public User GetUser()
+        {
+            string username = GetUsername();
+            string authtoken = GetAuthToken();
+            string displayname = GetDisplayName();
+
+            if (username != null
+                && authtoken != null)
+            {
+                User user = new User
+                {
+                    Username = username,
+                    AuthorizationToken = authtoken,
+                    DisplayName = displayname
+                };
+
+                return user;
+            }
+
+            return null;
+        }
+
+        public void SetUser(User user)
+        {
+            if (user != null)
+            {
+                SetUsername(user.Username);
+                SetAuthToken(user.AuthorizationToken);
+                SetDisplayName(user.DisplayName);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using HydrantWiki.Forms;
 using HydrantWiki.Interfaces;
 using HydrantWiki.Managers;
+using HydrantWiki.Objects;
 using Xamarin.Forms;
 
 namespace HydrantWiki
@@ -9,6 +10,7 @@ namespace HydrantWiki
     public class HydrantWikiApp : Application
     {
         public static string DataFolder;
+        public static User User { get; set; }
         public IPlatformManager m_PlatformManager;
 
         public HydrantWikiApp(
@@ -20,6 +22,8 @@ namespace HydrantWiki
 
             HWManager manager = HWManager.GetInstance();
             manager.PlatformManager = m_PlatformManager;
+
+            User = manager.SettingManager.GetUser();
 
             // The root page of your application
             MainPage = new MainForm(this);

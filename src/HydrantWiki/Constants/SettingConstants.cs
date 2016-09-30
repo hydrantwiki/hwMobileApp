@@ -10,5 +10,7 @@ namespace HydrantWiki.Constants
         public const string InstallId = "InstallId";
 
         public const string DisplayName = "DisplayName";
+
+        public const string TagCount = "TagCount";
     }
 }
