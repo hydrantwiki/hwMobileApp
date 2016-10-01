@@ -20,8 +20,6 @@ namespace HydrantWiki.Forms
 
             OutsideLayout.Children.Add(m_lstNearby);
             m_Location = new LocationManager();
-
-            StartUpdateLocation();
         }
 
         private void StartUpdateLocation()
@@ -62,6 +60,8 @@ namespace HydrantWiki.Forms
             base.OnAppearing();
 
             m_Location.StartListening();
+
+            StartUpdateLocation();
         }
 
         protected override void OnDisappearing()
