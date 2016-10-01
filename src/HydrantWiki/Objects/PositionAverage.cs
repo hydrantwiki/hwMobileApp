@@ -9,7 +9,11 @@ namespace HydrantWiki.Objects
 
         public void Add(GeoPoint _position)
         {
-            m_Positions.Add(_position);
+            if (_position.Latitude != 0.0
+                && _position.Longitude != 0.0)
+            {
+                m_Positions.Add(_position);
+            }
         }
 
         public void Add(
@@ -18,7 +22,8 @@ namespace HydrantWiki.Objects
             double? _altitude,
             double? _accuracy)
         {
-            if (_latitude != 0.0 && _logitude != 0.0)
+            if (_latitude != 0.0
+                && _logitude != 0.0)
             {
                 GeoPoint position = new GeoPoint
                 {

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HydrantWiki.Delegates;
 using HydrantWiki.Objects;
 using Xamarin.Forms;
 using XLabs.Platform.Services.Geolocation;
 
 namespace HydrantWiki.Managers
 {
-    public class LocationManager
+    public class LocationManager : IDisposable
     {
         private IGeolocator m_Locator;
+
+        public event PositionChangedDelegate PositionChanged;
 
         public LocationManager()
         {
@@ -17,12 +20,20 @@ namespace HydrantWiki.Managers
 
         public void StartListening()
         {
-            m_Locator.StartListening(10, 10);
+            if (!m_Locator.IsListening)
+            {
+                m_Locator.PositionChanged += LocationManager_PositionChanged;
+                m_Locator.StartListening(10, 10);
+            }
         }
 
         public void StopListening()
         {
-            m_Locator.StopListening();
+            if (m_Locator.IsListening)
+            {
+                m_Locator.StopListening();
+                m_Locator.PositionChanged -= LocationManager_PositionChanged;
+            }
         }
 
         public bool IsListening
@@ -31,6 +42,31 @@ namespace HydrantWiki.Managers
             {
                 return m_Locator.IsListening;
             }
+        }
+
+        void LocationManager_PositionChanged(object sender, PositionEventArgs e)
+        {
+            var pc = PositionChanged;
+            if (pc != null)
+            {
+                GeoPoint point = ConvertPosition(e.Position);
+                pc(point);
+            }
+        }
+
+        private GeoPoint ConvertPosition(Position _position)
+        {
+            GeoPoint point = new GeoPoint
+            {
+                Latitude = _position.Latitude,
+                Longitude = _position.Longitude,
+                Altitude = _position.Altitude,
+                Accuracy = _position.Accuracy,
+                DeviceDateTime = _position.Timestamp,
+                Speed = _position.Speed
+            };
+
+            return point;
         }
 
         public async Task<GeoPoint> GetLocation()
@@ -53,6 +89,11 @@ namespace HydrantWiki.Managers
             }
 
             return null;
+        }
+
+        public void Dispose()
+        {
+            StopListening();
         }
     }
 }

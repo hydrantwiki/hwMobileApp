@@ -84,6 +84,8 @@
     <Compile Include="Controls\HWButton.cs" />
     <Compile Include="Constants\DisplayConstants.cs" />
     <Compile Include="Controls\NearbyHydrantsListView.cs" />
+    <Compile Include="Delegates\PositionChangedDelegate.cs" />
+    <Compile Include="Workers\PositionAverager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
@@ -98,6 +100,7 @@
     <Folder Include="Daos\" />
     <Folder Include="ResponseObjects\" />
     <Folder Include="Delegates\" />
+    <Folder Include="Workers\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
