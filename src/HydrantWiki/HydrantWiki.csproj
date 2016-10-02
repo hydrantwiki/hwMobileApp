@@ -86,6 +86,9 @@
     <Compile Include="Controls\NearbyHydrantsListView.cs" />
     <Compile Include="Delegates\PositionChangedDelegate.cs" />
     <Compile Include="Workers\PositionAverager.cs" />
+    <Compile Include="Helpers\MapHelper.cs" />
+    <Compile Include="Objects\GeoBox.cs" />
+    <Compile Include="Helpers\GeoHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
@@ -101,6 +104,7 @@
     <Folder Include="ResponseObjects\" />
     <Folder Include="Delegates\" />
     <Folder Include="Workers\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

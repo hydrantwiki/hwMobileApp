@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using HydrantWiki.Helpers;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
 using Xamarin.Forms;
@@ -9,11 +10,14 @@ namespace HydrantWiki.Forms
 {
     public class HydrantMap : AbstractPage
     {
+        private bool m_Loading = false;
         private Map m_Map;
         private LocationManager m_Location;
 
         public HydrantMap() : base("Hydrant Map")
         {
+            m_Loading = true;
+
             m_Location = new LocationManager();
 
             m_Map = new Map(MapSpan.FromCenterAndRadius(
@@ -24,8 +28,11 @@ namespace HydrantWiki.Forms
                 WidthRequest = 960,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
+            m_Map.PropertyChanged += Map_PropertyChanged;
 
             OutsideLayout.Children.Add(m_Map);
+
+            m_Loading = false;
         }
 
         private void StartUpdateLocation()
@@ -33,19 +40,63 @@ namespace HydrantWiki.Forms
             Task t = Task.Factory.StartNew(() => UpdateLocation());
         }
 
+        void Map_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (!m_Loading
+                && e.PropertyName == "VisibleRegion")
+            {
+                Task t = Task.Factory.StartNew(() => UpdateCurrentView());
+            }
+        }
+
+        private void UpdateCurrentView()
+        {
+            GeoBox box = m_Map.VisibleRegion.GetGeoBox();
+
+            if (box != null)
+            {
+                List<Hydrant> hydrants = GetHydrants(box);
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    if (hydrants != null)
+                    {
+                        m_Map.Pins.Clear();
+
+                        foreach (var item in hydrants)
+                        {
+                            if (item.Position != null)
+                            {
+                                var pin = new Pin()
+                                {
+                                    Label = "Hydrant"
+                                };
+
+                                pin.Position = new Position(item.Position.Latitude, item.Position.Longitude);
+                                m_Map.Pins.Add(pin);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
         private async Task UpdateLocation()
         {
+            m_Loading = true;
+
             GeoPoint position = await m_Location.GetLocation();
-
-            List<Hydrant> hydrants = GetHydrants(position);
-
-            Device.BeginInvokeOnMainThread(() =>
+            if (position != null)
             {
-                if (position != null)
-                {
-                    var pos = new Position(position.Latitude, position.Longitude);
+                var pos = new Position(position.Latitude, position.Longitude);
+                var span = MapSpan.FromCenterAndRadius(pos, Distance.FromMiles(1));
+                var box = span.GetGeoBox();
 
-                    m_Map.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMiles(1)));
+                List<Hydrant> hydrants = GetHydrants(box);
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    m_Map.MoveToRegion(span);
 
                     if (hydrants != null)
                     {
@@ -65,19 +116,22 @@ namespace HydrantWiki.Forms
                             }
                         }
                     }
-                }
-            });
+
+                    m_Loading = false;
+                });
+            }
         }
 
-        private List<Hydrant> GetHydrants(GeoPoint position)
+        private List<Hydrant> GetHydrants(GeoBox box)
         {
-            if (position != null)
+            if (box != null)
             {
-                var response = HWManager.GetInstance().ApiManager.GetHydrantsInCirle(
+                var response = HWManager.GetInstance().ApiManager.GetHydrantsInBox(
                     HydrantWikiApp.User,
-                    position.Latitude,
-                    position.Longitude,
-                    500);
+                    box.MinLatitude,
+                    box.MaxLatitude,
+                    box.MinLongitude,
+                    box.MaxLongitude);
 
                 return response.Hydrants;
             }

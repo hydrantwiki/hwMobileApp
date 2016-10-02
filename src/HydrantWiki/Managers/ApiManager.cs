@@ -144,7 +144,7 @@ namespace HydrantWiki.Managers
             double _maxLongitude)
         {
 
-            string url = string.Format("/api/hydrants/box/{0}/{1}/{2}/{3}", _maxLongitude, _minLongitude, _maxLatitude, _minLatitude);
+            string url = string.Format("/api/hydrants/box/{0}/{1}/{2}/{3}", _maxLatitude, _minLatitude, _maxLongitude, _minLongitude);
 
             HWRestRequest request = new HWRestRequest();
             request.Method = HWRestMethods.Get;
