@@ -21,7 +21,8 @@ namespace HydrantWiki.Forms
             m_Location = new LocationManager();
 
             m_Map = new Map(MapSpan.FromCenterAndRadius(
-                new Position(37, -122), Distance.FromMiles(100)))
+                new Position(37, -122),
+                Distance.FromMiles(100)))
             {
                 IsShowingUser = true,
                 HeightRequest = 100,

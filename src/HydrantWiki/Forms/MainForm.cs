@@ -33,7 +33,7 @@ namespace HydrantWiki.Forms
 
         private void NavigateTo(MenuOption menu)
         {
-            Page displayPage = (Page)Activator.CreateInstance(menu.TargetType); ;
+            Page displayPage = (Page)Activator.CreateInstance(menu.TargetType);
 
             if (displayPage != null)
             {

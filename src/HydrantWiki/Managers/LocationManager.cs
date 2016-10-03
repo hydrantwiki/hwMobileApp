@@ -20,7 +20,8 @@ namespace HydrantWiki.Managers
 
         public void StartListening()
         {
-            if (!m_Locator.IsListening)
+            if (m_Locator != null
+                && !m_Locator.IsListening)
             {
                 m_Locator.PositionChanged += LocationManager_PositionChanged;
                 m_Locator.StartListening(10, 10);
@@ -29,7 +30,8 @@ namespace HydrantWiki.Managers
 
         public void StopListening()
         {
-            if (m_Locator.IsListening)
+            if (m_Locator != null
+                && m_Locator.IsListening)
             {
                 m_Locator.StopListening();
                 m_Locator.PositionChanged -= LocationManager_PositionChanged;
@@ -40,7 +42,12 @@ namespace HydrantWiki.Managers
         {
             get
             {
-                return m_Locator.IsListening;
+                if (m_Locator != null)
+                {
+                    return m_Locator.IsListening;
+                }
+
+                return false;
             }
         }
 

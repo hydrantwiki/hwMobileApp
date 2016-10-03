@@ -89,6 +89,7 @@
     <Compile Include="Helpers\MapHelper.cs" />
     <Compile Include="Objects\GeoBox.cs" />
     <Compile Include="Helpers\GeoHelper.cs" />
+    <Compile Include="Forms\HydrantDetailsForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

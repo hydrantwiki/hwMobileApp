@@ -156,6 +156,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Managers\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Assets.xcassets\NoImage.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />

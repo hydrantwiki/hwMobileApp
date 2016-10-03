@@ -8,7 +8,7 @@ namespace HydrantWiki.Cells
     public class HydrantCell : ViewCell
     {
         private StackLayout m_Layout;
-        private WebImage m_imgCell;
+        private Image m_imgCell;
 
         private HWLabel m_lblLatitude;
         private HWLabel m_lblLongitude;
@@ -23,13 +23,13 @@ namespace HydrantWiki.Cells
                 Orientation = StackOrientation.Horizontal
             };
 
-            m_imgCell = new WebImage
+            m_imgCell = new Image
             {
                 Aspect = Aspect.AspectFit,
                 WidthRequest = 70,
                 HeightRequest = 70
             };
-            m_imgCell.SetBinding(WebImage.ImageUrlProperty, "ThumbnailUrl");
+            m_imgCell.SetBinding(Image.SourceProperty, "ThumbnailUrl");
             m_Layout.Children.Add(m_imgCell);
 
             StackLayout rows = new StackLayout

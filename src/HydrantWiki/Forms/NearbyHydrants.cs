@@ -16,10 +16,11 @@ namespace HydrantWiki.Forms
 
         public NearbyHydrants() : base("Nearby Hydrants")
         {
-            m_lstNearby = new NearbyHydrantsListView();
-
-            OutsideLayout.Children.Add(m_lstNearby);
             m_Location = new LocationManager();
+
+            m_lstNearby = new NearbyHydrantsListView();
+            m_lstNearby.ItemSelected += Nearby_ItemSelected;
+            OutsideLayout.Children.Add(m_lstNearby);
         }
 
         private void StartUpdateLocation()
@@ -37,6 +38,19 @@ namespace HydrantWiki.Forms
             {
                 m_lstNearby.ItemsSource = hydrants;
             });
+        }
+
+        void Nearby_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var item = e.SelectedItem as Hydrant;
+
+            if (item != null)
+            {
+                HydrantDetailsForm details = new HydrantDetailsForm();
+                details.SetHydrant(item);
+
+                Navigation.PushAsync(details);
+            }
         }
 
         private List<Hydrant> GetHydrants(GeoPoint position)
@@ -69,6 +83,8 @@ namespace HydrantWiki.Forms
             base.OnDisappearing();
 
             m_Location.StopListening();
+
+            m_lstNearby.ItemsSource = null;
         }
     }
 }
