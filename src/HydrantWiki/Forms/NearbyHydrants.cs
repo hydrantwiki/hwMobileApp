@@ -13,10 +13,19 @@ namespace HydrantWiki.Forms
     {
         private NearbyHydrantsListView m_lstNearby;
         private LocationManager m_Location;
+        private HWButton m_btnRefresh;
+        private List<Hydrant> m_Hydrants = null;
 
         public NearbyHydrants() : base("Nearby Hydrants")
         {
             m_Location = new LocationManager();
+
+            m_btnRefresh = new HWButton()
+            {
+                Text = "Refresh"
+            };
+            m_btnRefresh.Clicked += Refresh_Clicked;
+            OutsideLayout.Children.Add(m_btnRefresh);
 
             m_lstNearby = new NearbyHydrantsListView();
             m_lstNearby.ItemSelected += Nearby_ItemSelected;
@@ -25,18 +34,25 @@ namespace HydrantWiki.Forms
 
         private void StartUpdateLocation()
         {
+            m_btnRefresh.IsEnabled = false;
             Task t = Task.Factory.StartNew(() => UpdateLocation());
+        }
+
+        void Refresh_Clicked(object sender, EventArgs e)
+        {
+            StartUpdateLocation();
         }
 
         private async Task UpdateLocation()
         {
             GeoPoint position = await m_Location.GetLocation();
 
-            List<Hydrant> hydrants = GetHydrants(position);
+            m_Hydrants = GetHydrants(position);
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                m_lstNearby.ItemsSource = hydrants;
+                m_lstNearby.ItemsSource = m_Hydrants;
+                m_btnRefresh.IsEnabled = true;
             });
         }
 
@@ -49,7 +65,7 @@ namespace HydrantWiki.Forms
                 HydrantDetailsForm details = new HydrantDetailsForm();
                 details.SetHydrant(item);
 
-                Navigation.PushAsync(details);
+                Navigation.PushModalAsync(details);
             }
         }
 
@@ -75,7 +91,12 @@ namespace HydrantWiki.Forms
 
             m_Location.StartListening();
 
-            StartUpdateLocation();
+            if (m_Hydrants == null)
+            {
+                StartUpdateLocation();
+            } else {
+                m_lstNearby.ItemsSource = m_Hydrants;
+            }
         }
 
         protected override void OnDisappearing()

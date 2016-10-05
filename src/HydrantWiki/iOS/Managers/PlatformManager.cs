@@ -39,7 +39,7 @@ namespace HydrantWiki.iOS.Managers
             get
             {
                 //return "http://mobileapi.hydrantwiki.com";
-                return "http://192.168.50.192";
+                return "http://192.168.50.192:8990";
             }
         }
 
@@ -144,7 +144,5 @@ namespace HydrantWiki.iOS.Managers
 
             throw new ArgumentException("Unexpected rest method");
         }
-
-
     }
 }
