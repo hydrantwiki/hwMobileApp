@@ -91,6 +91,8 @@
     <Compile Include="Helpers\GeoHelper.cs" />
     <Compile Include="Forms\HydrantDetailsForm.cs" />
     <Compile Include="Controls\HWButtonBar.cs" />
+    <Compile Include="Forms\About.cs" />
+    <Compile Include="Constants\AboutConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

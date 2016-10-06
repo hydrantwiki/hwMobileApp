@@ -47,7 +47,7 @@ namespace HydrantWiki.Forms
             }
         }
 
-        public void PushModal(ContentPage _form)
+        public void PushModal(Page _form)
         {
             Navigation.PushModalAsync(_form);
         }

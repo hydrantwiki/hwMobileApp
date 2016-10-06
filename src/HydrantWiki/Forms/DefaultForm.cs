@@ -10,6 +10,8 @@ namespace HydrantWiki.Forms
     {
         private RecentTagsListView m_lstRecentTags;
         private HWLabel m_lblTags;
+        private HWButton m_btnTagHydrant;
+        private HWLabel m_lblRecent;
 
         public DefaultForm() : base("Home")
         {
@@ -22,6 +24,23 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(m_lblTags);
 
+            m_btnTagHydrant = new HWButton
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Text = "Tag Hydrant",
+                Margin = new Thickness(0, 10, 0, 10)
+            };
+            m_btnTagHydrant.Clicked += TagHydrant_Clicked;
+            OutsideLayout.Children.Add(m_btnTagHydrant);
+
+            m_lblRecent = new HWLabel
+            {
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Text = "My Recent Tags"
+            };
+
             m_lstRecentTags = new RecentTagsListView();
             OutsideLayout.Children.Add(m_lstRecentTags);
         }
@@ -32,6 +51,11 @@ namespace HydrantWiki.Forms
 
             //TODO load tags
             var tagCountTask = Task.Factory.StartNew(() => LoadTagCount());
+        }
+
+        void TagHydrant_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new TagHydrant());
         }
 
         private void LoadTagCount()

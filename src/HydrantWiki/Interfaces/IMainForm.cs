@@ -7,7 +7,7 @@ namespace HydrantWiki.Interfaces
     {
         Task<bool> ShowAlert(string _title, string _message, string _accept, string _cancel);
 
-        void PushModal(ContentPage _form);
+        void PushModal(Page _form);
     }
 }
 

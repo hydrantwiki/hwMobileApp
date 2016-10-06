@@ -19,12 +19,6 @@ namespace HydrantWiki.Data
 
             menuItems.Add(new MenuOption()
             {
-                Title = "Tag Hydrant",
-                TargetType = typeof(TagHydrant)
-            });
-
-            menuItems.Add(new MenuOption()
-            {
                 Title = "Hydrant Map",
                 TargetType = typeof(HydrantMap)
             });
@@ -33,6 +27,12 @@ namespace HydrantWiki.Data
             {
                 Title = "Nearby Hydrants",
                 TargetType = typeof(NearbyHydrants)
+            });
+
+            menuItems.Add(new MenuOption()
+            {
+                Title = "About",
+                TargetType = typeof(About)
             });
 
             return menuItems;
