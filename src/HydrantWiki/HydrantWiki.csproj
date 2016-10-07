@@ -93,6 +93,8 @@
     <Compile Include="Controls\HWButtonBar.cs" />
     <Compile Include="Forms\About.cs" />
     <Compile Include="Constants\AboutConstants.cs" />
+    <Compile Include="Forms\HWNavigationPage.cs" />
+    <Compile Include="Interfaces\IValidatedPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

@@ -23,7 +23,7 @@ namespace HydrantWiki.Forms
             menuPage.Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuOption);
             Master = menuPage;
 
-            Detail = new NavigationPage(new DefaultForm());
+            Detail = new HWNavigationPage(new DefaultForm());
         }
 
         public Task<bool> ShowAlert(string _title, string _message, string _accept, string _cancel)

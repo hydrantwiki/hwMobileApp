@@ -29,22 +29,39 @@ namespace HydrantWiki.Forms
             CancelButton = m_ButtonLayout.Add("Cancel", LayoutOptions.StartAndExpand);
             CancelButton.Clicked += CancelButton_Clicked;
 
+            Frame imageFrame = new Frame
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                HasShadow = false,
+                OutlineColor = Color.Black,
+                Margin = new Thickness(10, 0, 10, 0)
+            };
+            OutsideLayout.Children.Add(imageFrame);
+
             m_imgMainImage = new Image()
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Aspect = Aspect.AspectFit,
-                Margin = new Thickness(10, 0, 10, 0)
             };
-            OutsideLayout.Children.Add(m_imgMainImage);
+            imageFrame.Content = m_imgMainImage;
+
+            StackLayout labelLayout = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Margin = new Thickness(0, 0, 0, 10)
+            };
+            OutsideLayout.Children.Add(labelLayout);
 
             m_lblUsername = new HWLabel
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalTextAlignment = TextAlignment.Center,
-                HorizontalTextAlignment = TextAlignment.Center
+                HorizontalTextAlignment = TextAlignment.Center,
             };
-            OutsideLayout.Children.Add(m_lblUsername);
+            labelLayout.Children.Add(m_lblUsername);
 
             m_lblLatitude = new HWLabel
             {
@@ -52,16 +69,15 @@ namespace HydrantWiki.Forms
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center
             };
-            OutsideLayout.Children.Add(m_lblLatitude);
+            labelLayout.Children.Add(m_lblLatitude);
 
             m_lblLongitude = new HWLabel
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalTextAlignment = TextAlignment.Center,
-                HorizontalTextAlignment = TextAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 10)
+                HorizontalTextAlignment = TextAlignment.Center
             };
-            OutsideLayout.Children.Add(m_lblLongitude);
+            labelLayout.Children.Add(m_lblLongitude);
         }
 
         void CancelButton_Clicked(object sender, System.EventArgs e)
