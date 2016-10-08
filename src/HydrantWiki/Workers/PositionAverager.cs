@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HydrantWiki.Delegates;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
 
@@ -12,6 +13,8 @@ namespace HydrantWiki.Workers
         private PositionAverage m_Average = null;
         private bool m_Cancelled = false;
 
+        public event PositionChangedDelegate PositionUpdated;
+
         public PositionAverager(LocationManager _location, int count)
         {
             m_Location = _location;
@@ -22,28 +25,25 @@ namespace HydrantWiki.Workers
         {
             m_Cancelled = false;
             m_Average = new PositionAverage();
-            m_Location.PositionChanged += PositionChanged;
 
             for (int i = 0; i < m_DesiredPositionCount; i++)
             {
                 GeoPoint point = await m_Location.GetLocation();
                 m_Average.Add(point);
 
-                await Task.Delay(200);
-            }
+                var updated = PositionUpdated;
+                if (updated != null)
+                {
+                    updated(m_Average.GetAverage());
+                }
 
-            m_Location.StopListening();
-            m_Location.PositionChanged -= PositionChanged;
+                await Task.Delay(250);
+            }
         }
 
         public void Cancel()
         {
             m_Cancelled = true;
-        }
-
-        void PositionChanged(GeoPoint position)
-        {
-            m_Average.Add(position);
         }
 
         public PositionAverage Average

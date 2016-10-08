@@ -7,6 +7,8 @@ namespace HydrantWiki.Constants
 
         public const string Token = "AuthToken";
 
+        public const string UserType = "UserType";
+
         public const string InstallId = "InstallId";
 
         public const string DisplayName = "DisplayName";

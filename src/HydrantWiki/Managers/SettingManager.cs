@@ -166,6 +166,16 @@ namespace HydrantWiki.Managers
             SetSetting(SettingConstants.Token, token);
         }
 
+        public string GetUserType()
+        {
+            return GetSettingValue(SettingConstants.UserType);
+        }
+
+        public void SetUserType(string userType)
+        {
+            SetSetting(SettingConstants.UserType, userType);
+        }
+
         public void Dispose()
         {
             m_Manager = null;
@@ -186,6 +196,7 @@ namespace HydrantWiki.Managers
             string username = GetUsername();
             string authtoken = GetAuthToken();
             string displayname = GetDisplayName();
+            string userType = GetUserType();
 
             if (username != null
                 && authtoken != null)
@@ -194,13 +205,22 @@ namespace HydrantWiki.Managers
                 {
                     Username = username,
                     AuthorizationToken = authtoken,
-                    DisplayName = displayname
+                    DisplayName = displayname,
+                    UserType = userType
                 };
 
                 return user;
             }
 
             return null;
+        }
+
+        public void ClearUser()
+        {
+            SetUsername(null);
+            SetAuthToken(null);
+            SetUserType(null);
+            SetDisplayName(null);
         }
 
         public void SetUser(User user)
@@ -210,6 +230,7 @@ namespace HydrantWiki.Managers
                 SetUsername(user.Username);
                 SetAuthToken(user.AuthorizationToken);
                 SetDisplayName(user.DisplayName);
+                SetUserType(user.UserType);
             }
         }
     }

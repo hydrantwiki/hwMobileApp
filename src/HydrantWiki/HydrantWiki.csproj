@@ -95,6 +95,8 @@
     <Compile Include="Constants\AboutConstants.cs" />
     <Compile Include="Forms\HWNavigationPage.cs" />
     <Compile Include="Interfaces\IValidatedPage.cs" />
+    <Compile Include="Forms\SettingsForm.cs" />
+    <Compile Include="Forms\ReviewTagForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

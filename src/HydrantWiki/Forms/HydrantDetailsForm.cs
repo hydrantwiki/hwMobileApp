@@ -1,4 +1,5 @@
 ﻿using HydrantWiki.Controls;
+using HydrantWiki.Helpers;
 using HydrantWiki.Objects;
 using Xamarin.Forms;
 
@@ -96,8 +97,8 @@ namespace HydrantWiki.Forms
 
             if (_hydrant.Position != null)
             {
-                m_lblLatitude.Text = string.Format("Latitude: {0:00.000000}", _hydrant.Position.Latitude);
-                m_lblLongitude.Text = string.Format("Latitude: {0:00.000000}", _hydrant.Position.Longitude);
+                m_lblLatitude.Text = _hydrant.Position.Latitude.AsLatitude();
+                m_lblLongitude.Text = _hydrant.Position.Longitude.AsLongitude();
             }
 
         }

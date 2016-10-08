@@ -98,9 +98,7 @@ namespace HydrantWiki.Managers
 
             if (user != null)
             {
-                m_SettingManager.SetUsername(user.Username);
-                m_SettingManager.SetDisplayName(user.DisplayName);
-                m_SettingManager.SetAuthToken(user.AuthorizationToken);
+                m_SettingManager.SetUser(user);
 
                 return true;
             } else {

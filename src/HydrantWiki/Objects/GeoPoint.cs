@@ -17,5 +17,6 @@ namespace HydrantWiki.Objects
 
         public bool WasAveraged { get; set; }
 
+        public int CountOfPositions { get; set; }
     }
 }

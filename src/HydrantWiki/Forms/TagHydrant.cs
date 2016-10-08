@@ -1,11 +1,19 @@
 ﻿using System;
+using System.Threading.Tasks;
 using HydrantWiki.Controls;
+using HydrantWiki.Helpers;
+using HydrantWiki.Managers;
+using HydrantWiki.Objects;
+using HydrantWiki.Workers;
 using Xamarin.Forms;
 
 namespace HydrantWiki.Forms
 {
     public class TagHydrant : AbstractPage
     {
+        private LocationManager m_Location;
+        private PositionAverager m_Averager;
+
         private HWHeader m_Header;
         private HWButtonBar m_ButtonLayout;
         private HWButton CancelButton;
@@ -65,9 +73,12 @@ namespace HydrantWiki.Forms
             m_btnTakePhoto = new HWButton
             {
                 Text = "Take Photo",
+                VerticalOptions = LayoutOptions.Center,
                 WidthRequest = 80,
+                HeightRequest = 40,
                 BorderColor = Color.Black,
-
+                BorderWidth = 1,
+                BackgroundColor = Color.White
             };
             m_btnTakePhoto.Clicked += TakePhoto_Clicked;
             m_layoutPhoto.Children.Add(m_btnTakePhoto);
@@ -100,6 +111,26 @@ namespace HydrantWiki.Forms
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             lableLayout.Children.Add(m_lblLongitude);
+
+            m_Location = new LocationManager();
+            m_Location.StartListening();
+
+            m_Averager = new PositionAverager(m_Location, 10);
+            m_Averager.PositionUpdated += Averager_PositionUpdated;
+            StartUpdateLocation();
+        }
+
+        void Averager_PositionUpdated(GeoPoint position)
+        {
+            if (position != null)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    m_lblCount.Text = string.Format("Position Count: {0}", position.CountOfPositions);
+                    m_lblLatitude.Text = position.Latitude.AsLatitude();
+                    m_lblLongitude.Text = position.Longitude.AsLongitude();
+                });
+            }
         }
 
         void TakePhoto_Clicked(object sender, EventArgs e)
@@ -107,14 +138,31 @@ namespace HydrantWiki.Forms
 
         }
 
+        private void Cleanup()
+        {
+            m_Averager.PositionUpdated -= Averager_PositionUpdated;
+            m_Averager = null;
+            m_Location.StopListening();
+            m_Location = null;
+        }
+
         void CancelButton_Clicked(object sender, System.EventArgs e)
         {
+            Cleanup();
             Navigation.PopModalAsync(true);
         }
 
         void SaveButton_Clicked(object sender, EventArgs e)
         {
 
+
+            Cleanup();
+            Navigation.PopModalAsync(true);
+        }
+
+        private void StartUpdateLocation()
+        {
+            Task t = Task.Factory.StartNew(() => m_Averager.Start());
         }
     }
 }

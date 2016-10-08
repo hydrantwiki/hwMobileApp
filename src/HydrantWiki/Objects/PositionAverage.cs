@@ -7,6 +7,11 @@ namespace HydrantWiki.Objects
     {
         private List<GeoPoint> m_Positions;
 
+        public PositionAverage()
+        {
+            m_Positions = new List<GeoPoint>();
+        }
+
         public void Add(GeoPoint _position)
         {
             if (_position.Latitude != 0.0
@@ -76,7 +81,8 @@ namespace HydrantWiki.Objects
                     DeviceDateTime = DateTime.UtcNow,
                     Latitude = latitude / count,
                     Longitude = longitude / count,
-                    WasAveraged = true
+                    WasAveraged = true,
+                    CountOfPositions = count
                 };
 
                 if (altitudeCount > 0)
@@ -94,8 +100,5 @@ namespace HydrantWiki.Objects
 
             return null;
         }
-
-
-
     }
 }

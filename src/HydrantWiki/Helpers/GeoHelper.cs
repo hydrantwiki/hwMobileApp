@@ -138,5 +138,16 @@ namespace HydrantWiki.Helpers
 
             return null;
         }
+
+
+        public static string AsLatitude(this double latitude)
+        {
+            return string.Format("Latitude: {0:00.000000}", latitude);
+        }
+
+        public static string AsLongitude(this double longitude)
+        {
+            return string.Format("Longitude: {0:00.000000}", longitude);
+        }
     }
 }
