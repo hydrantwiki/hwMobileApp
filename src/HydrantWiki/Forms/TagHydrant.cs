@@ -5,12 +5,20 @@ using HydrantWiki.Helpers;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
 using HydrantWiki.Workers;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
+//using XLabs.Ioc;
+//using XLabs.Platform.Device;
+//using XLabs.Platform.Services.Media;
 
 namespace HydrantWiki.Forms
 {
     public class TagHydrant : AbstractPage
     {
+        //private IMediaPicker m_MediaPicker;
+        //private readonly TaskScheduler m_Scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
         private LocationManager m_Location;
         private PositionAverager m_Averager;
 
@@ -29,6 +37,11 @@ namespace HydrantWiki.Forms
         public TagHydrant()
             : base("Tag Hydrant")
         {
+            //m_MediaPicker = DependencyService.Get<IMediaPicker>();
+            //var device = Resolver.Resolve<IDevice>();
+            //m_MediaPicker = m_MediaPicker ?? device.MediaPicker;
+
+
             m_Header = new HWHeader("Hydrant Details")
             {
                 Margin = new Thickness(0, 0, 0, 0)
@@ -83,6 +96,13 @@ namespace HydrantWiki.Forms
             m_btnTakePhoto.Clicked += TakePhoto_Clicked;
             m_layoutPhoto.Children.Add(m_btnTakePhoto);
 
+            if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
+            {
+                m_btnTakePhoto.IsEnabled = true;
+            } else {
+                m_btnTakePhoto.IsEnabled = false;
+            }
+
             StackLayout lableLayout = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
@@ -133,9 +153,53 @@ namespace HydrantWiki.Forms
             }
         }
 
-        void TakePhoto_Clicked(object sender, EventArgs e)
+        public async Task<MediaFile> TakePicture()
         {
+            //var cmso = new CameraMediaStorageOptions
+            //{
+            //    DefaultCamera = CameraDevice.Front,
+            //    MaxPixelDimension = 400
+            //};
 
+            //return await m_MediaPicker.TakePhotoAsync(cmso).ContinueWith(t =>
+            //{
+            //    if (t.IsCompleted
+            //        && t.Status == TaskStatus.RanToCompletion)
+            //    {
+            //        var mediaFile = t.Result;
+
+            //        return mediaFile;
+            //    }
+
+            //    return null;
+            //}, m_Scheduler);
+
+            // Supply media options for saving our photo after it's taken.
+            var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            {
+                Directory = "Receipts",
+                Name = $"{DateTime.UtcNow}.jpg"
+            };
+
+            // Take a photo of the business receipt.
+            var file = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
+            return file;
+
+        }
+
+        async void TakePhoto_Clicked(object sender, EventArgs e)
+        {
+            await CrossMedia.Current.Initialize();
+
+            if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
+            {
+                MediaFile file = await TakePicture();
+
+                if (file != null)
+                {
+
+                }
+            }
         }
 
         private void Cleanup()

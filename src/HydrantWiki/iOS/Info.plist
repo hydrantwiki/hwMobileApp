@@ -7,7 +7,7 @@
 	<key>CFBundleName</key>
 	<string>HydrantWiki</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.hyrantwiki.app.hydrantwiki</string>
+	<string>com.hydrantwiki.mobile</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -45,5 +45,7 @@
 	<string>Can we use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We are using your location</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera used to capture hydrant images.</string>
 </dict>
 </plist>

@@ -62,17 +62,22 @@ namespace HydrantWiki.Forms
         {
             try
             {
-                var response = HWManager.GetInstance().ApiManager.GetMyTagCount(HydrantWikiApp.User);
-
-                if (response.Success)
+                if (HydrantWikiApp.User != null)
                 {
-                    HWManager.GetInstance().SettingManager.SetTagCount(response.TagCount);
+                    var response = HWManager.GetInstance().ApiManager.GetMyTagCount(HydrantWikiApp.User);
 
-                    Device.BeginInvokeOnMainThread(() =>
+                    if (response.Success)
                     {
-                        m_lblTags.Text = string.Format("Total Tags Collected - {0}", response.TagCount);
-                    });
+                        HWManager.GetInstance().SettingManager.SetTagCount(response.TagCount);
 
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            m_lblTags.Text = string.Format("Total Tags Collected - {0}", response.TagCount);
+                        });
+
+                        return;
+                    }
+                } else {
                     return;
                 }
 

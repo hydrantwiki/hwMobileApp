@@ -99,6 +99,7 @@ namespace HydrantWiki.Managers
             if (user != null)
             {
                 m_SettingManager.SetUser(user);
+                HydrantWikiApp.User = user;
 
                 return true;
             } else {

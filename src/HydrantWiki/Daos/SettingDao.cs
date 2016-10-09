@@ -13,7 +13,7 @@ namespace HydrantWiki.Daos
 
         public override void BuildIndexes()
         {
-
+            m_Collection.EnsureIndex("Name");
         }
 
         public override string CollectionName

@@ -6,8 +6,12 @@ using HydrantWiki.iOS.Managers;
 using UIKit;
 using XLabs.Forms;
 using XLabs.Forms.Services;
+using XLabs.Ioc;
 using XLabs.Platform.Device;
+using XLabs.Platform.Services;
+using XLabs.Platform.Services.Email;
 using XLabs.Platform.Services.Geolocation;
+using XLabs.Platform.Services.Media;
 
 namespace HydrantWiki.iOS
 {
@@ -33,19 +37,24 @@ namespace HydrantWiki.iOS
 
         private void SetIoc()
         {
-            global::Xamarin.Forms.Forms.Init();
+            Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
-            var resolverContainer = new global::XLabs.Ioc.SimpleContainer();
-
             var app = new XFormsAppiOS();
             app.Init(this);
 
-            resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice);
-            resolverContainer.Register<IDisplay>(t => t.Resolve<IDevice>().Display);
-            resolverContainer.Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()));
-            resolverContainer.Register<IGeolocator>(t => new Geolocator());
+            var resolverContainer = new SimpleContainer();
 
-            XLabs.Ioc.Resolver.SetResolver(resolverContainer.GetResolver());
+            resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice)
+                .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
+                .Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
+                .Register<IGeolocator>(t => new Geolocator())
+                .Register<ITextToSpeechService, TextToSpeechService>()
+                .Register<IEmailService, EmailService>()
+                .Register<IMediaPicker, MediaPicker>()
+                .Register<ISecureStorage, SecureStorage>()
+                .Register<IDependencyContainer>(t => resolverContainer);
+
+            Resolver.SetResolver(resolverContainer.GetResolver());
         }
     }
 }
