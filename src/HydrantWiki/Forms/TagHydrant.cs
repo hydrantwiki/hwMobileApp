@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
@@ -69,7 +70,9 @@ namespace HydrantWiki.Forms
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 OutlineColor = Color.Black,
-                HasShadow = false
+                HasShadow = false,
+                Margin = new Thickness(3, 3, 3, 3),
+                Padding = new Thickness(0, 0, 0, 0)
             };
             m_layoutPhoto.Children.Add(imageFrame);
 
@@ -77,7 +80,8 @@ namespace HydrantWiki.Forms
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Aspect = Aspect.AspectFit
+                Aspect = Aspect.AspectFit,
+                Margin = new Thickness(0, 0, 0, 0)
             };
             imageFrame.Content = m_imgHydrant;
 
@@ -94,9 +98,14 @@ namespace HydrantWiki.Forms
             m_btnTakePhoto.Clicked += TakePhoto_Clicked;
             m_layoutPhoto.Children.Add(m_btnTakePhoto);
 
-            if (!m_MediaPicker.IsCameraAvailable)
+            if (m_MediaPicker.IsCameraAvailable)
+            {
+                m_btnTakePhoto.IsEnabled = true;
+                SaveButton.IsEnabled = false;
+            } else
             {
                 m_btnTakePhoto.IsEnabled = false;
+                SaveButton.IsEnabled = true;
             }
 
             StackLayout lableLayout = new StackLayout
@@ -153,8 +162,8 @@ namespace HydrantWiki.Forms
         {
             var cmso = new CameraMediaStorageOptions
             {
-                DefaultCamera = CameraDevice.Front,
-                MaxPixelDimension = 400
+                DefaultCamera = CameraDevice.Rear,
+                SaveMediaOnCapture = false
             };
 
             return await m_MediaPicker.TakePhotoAsync(cmso).ContinueWith(t =>
@@ -163,7 +172,6 @@ namespace HydrantWiki.Forms
                     && t.Status == TaskStatus.RanToCompletion)
                 {
                     var mediaFile = t.Result;
-
                     return mediaFile;
                 }
 
@@ -175,14 +183,15 @@ namespace HydrantWiki.Forms
         {
             if (m_MediaPicker.IsCameraAvailable)
             {
-                MediaFile file = await TakePicture();
+                MediaFile mediaFile = await TakePicture();
 
-                if (file != null)
+                if (mediaFile != null)
                 {
                     Device.BeginInvokeOnMainThread(() =>
-                        {
-                            m_imgHydrant.Source = ImageSource.FromStream(() => file.Source);
-                        });
+                    {
+                        m_imgHydrant.Source = ImageSource.FromStream(() => m_File.Source);
+                        SaveButton.IsEnabled = true;
+                    });
                 }
             }
         }
@@ -203,6 +212,42 @@ namespace HydrantWiki.Forms
 
         void SaveButton_Clicked(object sender, EventArgs e)
         {
+            HWManager manager = HWManager.GetInstance();
+
+            Guid imageGuid = Guid.NewGuid();
+            string filename = null;
+
+            GeoPoint average = m_Averager.Average.GetAverage();
+
+            if (average != null)
+            {
+                if (m_imgHydrant.Source != null)
+                {
+                    string file = string.Format("{0}.jpg", imageGuid);
+                    filename = manager.PlatformManager.GetLocalImageFilename(file);
+                    manager.PlatformManager.SaveImage(m_imgHydrant.Source, filename);
+                }
+
+                Tag tag = new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    ImageGuid = imageGuid,
+                    TagTime = average.DeviceDateTime,
+                    Position = average,
+                    SentToServer = false
+                };
+
+                //Save Tag locally - Figure out
+
+
+                //Save tag to server if connected
+                manager.ApiManager.SaveTag(HydrantWikiApp.User, tag);
+                manager.ApiManager.SaveTagImage(HydrantWikiApp.User, filename);
+
+                tag.SentToServer = true;
+                //Save again.
+            }
+
 
 
             Cleanup();

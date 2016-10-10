@@ -8,5 +8,7 @@ namespace HydrantWiki.Objects
         public GeoPoint Position { get; set; }
 
         public DateTimeOffset TagTime { get; set; }
+
+        public bool SentToServer { get; set; }
     }
 }

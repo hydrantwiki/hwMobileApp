@@ -78,7 +78,7 @@ namespace HydrantWiki.Objects
             {
                 GeoPoint position = new GeoPoint
                 {
-                    DeviceDateTime = DateTime.UtcNow,
+                    DeviceDateTime = m_Positions[0].DeviceDateTime,
                     Latitude = latitude / count,
                     Longitude = longitude / count,
                     WasAveraged = true,
