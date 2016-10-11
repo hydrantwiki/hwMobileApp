@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.IO;
 using HydrantWiki.Daos;
 using HydrantWiki.Interfaces;
@@ -107,6 +109,26 @@ namespace HydrantWiki.Managers
             }
         }
 
+        #region Tags
+        public void Persist(Tag _tag)
+        {
+            TagDao dao = new TagDao(m_Database);
+            dao.Persist(_tag);
+        }
+
+        public List<Tag> GetRecentTags()
+        {
+            TagDao dao = new TagDao(m_Database);
+            return dao.GetRecent();
+        }
+
+        public List<Tag> GetTagsNotSentToServer()
+        {
+            TagDao dao = new TagDao(m_Database);
+            return dao.GetNotSentToServer();
+        }
+
+        #endregion
 
     }
 }
