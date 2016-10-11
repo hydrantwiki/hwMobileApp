@@ -25,6 +25,10 @@ namespace HydrantWiki.Interfaces
 
         string GetLocalImageFilename(string _filename);
 
+        string GetLocalThumbnailFilename(string _filename);
+
         Task SaveImage(ImageSource _imageSource, string _filename);
+
+        void GenerateThumbnail(string _imageFilename, string _thumbnailFilename);
     }
 }

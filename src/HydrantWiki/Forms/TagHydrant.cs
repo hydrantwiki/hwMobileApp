@@ -189,7 +189,7 @@ namespace HydrantWiki.Forms
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        m_imgHydrant.Source = ImageSource.FromStream(() => m_File.Source);
+                        m_imgHydrant.Source = ImageSource.FromStream(() => mediaFile.Source);
                         SaveButton.IsEnabled = true;
                     });
                 }
@@ -247,8 +247,6 @@ namespace HydrantWiki.Forms
                 tag.SentToServer = true;
                 manager.Persist(tag);
             }
-
-
 
             Cleanup();
             Navigation.PopModalAsync(true);

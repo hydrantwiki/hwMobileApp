@@ -9,6 +9,9 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Foundation;
+using UIKit;
+using CoreGraphics;
+using System.Drawing;
 
 namespace HydrantWiki.iOS.Managers
 {
@@ -143,6 +146,81 @@ namespace HydrantWiki.iOS.Managers
             }
 
             throw new ArgumentException("Unexpected rest method");
+        }
+
+        public string GetLocalThumbnailFilename(string _filename)
+        {
+            string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string jpgFilename = Path.Combine(rootAppFolder, "Library", "HWMobileThumbnail", _filename);
+            return jpgFilename;
+        }
+
+        public void GenerateThumbnail(string _imageFilename, string _thumbnailFilename)
+        {
+            byte[] imageData = File.ReadAllBytes(_imageFilename);
+
+            byte[] thumbnailData = ResizeImage(imageData, 60, 80);
+
+            File.WriteAllBytes(_thumbnailFilename, thumbnailData);
+        }
+
+        public static byte[] ResizeImage(byte[] imageData, float maxDimension, int quality)
+        {
+            UIImage originalImage = ImageFromByteArray(imageData);
+
+
+            float oldWidth = (float)originalImage.Size.Width;
+            float oldHeight = (float)originalImage.Size.Height;
+            float scaleFactor = 0f;
+
+            if (oldWidth > oldHeight)
+            {
+                scaleFactor = maxDimension / oldWidth;
+            } else
+            {
+                scaleFactor = maxDimension / oldHeight;
+            }
+
+            float newHeight = oldHeight * scaleFactor;
+            float newWidth = oldWidth * scaleFactor;
+
+            //create a 24bit RGB image
+            using (CGBitmapContext context = new CGBitmapContext(IntPtr.Zero,
+                (int)newWidth, (int)newHeight, 8,
+                (int)(4 * newWidth), CGColorSpace.CreateDeviceRGB(),
+                CGImageAlphaInfo.PremultipliedFirst))
+            {
+
+                RectangleF imageRect = new RectangleF(0, 0, newWidth, newHeight);
+
+                // draw the image
+                context.DrawImage(imageRect, originalImage.CGImage);
+
+                UIImage resizedImage = UIImage.FromImage(context.ToImage());
+
+                // save the image as a jpeg
+                return resizedImage.AsJPEG((float)quality).ToArray();
+            }
+        }
+
+        public static UIImage ImageFromByteArray(byte[] data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            UIImage image;
+            try
+            {
+                image = new UIKit.UIImage(Foundation.NSData.FromArray(data));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Image load failed: " + e.Message);
+                return null;
+            }
+            return image;
         }
     }
 }
