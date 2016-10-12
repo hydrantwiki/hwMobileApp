@@ -23,7 +23,8 @@ namespace HydrantWiki.Daos
 
         public override void BuildIndexes()
         {
-            m_Collection.EnsureIndex("TagTime");
+            m_Collection.EnsureIndex("TagTime", new IndexOptions { Unique = false });
+            m_Collection.EnsureIndex("SentToServer", new IndexOptions { Unique = false });
         }
 
         public List<Tag> GetRecent()
