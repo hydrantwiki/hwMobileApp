@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
+using HydrantWiki.Objects;
 using Xamarin.Forms;
 
 namespace HydrantWiki.Forms
@@ -28,7 +30,10 @@ namespace HydrantWiki.Forms
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Text = "Tag Hydrant",
-                Margin = new Thickness(0, 10, 0, 10)
+                BackgroundColor = Color.White,
+                BorderWidth = 1,
+                BorderColor = Color.Black,
+                Margin = new Thickness(10, 10, 10, 10)
             };
             m_btnTagHydrant.Clicked += TagHydrant_Clicked;
             OutsideLayout.Children.Add(m_btnTagHydrant);
@@ -49,13 +54,24 @@ namespace HydrantWiki.Forms
         {
             base.OnAppearing();
 
-            //TODO load tags
             var tagCountTask = Task.Factory.StartNew(() => LoadTagCount());
+
+            var recentTagsTask = Task.Factory.StartNew(() => LoadRecentTags());
         }
 
         void TagHydrant_Clicked(object sender, EventArgs e)
         {
             Navigation.PushModalAsync(new TagHydrant());
+        }
+
+        private void LoadRecentTags()
+        {
+            List<Tag> tags = HWManager.GetInstance().GetRecentTags();
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                m_lstRecentTags.ItemsSource = tags;
+            });
         }
 
         private void LoadTagCount()

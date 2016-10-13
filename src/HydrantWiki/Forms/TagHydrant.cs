@@ -240,12 +240,15 @@ namespace HydrantWiki.Forms
                 //Save Tag locally - Figure out
                 manager.Persist(tag);
 
-                //Save tag to server if connected
-                manager.ApiManager.SaveTag(HydrantWikiApp.User, tag);
-                manager.ApiManager.SaveTagImage(HydrantWikiApp.User, filename);
+                if (manager.PlatformManager.HasNetworkConnectivity)
+                {
+                    //Save tag to server if connected
+                    manager.ApiManager.SaveTag(HydrantWikiApp.User, tag);
+                    manager.ApiManager.SaveTagImage(HydrantWikiApp.User, filename);
 
-                tag.SentToServer = true;
-                manager.Persist(tag);
+                    tag.SentToServer = true;
+                    manager.Persist(tag);
+                }
             }
 
             Cleanup();

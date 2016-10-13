@@ -56,6 +56,16 @@ namespace HydrantWiki.Forms
             btnLogout.Clicked += Logout_Clicked;
             m_InsideLayout.Children.Add(btnLogout);
 
+            if (HWManager.GetInstance().PlatformManager.HasNetworkConnectivity)
+            {
+                btnSync.Text = "Sync Tags";
+                btnSync.IsEnabled = true;
+            } else
+            {
+                btnSync.Text = "Sync Tags - No Network";
+                btnSync.IsEnabled = false;
+            }
+
             Task t = Task.Factory.StartNew(() => LoadTagCount());
         }
 
@@ -80,7 +90,31 @@ namespace HydrantWiki.Forms
 
         void Sync_Clicked(object sender, EventArgs e)
         {
+            HWManager manager = HWManager.GetInstance();
+            List<Tag> tagsNotSent = manager.GetTagsNotSentToServer();
 
+            if (tagsNotSent != null)
+            {
+                foreach (var tag in tagsNotSent)
+                {
+                    try
+                    {
+                        string file = string.Format("{0}.jpg", tag.ImageGuid);
+                        string filename = manager.PlatformManager.GetLocalImageFilename(file);
+
+                        //Save tag to server if connected
+                        manager.ApiManager.SaveTag(HydrantWikiApp.User, tag);
+                        manager.ApiManager.SaveTagImage(HydrantWikiApp.User, filename);
+
+                        tag.SentToServer = true;
+                        manager.Persist(tag);
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO - Log Error
+                    }
+                }
+            }
         }
 
         void Logout_Clicked(object sender, EventArgs e)
