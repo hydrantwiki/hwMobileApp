@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Foundation;
 using HydrantWiki.iOS.Managers;
+using LiteDB;
+using LiteDB.Platform;
 using UIKit;
 using XLabs.Forms;
 using XLabs.Forms.Services;
@@ -39,6 +41,9 @@ namespace HydrantWiki.iOS
         {
             Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
+
+            LitePlatform.Initialize(new LitePlatformiOS());
+
             var app = new XFormsAppiOS();
             app.Init(this);
 
