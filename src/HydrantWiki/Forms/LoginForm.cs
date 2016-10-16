@@ -33,8 +33,15 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(m_txtPassword);
 
-            m_btnLogin = new HWButton();
-            m_btnLogin.Text = DisplayConstants.Login;
+            m_btnLogin = new HWButton()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Text = DisplayConstants.Login,
+                BackgroundColor = Color.White,
+                BorderWidth = 1,
+                BorderColor = Color.Black,
+                Margin = new Thickness(10, 10, 10, 10)
+            };
             m_btnLogin.Clicked += btnLoginClicked;
             OutsideLayout.Children.Add(m_btnLogin);
         }

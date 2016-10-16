@@ -52,19 +52,27 @@ namespace HydrantWiki.Managers
         /// <param name="_tag">Tag.</param>
         public TagResponse SaveTag(User _user, Tag _tag)
         {
+            string body = JsonConvert.SerializeObject(_tag);
+
             HWRestRequest request = new HWRestRequest();
             request.Method = HWRestMethods.Post;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = "/api/tag";
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
-            request.Body = JsonConvert.SerializeObject(_tag);
+            request.Body = body;
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
-            TagResponse responseObject =
-                JsonConvert.DeserializeObject<TagResponse>(response.Body);
 
-            return responseObject;
+            if (response.Status == HWResponseStatus.Completed)
+            {
+                TagResponse responseObject =
+                    JsonConvert.DeserializeObject<TagResponse>(response.Body);
+
+                return responseObject;
+            } else {
+                throw new Exception(response.ErrorMessage);
+            }
         }
 
         /// <summary>

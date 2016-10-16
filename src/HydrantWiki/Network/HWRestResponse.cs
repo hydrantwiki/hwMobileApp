@@ -13,6 +13,7 @@ namespace HydrantWiki.Network
         public HWResponseStatus Status { get; set; }
         public Dictionary<string, string> Headers { get; set; }
         public string Body { get; set; }
+        public string ErrorMessage { get; set; }
 
     }
 }

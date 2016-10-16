@@ -88,7 +88,7 @@ namespace HydrantWiki.iOS.Managers
             //Add Body
             if (_request.Body != null)
             {
-                request.AddBody(_request.Body);
+                request.AddParameter("application/json", _request.Body, ParameterType.RequestBody);
             }
 
             if (_request.File != null)
@@ -110,6 +110,7 @@ namespace HydrantWiki.iOS.Managers
             }
             atResponse.Status = GetStatus(response.ResponseStatus);
             atResponse.Body = response.Content;
+            atResponse.ErrorMessage = response.ErrorMessage;
 
             return atResponse;
         }
