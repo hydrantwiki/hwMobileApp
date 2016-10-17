@@ -10,15 +10,18 @@ namespace HydrantWiki
     public class HydrantWikiApp : Application
     {
         public static string DataFolder;
+        public static string ImageFolder;
+
         public static User User { get; set; }
         public IPlatformManager m_PlatformManager;
 
         public HydrantWikiApp(
-            string _dataFolder,
             IPlatformManager _platformManager)
         {
-            DataFolder = _dataFolder;
             m_PlatformManager = _platformManager;
+
+            DataFolder = m_PlatformManager.DataFolder;
+            ImageFolder = m_PlatformManager.ImageFolder;
 
             HWManager manager = HWManager.GetInstance();
             manager.PlatformManager = m_PlatformManager;

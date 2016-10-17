@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using HydrantWiki.Network;
 using HydrantWiki.Objects;
 using HydrantWiki.ResponseObjects;
@@ -92,8 +93,8 @@ namespace HydrantWiki.Managers
 
             HWFile file = new HWFile
             {
-                Filename = _fileName,
-                FullPathFilename = HWManager.GetInstance().PlatformManager.GetLocalImageFilename(_fileName)
+                Filename = Path.GetFileName(_fileName),
+                FullPathFilename = _fileName
             };
             request.File = file;
 

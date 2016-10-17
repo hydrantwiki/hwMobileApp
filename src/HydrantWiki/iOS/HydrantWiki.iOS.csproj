@@ -82,7 +82,7 @@
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <PlatformTarget>x86</PlatformTarget>
-    <CodesignProvision>111ec2b3-6bf5-4151-bf9c-db80b1499c93</CodesignProvision>
+    <CodesignProvision>1825ec39-cb24-4dc9-967e-5c7430738801</CodesignProvision>
     <MtouchSdkVersion>10.0</MtouchSdkVersion>
   </PropertyGroup>
   <ItemGroup>

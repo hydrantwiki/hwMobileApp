@@ -24,15 +24,7 @@ namespace HydrantWiki.iOS
         {
             SetIoc();
 
-            string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string dataFolder = Path.Combine(rootAppFolder, "Library", "HWMobile");
-
-            if (!Directory.Exists(dataFolder))
-            {
-                Directory.CreateDirectory(dataFolder);
-            }
-
-            LoadApplication(new HydrantWikiApp(dataFolder, new PlatformManager()));
+            LoadApplication(new HydrantWikiApp(new PlatformManager()));
 
             return base.FinishedLaunching(app, options);
         }

@@ -210,7 +210,7 @@ namespace HydrantWiki.Forms
             Navigation.PopModalAsync(true);
         }
 
-        void SaveButton_Clicked(object sender, EventArgs e)
+        async void SaveButton_Clicked(object sender, EventArgs e)
         {
             HWManager manager = HWManager.GetInstance();
 
@@ -225,7 +225,7 @@ namespace HydrantWiki.Forms
                 {
                     string file = string.Format("{0}.jpg", imageGuid);
                     filename = manager.PlatformManager.GetLocalImageFilename(file);
-                    manager.PlatformManager.SaveImage(m_imgHydrant.Source, filename);
+                    await manager.PlatformManager.SaveImage(m_imgHydrant.Source, filename);
                 }
 
                 Tag tag = new Tag

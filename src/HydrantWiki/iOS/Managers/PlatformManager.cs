@@ -20,6 +20,37 @@ namespace HydrantWiki.iOS.Managers
 
         public PlatformManager()
         {
+
+            string dataFolder = DataFolder;
+
+            if (!Directory.Exists(dataFolder))
+            {
+                Directory.CreateDirectory(dataFolder);
+            }
+
+            string imagesFolder = ImageFolder;
+            if (!Directory.Exists(imagesFolder))
+            {
+                Directory.CreateDirectory(imagesFolder);
+            }
+        }
+
+        public string DataFolder
+        {
+            get
+            {
+                string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                return Path.Combine(rootAppFolder, "Library", "HWMobile");
+            }
+        }
+
+        public string ImageFolder
+        {
+            get
+            {
+                string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                return Path.Combine(rootAppFolder, "Library", "HWMobileImage");
+            }
         }
 
         public bool HasNetworkConnectivity
@@ -49,7 +80,7 @@ namespace HydrantWiki.iOS.Managers
         public string GetLocalImageFilename(string _filename)
         {
             string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string jpgFilename = Path.Combine(rootAppFolder, "Library", "HWMobileImage", _filename);
+            string jpgFilename = Path.Combine(ImageFolder, _filename);
             return jpgFilename;
         }
 
@@ -91,7 +122,8 @@ namespace HydrantWiki.iOS.Managers
                 request.AddParameter("application/json", _request.Body, ParameterType.RequestBody);
             }
 
-            if (_request.File != null)
+            if (_request.File != null
+                && File.Exists(_request.File.FullPathFilename))
             {
                 request.AddFile("fileData", _request.File.FullPathFilename, _request.File.Filename);
                 request.AlwaysMultipartFormData = true;

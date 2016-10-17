@@ -115,6 +115,8 @@ namespace HydrantWiki.Forms
                     }
                 }
             }
+
+            LoadTagCount();
         }
 
         void Logout_Clicked(object sender, EventArgs e)
