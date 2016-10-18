@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using HydrantWiki.Constants;
+using Xamarin.Forms;
 
 namespace HydrantWiki.Controls
 {
@@ -8,12 +9,14 @@ namespace HydrantWiki.Controls
 
         public HWButtonBar()
         {
+            BackgroundColor = Color.FromHex(UIConstants.ButtonBarColor);
+
             m_Buttons = new StackLayout
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Orientation = StackOrientation.Horizontal,
                 Padding = 0,
-                Spacing = 0
+                Spacing = 0,
             };
 
             if (Device.Idiom == TargetIdiom.Phone)
@@ -39,7 +42,10 @@ namespace HydrantWiki.Controls
                 Margin = new Thickness(5, 0, 5, 0),
                 HorizontalOptions = _horizontalOptions,
                 VerticalOptions = LayoutOptions.Center,
-                WidthRequest = _width
+                WidthRequest = _width,
+                TextColor = Color.FromHex(UIConstants.ButtonBarTextColor),
+                FontAttributes = FontAttributes.Bold,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button))
             };
 
             m_Buttons.Children.Add(button);

@@ -31,5 +31,9 @@
 
         public const string TextBackgroundEnabled = "FFFFFF";
         public const string TextBackgroundDisabled = "DDDDDD";
+
+
+        public const string ButtonBarTextColor = "FFFFFF";
+        public const string ButtonBarColor = "CCCCCC";
     }
 }

@@ -93,7 +93,9 @@ namespace HydrantWiki.Forms
                 HeightRequest = 40,
                 BorderColor = Color.Black,
                 BorderWidth = 1,
-                BackgroundColor = Color.White
+                BackgroundColor = Color.White,
+                FontAttributes = FontAttributes.Bold,
+                FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Button))
             };
             m_btnTakePhoto.Clicked += TakePhoto_Clicked;
             m_layoutPhoto.Children.Add(m_btnTakePhoto);
