@@ -14,7 +14,7 @@
         public const string MenuTitleColor = "57BED6";
 
         public const string MenuSettingsTitleTextColor = "000000";
-        public const string MenuSettingsTitleColor = "90D8E9";
+        public const string MenuSettingsTitleColor = "57BED6";
 
         public const string MenuListTextColor = "000000";
         public const string MenuListColor = "CCCCCC";
@@ -31,7 +31,6 @@
 
         public const string TextBackgroundEnabled = "FFFFFF";
         public const string TextBackgroundDisabled = "DDDDDD";
-
 
         public const string ButtonBarTextColor = "FFFFFF";
         public const string ButtonBarColor = "CCCCCC";
