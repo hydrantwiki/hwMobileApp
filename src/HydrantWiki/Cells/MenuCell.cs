@@ -15,7 +15,11 @@ namespace HydrantWiki.Cells
             m_Layout.Padding = new Thickness(0, 5);
             m_Layout.Margin = new Thickness(20, 8, 20, 0);
 
-            m_lblCellText = new HWLabel();
+            m_lblCellText = new HWLabel()
+            {
+                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                FontAttributes = FontAttributes.Bold
+            };
             m_lblCellText.SetBinding(Label.TextProperty, "Title");
             m_lblCellText.TextColor = Color.FromHex(UIConstants.MenuListTextColor);
             m_lblCellText.VerticalTextAlignment = TextAlignment.Center;

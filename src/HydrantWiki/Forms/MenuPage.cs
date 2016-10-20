@@ -23,6 +23,8 @@ namespace HydrantWiki.Forms
                 {
                     TextColor = Color.FromHex(UIConstants.MenuTitleTextColor),
                     Text = "MENU",
+                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                    FontAttributes = FontAttributes.Bold
                 }
             };
 

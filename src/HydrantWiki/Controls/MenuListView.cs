@@ -18,6 +18,8 @@ namespace HydrantWiki.Controls
 
             List<MenuOption> data = MenuListData.GetMenu();
             ItemsSource = data;
+
+            RowHeight = 60;
         }
     }
 }
