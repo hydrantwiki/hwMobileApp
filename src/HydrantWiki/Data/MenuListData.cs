@@ -40,7 +40,7 @@ namespace HydrantWiki.Data
                 menuItems.Add(new MenuOption()
                 {
                     Title = "Review Tags",
-                    TargetType = typeof(ReviewTagForm)
+                    TargetType = typeof(ReviewTagsForm)
                 });
             }
 

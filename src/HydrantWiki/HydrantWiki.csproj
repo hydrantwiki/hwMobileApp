@@ -96,6 +96,9 @@
     <Compile Include="Interfaces\IValidatedPage.cs" />
     <Compile Include="Forms\SettingsForm.cs" />
     <Compile Include="Forms\ReviewTagForm.cs" />
+    <Compile Include="Controls\ReviewTagListView.cs" />
+    <Compile Include="Cells\ReviewTagCell.cs" />
+    <Compile Include="Forms\ReviewTagsForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

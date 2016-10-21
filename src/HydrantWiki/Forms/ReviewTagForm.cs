@@ -3,8 +3,11 @@ namespace HydrantWiki.Forms
 {
     public class ReviewTagForm : AbstractPage
     {
-        public ReviewTagForm() : base("Review Tags")
+
+
+        public ReviewTagForm() : base("Review Tag")
         {
+
         }
     }
 }
