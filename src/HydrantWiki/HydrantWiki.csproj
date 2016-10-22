@@ -99,6 +99,9 @@
     <Compile Include="Controls\ReviewTagListView.cs" />
     <Compile Include="Cells\ReviewTagCell.cs" />
     <Compile Include="Forms\ReviewTagsForm.cs" />
+    <Compile Include="ResponseObjects\TagsToReviewResponse.cs" />
+    <Compile Include="ResponseObjects\TagReviewedResponse.cs" />
+    <Compile Include="Objects\TagToReview.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

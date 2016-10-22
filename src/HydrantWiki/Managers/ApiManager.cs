@@ -169,5 +169,25 @@ namespace HydrantWiki.Managers
             return responseObject;
         }
 
+        public TagsToReviewResponse GetTagsToReview(
+            User _user)
+        {
+
+            string url = string.Format("/api/review/tags");
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = url;
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            TagsToReviewResponse responseObject =
+                JsonConvert.DeserializeObject<TagsToReviewResponse>(response.Body);
+
+            return responseObject;
+        }
+
     }
 }
