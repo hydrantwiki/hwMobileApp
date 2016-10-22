@@ -13,6 +13,25 @@ namespace HydrantWiki.Objects
 
         public bool SentToServer { get; set; }
 
+        public string ImageUrl { get; set; }
+
+        public string ThumbnailUrl { get; set; }
+
+        [BsonIgnore]
+        public string DisplayThumbnailUrl
+        {
+            get
+            {
+                if (ThumbnailUrl == null)
+                {
+                    return "NoImage";
+                } else
+                {
+                    return ThumbnailUrl;
+                }
+            }
+        }
+
         [BsonIgnore]
         public string DisplaySentToServer
         {

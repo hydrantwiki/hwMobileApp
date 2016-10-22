@@ -58,6 +58,8 @@ namespace HydrantWiki.Forms
 
         void TagSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            TagToReview tag = (TagToReview)e.SelectedItem;
+
 
         }
     }

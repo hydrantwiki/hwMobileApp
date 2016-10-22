@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
+using HydrantWiki.ResponseObjects;
 using Xamarin.Forms;
 
 namespace HydrantWiki.Forms
@@ -103,7 +104,13 @@ namespace HydrantWiki.Forms
                         string filename = manager.PlatformManager.GetLocalImageFilename(file);
 
                         //Save tag to server if connected
-                        manager.ApiManager.SaveTag(HydrantWikiApp.User, tag);
+                        TagResponse response = manager.ApiManager.SaveTag(HydrantWikiApp.User, tag);
+                        if (response != null)
+                        {
+                            tag.ThumbnailUrl = response.ThumbnailUrl;
+                            tag.ImageUrl = response.ImageUrl;
+                        }
+
                         manager.ApiManager.SaveTagImage(HydrantWikiApp.User, filename);
 
                         tag.SentToServer = true;

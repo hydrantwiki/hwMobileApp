@@ -159,11 +159,16 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\hw80.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\hw120.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\hw180.png" />
+    <ImageAsset Include="Assets.xcassets\NoImage.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\NoImage.imageset\NoImage_100.png" />
+    <ImageAsset Include="Assets.xcassets\NoImage.imageset\NoImage_200.png" />
+    <ImageAsset Include="Assets.xcassets\NoImage.imageset\NoImage_300.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Managers\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Assets.xcassets\NoImage.imageset\" />
     <Folder Include="Assets.xcassets\NoImage.imageset\" />
   </ItemGroup>
   <ItemGroup>

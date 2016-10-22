@@ -28,7 +28,7 @@ namespace HydrantWiki.Cells
                 WidthRequest = 70,
                 HeightRequest = 70
             };
-            m_imgCell.SetBinding(Image.SourceProperty, "ThumbnailUrl");
+            m_imgCell.SetBinding(Image.SourceProperty, "DisplayThumbnailUrl");
             m_Layout.Children.Add(m_imgCell);
 
             StackLayout rows = new StackLayout
