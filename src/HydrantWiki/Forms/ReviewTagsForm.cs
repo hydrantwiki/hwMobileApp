@@ -60,7 +60,10 @@ namespace HydrantWiki.Forms
         {
             TagToReview tag = (TagToReview)e.SelectedItem;
 
+            ReviewTagForm form = new ReviewTagForm();
+            form.SetTag(tag);
 
+            Navigation.PushModalAsync(form);
         }
     }
 }

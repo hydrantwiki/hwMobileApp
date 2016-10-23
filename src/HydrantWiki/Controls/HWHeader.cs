@@ -56,6 +56,5 @@ namespace HydrantWiki.Controls
 
             header.Children.Add(line);
         }
-
     }
 }

@@ -102,6 +102,7 @@
     <Compile Include="ResponseObjects\TagsToReviewResponse.cs" />
     <Compile Include="ResponseObjects\TagReviewedResponse.cs" />
     <Compile Include="Objects\TagToReview.cs" />
+    <Compile Include="Controls\ReviewTagHydrantsListView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
