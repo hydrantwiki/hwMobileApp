@@ -1,5 +1,6 @@
 ﻿using System;
 using HydrantWiki.Controls;
+using HydrantWiki.Helpers;
 using HydrantWiki.Objects;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -15,14 +16,16 @@ namespace HydrantWiki.Forms
 
         private HWLabel m_User;
 
-        private StackLayout m_Buttons;
+        private Grid m_Buttons;
         private HWButton m_Approve;
         private HWButton m_Reject;
 
-        private RelativeLayout m_Middle;
+        private Grid m_Middle;
         private Map m_Map;
         private Image m_Image;
 
+
+        private HWLabel m_Nearby;
         private ReviewTagHydrantsListView m_Hydrants;
 
 
@@ -38,46 +41,69 @@ namespace HydrantWiki.Forms
             m_Cancel.Clicked += Cancel_Clicked;
 
             //Add approve and reject buttons
-            m_Buttons = new StackLayout
+            m_Buttons = new Grid
             {
-                Orientation = StackOrientation.Horizontal,
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions = {
+                    new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
+                },
+                ColumnDefinitions = {
+                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
+                },
+                HeightRequest = 60
             };
             OutsideLayout.Children.Add(m_Buttons);
 
             m_Reject = new HWButton
             {
                 Text = "Reject",
-                MinimumWidthRequest = 80,
+                WidthRequest = 100,
+                HeightRequest = 30,
                 HorizontalOptions = LayoutOptions.Start,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.Center,
+                Margin = new Thickness(10, 10, 10, 10),
+                BorderColor = Color.Black,
+                BorderWidth = 1,
+                BackgroundColor = Color.White
             };
-            m_Buttons.Children.Add(m_Reject);
-
-
+            m_Buttons.Children.Add(m_Reject, 0, 0);
 
             m_Approve = new HWButton
             {
                 Text = "Approve",
-                MinimumWidthRequest = 80,
-                HorizontalOptions = LayoutOptions.End
+                WidthRequest = 100,
+                HeightRequest = 30,
+                HorizontalOptions = LayoutOptions.End,
+                Margin = new Thickness(10, 10, 10, 10),
+                BorderColor = Color.Black,
+                BorderWidth = 1,
+                BackgroundColor = Color.White
             };
-            m_Buttons.Children.Add(m_Approve);
+            m_Buttons.Children.Add(m_Approve, 1, 0);
 
             m_User = new HWLabel
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 HorizontalTextAlignment = TextAlignment.Start,
                 VerticalTextAlignment = TextAlignment.Center,
-                Margin = new Thickness(10, 0, 10, 0)
+                Margin = new Thickness(10, 0, 10, 10)
             };
             OutsideLayout.Children.Add(m_User);
 
             //Add Map and Image
-            m_Middle = new RelativeLayout
+            m_Middle = new Grid
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions = {
+                    new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
+                },
+                ColumnDefinitions = {
+                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
+                },
+                MinimumHeightRequest = 300
             };
             OutsideLayout.Children.Add(m_Middle);
 
@@ -86,40 +112,32 @@ namespace HydrantWiki.Forms
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
-            m_Middle.Children.Add(
-                m_Map,
-                Constraint.RelativeToParent((parent) =>
-                {
-                    return parent.Width / 3;
-                }),
-                Constraint.RelativeToParent((parent) =>
-                {
-                    return parent.Height / 2;
-                })
-            );
+            m_Middle.Children.Add(m_Map, 0, 0);
 
             m_Image = new Image
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
-            m_Middle.Children.Add(
-                m_Image,
-                Constraint.RelativeToParent((parent) =>
-                {
-                    return parent.Width / 3;
-                }),
-                Constraint.RelativeToParent((parent) =>
-                {
-                    return parent.Height / 2;
-                })
-            );
+            m_Middle.Children.Add(m_Image, 1, 0);
 
             //Add nearby hydrants
+
+            m_Nearby = new HWLabel
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.Center,
+                Text = "Nearby Hydrants",
+                Margin = new Thickness(10, 5, 10, 10)
+            };
+            OutsideLayout.Children.Add(m_Nearby);
+
             m_Hydrants = new ReviewTagHydrantsListView
             {
                 VerticalOptions = LayoutOptions.Fill,
-                HorizontalOptions = LayoutOptions.Fill
+                HorizontalOptions = LayoutOptions.Fill,
+                HeightRequest = 100
             };
             OutsideLayout.Children.Add(m_Hydrants);
         }
@@ -135,12 +153,13 @@ namespace HydrantWiki.Forms
 
             m_User.Text = string.Format("User: {0}", _tag.Username);
             m_Hydrants.ItemsSource = _tag.NearbyHydrants;
+            m_Image.Source = ImageSource.FromUri(new System.Uri(m_Tag.ImageUrl));
 
-            if (Device.Idiom == TargetIdiom.Phone)
+            if (m_Tag.Position != null)
             {
-                m_Image.Source = ImageSource.FromUri(new System.Uri(m_Tag.ThumbnailUrl));
-            } else {
-                m_Image.Source = ImageSource.FromUri(new System.Uri(m_Tag.ImageUrl));
+                var pos = new Position(m_Tag.Position.Latitude, m_Tag.Position.Longitude);
+                var span = MapSpan.FromCenterAndRadius(pos, Distance.FromMiles(.1));
+                m_Map.MoveToRegion(span);
             }
         }
     }
