@@ -33,8 +33,7 @@ namespace HydrantWiki.Controls
                 AbsoluteLayoutFlags.PositionProportional);
 
             AbsoluteLayout.SetLayoutBounds(m_lblTitle,
-                new Rectangle(0.5,
-                    0.7, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+                new Rectangle(0.5, 0.7, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
             header.Children.Add(m_lblTitle);
 
             BoxView line = new BoxView

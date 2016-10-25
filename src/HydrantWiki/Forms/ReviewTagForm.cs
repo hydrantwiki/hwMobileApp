@@ -51,7 +51,6 @@ namespace HydrantWiki.Forms
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
                 },
-                HeightRequest = 60
             };
             OutsideLayout.Children.Add(m_Buttons);
 
