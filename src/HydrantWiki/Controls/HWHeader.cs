@@ -8,17 +8,18 @@ namespace HydrantWiki.Controls
     public class HWHeader : ContentView
     {
         private HWLabel m_lblTitle;
+        private AbsoluteLayout m_Header;
 
         public HWHeader(string _title)
         {
-            AbsoluteLayout header = new AbsoluteLayout
+            m_Header = new AbsoluteLayout
             {
                 BackgroundColor = Color.FromHex(UIConstants.NavBarColor),
                 Margin = new Thickness(0, 0, 0, 0),
                 MinimumHeightRequest = 65,
                 HeightRequest = 65
             };
-            Content = header;
+            Content = m_Header;
 
             m_lblTitle = new HWLabel
             {
@@ -26,7 +27,8 @@ namespace HydrantWiki.Controls
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
                 TextColor = Color.FromHex(UIConstants.NavBarTextColor),
-                FontAttributes = FontAttributes.Bold
+                FontAttributes = FontAttributes.Bold,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
             };
 
             AbsoluteLayout.SetLayoutFlags(m_lblTitle,
@@ -34,7 +36,7 @@ namespace HydrantWiki.Controls
 
             AbsoluteLayout.SetLayoutBounds(m_lblTitle,
                 new Rectangle(0.5, 0.7, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
-            header.Children.Add(m_lblTitle);
+            m_Header.Children.Add(m_lblTitle);
 
             BoxView line = new BoxView
             {
@@ -53,7 +55,15 @@ namespace HydrantWiki.Controls
                                1,
                                AbsoluteLayout.AutoSize));
 
-            header.Children.Add(line);
+            m_Header.Children.Add(line);
+        }
+
+        public void SetLeftButton(HWButton button)
+        {
+            AbsoluteLayout.SetLayoutBounds(
+                button,
+                new Rectangle(0, 30, 70, 25));
+            m_Header.Children.Add(button);
         }
     }
 }

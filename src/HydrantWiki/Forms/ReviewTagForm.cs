@@ -34,11 +34,22 @@ namespace HydrantWiki.Forms
             m_Header = new HWHeader("Review Tag");
             OutsideLayout.Children.Add(m_Header);
 
-            m_Bar = new HWButtonBar();
-            OutsideLayout.Children.Add(m_Bar);
+            m_Cancel = new HWButton
+            {
+                Text = "Cancel",
+                TextColor = Color.White,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button)),
 
-            m_Cancel = m_Bar.Add("Cancel", LayoutOptions.Start);
+            };
             m_Cancel.Clicked += Cancel_Clicked;
+            m_Header.SetLeftButton(m_Cancel);
+
+            AbsoluteLayout layout = new AbsoluteLayout
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill
+            };
+            OutsideLayout.Children.Add(layout);
 
             //Add approve and reject buttons
             m_Buttons = new Grid
@@ -52,7 +63,9 @@ namespace HydrantWiki.Forms
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
                 },
             };
-            OutsideLayout.Children.Add(m_Buttons);
+
+            AbsoluteLayout.SetLayoutBounds(m_Buttons, new Rectangle(0, 0, AbsoluteLayout.AutoSize, 50));
+            layout.Children.Add(m_Buttons);
 
             m_Reject = new HWButton
             {
@@ -81,6 +94,7 @@ namespace HydrantWiki.Forms
             };
             m_Buttons.Children.Add(m_Approve, 1, 0);
 
+            //Add the tag's user
             m_User = new HWLabel
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -88,15 +102,17 @@ namespace HydrantWiki.Forms
                 VerticalTextAlignment = TextAlignment.Center,
                 Margin = new Thickness(10, 0, 10, 10)
             };
-            OutsideLayout.Children.Add(m_User);
+
+            AbsoluteLayout.SetLayoutBounds(m_User, new Rectangle(0, 50, AbsoluteLayout.AutoSize, 30));
+            layout.Children.Add(m_User);
 
             //Add Map and Image
             m_Middle = new Grid
             {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
                 RowDefinitions = {
-                    new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
+                    new RowDefinition { Height = 300 }
                 },
                 ColumnDefinitions = {
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
@@ -104,24 +120,24 @@ namespace HydrantWiki.Forms
                 },
                 MinimumHeightRequest = 300
             };
-            OutsideLayout.Children.Add(m_Middle);
+            AbsoluteLayout.SetLayoutBounds(m_Middle, new Rectangle(0, 80, AbsoluteLayout.AutoSize, 300));
+            layout.Children.Add(m_Middle);
 
             m_Map = new Map
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill
             };
             m_Middle.Children.Add(m_Map, 0, 0);
 
             m_Image = new Image
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill
             };
             m_Middle.Children.Add(m_Image, 1, 0);
 
             //Add nearby hydrants
-
             m_Nearby = new HWLabel
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -130,7 +146,8 @@ namespace HydrantWiki.Forms
                 Text = "Nearby Hydrants",
                 Margin = new Thickness(10, 5, 10, 10)
             };
-            OutsideLayout.Children.Add(m_Nearby);
+            AbsoluteLayout.SetLayoutBounds(m_Nearby, new Rectangle(0, 380, AbsoluteLayout.AutoSize, 30));
+            layout.Children.Add(m_Nearby);
 
             m_Hydrants = new ReviewTagHydrantsListView
             {
@@ -138,7 +155,8 @@ namespace HydrantWiki.Forms
                 HorizontalOptions = LayoutOptions.Fill,
                 HeightRequest = 100
             };
-            OutsideLayout.Children.Add(m_Hydrants);
+            AbsoluteLayout.SetLayoutBounds(m_Hydrants, new Rectangle(0, 410, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+            layout.Children.Add(m_Hydrants);
         }
 
         private void Cancel_Clicked(object sender, EventArgs e)
