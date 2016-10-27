@@ -72,7 +72,7 @@ namespace HydrantWiki.Forms
                 Text = "Reject",
                 WidthRequest = 100,
                 HeightRequest = 30,
-                HorizontalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
                 Margin = new Thickness(10, 10, 10, 10),
                 BorderColor = Color.Black,
@@ -86,7 +86,8 @@ namespace HydrantWiki.Forms
                 Text = "Approve",
                 WidthRequest = 100,
                 HeightRequest = 30,
-                HorizontalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
                 Margin = new Thickness(10, 10, 10, 10),
                 BorderColor = Color.Black,
                 BorderWidth = 1,
@@ -106,21 +107,25 @@ namespace HydrantWiki.Forms
             AbsoluteLayout.SetLayoutBounds(m_User, new Rectangle(0, 50, AbsoluteLayout.AutoSize, 30));
             layout.Children.Add(m_User);
 
+            //110 is the fixed item heights 
+            int middleHeight = (HydrantWikiApp.ScreenHeight - 110) * 3 / 5;
+            int bottomHeight = (HydrantWikiApp.ScreenHeight - 110) * 2 / 5;
+
             //Add Map and Image
             m_Middle = new Grid
             {
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 RowDefinitions = {
-                    new RowDefinition { Height = 300 }
+                    new RowDefinition { Height = middleHeight }
                 },
                 ColumnDefinitions = {
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
                 },
-                MinimumHeightRequest = 300
+                MinimumHeightRequest = middleHeight
             };
-            AbsoluteLayout.SetLayoutBounds(m_Middle, new Rectangle(0, 80, AbsoluteLayout.AutoSize, 300));
+            AbsoluteLayout.SetLayoutBounds(m_Middle, new Rectangle(0, 80, AbsoluteLayout.AutoSize, middleHeight));
             layout.Children.Add(m_Middle);
 
             m_Map = new Map
@@ -146,16 +151,16 @@ namespace HydrantWiki.Forms
                 Text = "Nearby Hydrants",
                 Margin = new Thickness(10, 5, 10, 10)
             };
-            AbsoluteLayout.SetLayoutBounds(m_Nearby, new Rectangle(0, 380, AbsoluteLayout.AutoSize, 30));
+            AbsoluteLayout.SetLayoutBounds(m_Nearby, new Rectangle(0, 80 + middleHeight, AbsoluteLayout.AutoSize, 30));
             layout.Children.Add(m_Nearby);
 
             m_Hydrants = new ReviewTagHydrantsListView
             {
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
-                HeightRequest = 100
+                HeightRequest = 100,
             };
-            AbsoluteLayout.SetLayoutBounds(m_Hydrants, new Rectangle(0, 410, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+            AbsoluteLayout.SetLayoutBounds(m_Hydrants, new Rectangle(0, 80 + middleHeight + 30, AbsoluteLayout.AutoSize, bottomHeight));
             layout.Children.Add(m_Hydrants);
         }
 
@@ -169,13 +174,38 @@ namespace HydrantWiki.Forms
             m_Tag = _tag;
 
             m_User.Text = string.Format("User: {0}", _tag.Username);
-            m_Hydrants.ItemsSource = _tag.NearbyHydrants;
             m_Image.Source = ImageSource.FromUri(new System.Uri(m_Tag.ImageUrl));
+            m_Hydrants.ItemsSource = _tag.NearbyHydrants;
+
+            foreach (var hydrant in _tag.NearbyHydrants)
+            {
+                if (hydrant.Position != null)
+                {
+                    Pin pin = new Pin()
+                    {
+                        Type = PinType.Place,
+                        Label = "Existing Hydrant",
+                        Position = new Position(hydrant.Position.Latitude, hydrant.Position.Longitude)
+                    };
+
+                    m_Map.Pins.Add(pin);
+                }
+            }
+
 
             if (m_Tag.Position != null)
             {
                 var pos = new Position(m_Tag.Position.Latitude, m_Tag.Position.Longitude);
                 var span = MapSpan.FromCenterAndRadius(pos, Distance.FromMiles(.1));
+
+                Pin pin = new Pin()
+                {
+                    Type = PinType.Generic,
+                    Label = "New Tag",
+                    Position = new Position(m_Tag.Position.Latitude, m_Tag.Position.Longitude)
+                };
+
+                m_Map.Pins.Add(pin);
                 m_Map.MoveToRegion(span);
             }
         }

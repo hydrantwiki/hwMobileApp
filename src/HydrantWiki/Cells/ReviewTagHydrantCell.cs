@@ -1,10 +1,11 @@
 ﻿using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using Xamarin.Forms;
+using XLabs.Forms.Controls;
 
 namespace HydrantWiki.Cells
 {
-    public class ReviewTagHydrantCell : ViewCell
+    public class HydrantCell : ViewCell
     {
         private StackLayout m_Layout;
         private Image m_imgCell;
@@ -13,7 +14,7 @@ namespace HydrantWiki.Cells
         private HWLabel m_lblLongitude;
         private HWLabel m_lblDistance;
 
-        public ReviewTagHydrantCell()
+        public HydrantCell()
         {
             m_Layout = new StackLayout()
             {

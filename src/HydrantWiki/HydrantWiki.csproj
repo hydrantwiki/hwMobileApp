@@ -103,6 +103,7 @@
     <Compile Include="ResponseObjects\TagReviewedResponse.cs" />
     <Compile Include="Objects\TagToReview.cs" />
     <Compile Include="Controls\ReviewTagHydrantsListView.cs" />
+    <Compile Include="Cells\ReviewTagHydrantCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

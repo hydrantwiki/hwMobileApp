@@ -11,6 +11,8 @@ namespace HydrantWiki
     {
         public static string DataFolder;
         public static string ImageFolder;
+        public static int ScreenWidth;
+        public static int ScreenHeight;
 
         public static User User { get; set; }
         public IPlatformManager m_PlatformManager;

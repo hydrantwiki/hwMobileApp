@@ -24,7 +24,11 @@ namespace HydrantWiki.iOS
         {
             SetIoc();
 
-            LoadApplication(new HydrantWikiApp(new PlatformManager()));
+            var hwApp = new HydrantWikiApp(new PlatformManager());
+            LoadApplication(hwApp);
+
+            HydrantWikiApp.ScreenWidth = (int)UIScreen.MainScreen.Bounds.Width;
+            HydrantWikiApp.ScreenHeight = (int)UIScreen.MainScreen.Bounds.Height;
 
             return base.FinishedLaunching(app, options);
         }
