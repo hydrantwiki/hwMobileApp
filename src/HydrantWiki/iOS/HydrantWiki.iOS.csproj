@@ -163,6 +163,10 @@
     <ImageAsset Include="Assets.xcassets\NoImage.imageset\NoImage_100.png" />
     <ImageAsset Include="Assets.xcassets\NoImage.imageset\NoImage_200.png" />
     <ImageAsset Include="Assets.xcassets\NoImage.imageset\NoImage_300.png" />
+    <ImageAsset Include="Assets.xcassets\HydrantRed.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\HydrantRed.imageset\hydrant_red.png" />
+    <ImageAsset Include="Assets.xcassets\HydrantGreen.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\HydrantGreen.imageset\hydrant_green.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -170,6 +174,9 @@
     <Folder Include="Helpers\" />
     <Folder Include="Assets.xcassets\NoImage.imageset\" />
     <Folder Include="Assets.xcassets\NoImage.imageset\" />
+    <Folder Include="Assets.xcassets\HydrantRed.imageset\" />
+    <Folder Include="Assets.xcassets\HydrantGreen.imageset\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -184,6 +191,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Managers\PlatformManager.cs" />
     <Compile Include="Helpers\Reachability.cs" />
+    <Compile Include="Renderers\ReviewTagMapRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />

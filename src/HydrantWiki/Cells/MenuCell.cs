@@ -17,8 +17,7 @@ namespace HydrantWiki.Cells
 
             m_lblCellText = new HWLabel()
             {
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                FontAttributes = FontAttributes.Bold
+                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label))
             };
             m_lblCellText.SetBinding(Label.TextProperty, "Title");
             m_lblCellText.TextColor = Color.FromHex(UIConstants.MenuListTextColor);

@@ -51,21 +51,7 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(layout);
 
-            //Add approve and reject buttons
-            m_Buttons = new Grid
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                RowDefinitions = {
-                    new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
-                },
-                ColumnDefinitions = {
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
-                },
-            };
-
-            AbsoluteLayout.SetLayoutBounds(m_Buttons, new Rectangle(0, 0, AbsoluteLayout.AutoSize, 50));
-            layout.Children.Add(m_Buttons);
+            int left1 = (HydrantWikiApp.ScreenWidth - 200) / 4;
 
             m_Reject = new HWButton
             {
@@ -74,12 +60,12 @@ namespace HydrantWiki.Forms
                 HeightRequest = 30,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
-                Margin = new Thickness(10, 10, 10, 10),
                 BorderColor = Color.Black,
                 BorderWidth = 1,
                 BackgroundColor = Color.White
             };
-            m_Buttons.Children.Add(m_Reject, 0, 0);
+            AbsoluteLayout.SetLayoutBounds(m_Reject, new Rectangle(left1, 10, 100, 30));
+            layout.Children.Add(m_Reject);
 
             m_Approve = new HWButton
             {
@@ -88,12 +74,12 @@ namespace HydrantWiki.Forms
                 HeightRequest = 30,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
-                Margin = new Thickness(10, 10, 10, 10),
                 BorderColor = Color.Black,
                 BorderWidth = 1,
                 BackgroundColor = Color.White
             };
-            m_Buttons.Children.Add(m_Approve, 1, 0);
+            AbsoluteLayout.SetLayoutBounds(m_Approve, new Rectangle(3 * left1 + 100, 10, 100, 30));
+            layout.Children.Add(m_Approve);
 
             //Add the tag's user
             m_User = new HWLabel
@@ -111,36 +97,45 @@ namespace HydrantWiki.Forms
             int middleHeight = (HydrantWikiApp.ScreenHeight - 110) * 3 / 5;
             int bottomHeight = (HydrantWikiApp.ScreenHeight - 110) * 2 / 5;
 
-            //Add Map and Image
-            m_Middle = new Grid
-            {
-                VerticalOptions = LayoutOptions.Fill,
-                HorizontalOptions = LayoutOptions.Fill,
-                RowDefinitions = {
-                    new RowDefinition { Height = middleHeight }
-                },
-                ColumnDefinitions = {
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
-                },
-                MinimumHeightRequest = middleHeight
-            };
-            AbsoluteLayout.SetLayoutBounds(m_Middle, new Rectangle(0, 80, AbsoluteLayout.AutoSize, middleHeight));
-            layout.Children.Add(m_Middle);
-
+            //Add Map
             m_Map = new Map
             {
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill
             };
-            m_Middle.Children.Add(m_Map, 0, 0);
 
+            int width = HydrantWikiApp.ScreenWidth / 2 - 3;
+
+            Frame mapFrame = new Frame
+            {
+                HasShadow = false,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                Padding = new Thickness(1, 1, 1, 1),
+                Content = m_Map,
+                HeightRequest = middleHeight
+            };
+            AbsoluteLayout.SetLayoutBounds(mapFrame, new Rectangle(2, 80, width, middleHeight));
+            layout.Children.Add(mapFrame);
+
+            //Add image
             m_Image = new Image
             {
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill
             };
-            m_Middle.Children.Add(m_Image, 1, 0);
+
+            Frame imageFrame = new Frame
+            {
+                HasShadow = false,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                Content = m_Image,
+                Padding = new Thickness(1, 1, 1, 1),
+                HeightRequest = middleHeight
+            };
+            AbsoluteLayout.SetLayoutBounds(imageFrame, new Rectangle(4 + width, 80, width, middleHeight));
+            layout.Children.Add(imageFrame);
 
             //Add nearby hydrants
             m_Nearby = new HWLabel
@@ -184,7 +179,7 @@ namespace HydrantWiki.Forms
                     Pin pin = new Pin()
                     {
                         Type = PinType.Place,
-                        Label = "Existing Hydrant",
+                        Label = "Hydrant",
                         Position = new Position(hydrant.Position.Latitude, hydrant.Position.Longitude)
                     };
 

@@ -104,6 +104,7 @@
     <Compile Include="Objects\TagToReview.cs" />
     <Compile Include="Controls\ReviewTagHydrantsListView.cs" />
     <Compile Include="Cells\ReviewTagHydrantCell.cs" />
+    <Compile Include="Controls\ReviewTagMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
