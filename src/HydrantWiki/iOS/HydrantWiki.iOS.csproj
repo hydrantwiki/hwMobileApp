@@ -192,6 +192,7 @@
     <Compile Include="Managers\PlatformManager.cs" />
     <Compile Include="Helpers\Reachability.cs" />
     <Compile Include="Renderers\ReviewTagMapRenderer.cs" />
+    <Compile Include="Renderers\ReviewTagsMKAnnotationView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />

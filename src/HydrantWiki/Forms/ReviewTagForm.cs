@@ -21,7 +21,7 @@ namespace HydrantWiki.Forms
         private HWButton m_Reject;
 
         private Grid m_Middle;
-        private Map m_Map;
+        private ReviewTagMap m_Map;
         private Image m_Image;
 
 
@@ -98,7 +98,7 @@ namespace HydrantWiki.Forms
             int bottomHeight = (HydrantWikiApp.ScreenHeight - 110) * 2 / 5;
 
             //Add Map
-            m_Map = new Map
+            m_Map = new ReviewTagMap
             {
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill
@@ -176,14 +176,18 @@ namespace HydrantWiki.Forms
             {
                 if (hydrant.Position != null)
                 {
-                    Pin pin = new Pin()
+                    HydrantPin pin = new HydrantPin()
                     {
-                        Type = PinType.Place,
-                        Label = "Hydrant",
-                        Position = new Position(hydrant.Position.Latitude, hydrant.Position.Longitude)
+                        Hydrant = hydrant,
+                        Pin = new Pin
+                        {
+                            Type = PinType.Place,
+                            Label = "Hydrant",
+                            Position = new Position(hydrant.Position.Latitude, hydrant.Position.Longitude)
+                        }
                     };
 
-                    m_Map.Pins.Add(pin);
+                    m_Map.NearbyHydrants.Add(pin);
                 }
             }
 

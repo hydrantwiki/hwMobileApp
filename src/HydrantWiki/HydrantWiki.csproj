@@ -105,6 +105,7 @@
     <Compile Include="Controls\ReviewTagHydrantsListView.cs" />
     <Compile Include="Cells\ReviewTagHydrantCell.cs" />
     <Compile Include="Controls\ReviewTagMap.cs" />
+    <Compile Include="Objects\HydrantPin.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
