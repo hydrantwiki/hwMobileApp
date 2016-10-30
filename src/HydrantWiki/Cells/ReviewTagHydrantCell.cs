@@ -1,11 +1,14 @@
-﻿using HydrantWiki.Constants;
+﻿using System;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
+using HydrantWiki.Delegates;
+using HydrantWiki.Objects;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
 
 namespace HydrantWiki.Cells
 {
-    public class HydrantCell : ViewCell
+    public class ReviewTagHydrantCell : ViewCell
     {
         private StackLayout m_Layout;
         private Image m_imgCell;
@@ -14,7 +17,9 @@ namespace HydrantWiki.Cells
         private HWLabel m_lblLongitude;
         private HWLabel m_lblDistance;
 
-        public HydrantCell()
+        public static event HydrantMatchDelegate HydrantMatchClicked;
+
+        public ReviewTagHydrantCell()
         {
             m_Layout = new StackLayout()
             {
@@ -58,7 +63,25 @@ namespace HydrantWiki.Cells
             m_lblDistance.HorizontalTextAlignment = TextAlignment.Start;
             rows.Children.Add(m_lblDistance);
 
+            var matchAction = new MenuItem { Text = "Match", IsDestructive = false }; // red background
+            matchAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
+            matchAction.Clicked += MatchClicked;
+            ContextActions.Add(matchAction);
+
             View = m_Layout;
+        }
+
+
+        void MatchClicked(object sender, EventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var matchClicked = HydrantMatchClicked;
+
+            if (matchClicked != null)
+            {
+                Hydrant hydrant = (Hydrant)menuItem.CommandParameter;
+                matchClicked(hydrant.HydrantGuid);
+            }
         }
     }
 }

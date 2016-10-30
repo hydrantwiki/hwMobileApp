@@ -7,9 +7,14 @@ namespace HydrantWiki.Controls
 {
     public class ReviewTagMap : Map
     {
+        public ReviewTagMap()
+        {
+            NearbyHydrants = new List<HydrantPin>();
+        }
+
         public List<HydrantPin> NearbyHydrants { get; set; }
 
-        public Tag TagToReview { get; set; }
+        public TagPin TagToReview { get; set; }
 
     }
 }

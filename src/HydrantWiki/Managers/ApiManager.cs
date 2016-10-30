@@ -189,5 +189,66 @@ namespace HydrantWiki.Managers
             return responseObject;
         }
 
+        public RejectTagResponse RejectTag(
+            User _user,
+            Guid _tagId)
+        {
+            string url = string.Format("/api/review/tag/{0}/reject", _tagId);
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = url;
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            RejectTagResponse responseObject =
+                JsonConvert.DeserializeObject<RejectTagResponse>(response.Body);
+
+            return responseObject;
+        }
+
+        public ApproveTagResponse ApproveTag(
+            User _user,
+            Guid _tagId)
+        {
+            string url = string.Format("/api/review/tag/{0}/approve", _tagId);
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = url;
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            ApproveTagResponse responseObject =
+                JsonConvert.DeserializeObject<ApproveTagResponse>(response.Body);
+
+            return responseObject;
+        }
+
+        public MatchTagResponse MatchTag(
+            User _user,
+            Guid _tagId,
+            Guid _hydrantId)
+        {
+            string url = string.Format("/api/review/tag/{0}/match/{1}", _tagId, _hydrantId);
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = url;
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            MatchTagResponse responseObject =
+                JsonConvert.DeserializeObject<MatchTagResponse>(response.Body);
+
+            return responseObject;
+        }
+
     }
 }

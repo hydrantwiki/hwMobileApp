@@ -1,4 +1,5 @@
 ﻿using System;
+using HydrantWiki.Cells;
 using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
 using HydrantWiki.Objects;
@@ -64,6 +65,7 @@ namespace HydrantWiki.Forms
                 BorderWidth = 1,
                 BackgroundColor = Color.White
             };
+            m_Reject.Clicked += RejectClicked;
             AbsoluteLayout.SetLayoutBounds(m_Reject, new Rectangle(left1, 10, 100, 30));
             layout.Children.Add(m_Reject);
 
@@ -78,6 +80,7 @@ namespace HydrantWiki.Forms
                 BorderWidth = 1,
                 BackgroundColor = Color.White
             };
+            m_Approve.Clicked += ApproveClicked;
             AbsoluteLayout.SetLayoutBounds(m_Approve, new Rectangle(3 * left1 + 100, 10, 100, 30));
             layout.Children.Add(m_Approve);
 
@@ -187,6 +190,7 @@ namespace HydrantWiki.Forms
                         }
                     };
 
+                    m_Map.Pins.Add(pin.Pin);
                     m_Map.NearbyHydrants.Add(pin);
                 }
             }
@@ -204,9 +208,45 @@ namespace HydrantWiki.Forms
                     Position = new Position(m_Tag.Position.Latitude, m_Tag.Position.Longitude)
                 };
 
+                TagPin tagPin = new TagPin
+                {
+                    Pin = pin,
+                    Tag = m_Tag
+                };
+
+                m_Map.TagToReview = tagPin;
                 m_Map.Pins.Add(pin);
                 m_Map.MoveToRegion(span);
             }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            ReviewTagHydrantCell.HydrantMatchClicked += HydrantMatchClicked;
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            ReviewTagHydrantCell.HydrantMatchClicked -= HydrantMatchClicked;
+        }
+
+        void HydrantMatchClicked(Guid hydrantGuid)
+        {
+
+        }
+
+        void RejectClicked(object sender, EventArgs e)
+        {
+
+        }
+
+        void ApproveClicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

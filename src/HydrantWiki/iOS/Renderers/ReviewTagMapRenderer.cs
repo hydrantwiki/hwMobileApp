@@ -18,6 +18,7 @@ namespace HydrantWiki.iOS.Renderers
     {
         UIView customPinView;
         List<HydrantPin> hydrantPins;
+        TagPin tagPin;
 
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
@@ -37,8 +38,9 @@ namespace HydrantWiki.iOS.Renderers
                 var formsMap = (ReviewTagMap)e.NewElement;
                 var nativeMap = Control as MKMapView;
                 hydrantPins = formsMap.NearbyHydrants;
+                tagPin = formsMap.TagToReview;
 
-                //nativeMap.GetViewForAnnotation = GetViewForAnnotation;
+                nativeMap.GetViewForAnnotation = GetViewForAnnotation;
                 //nativeMap.CalloutAccessoryControlTapped += OnCalloutAccessoryControlTapped;
                 //nativeMap.DidSelectAnnotationView += OnDidSelectAnnotationView;
                 //nativeMap.DidDeselectAnnotationView += OnDidDeselectAnnotationView;
@@ -56,19 +58,27 @@ namespace HydrantWiki.iOS.Renderers
             var hydrantPin = GetHydrantPin(anno);
             if (hydrantPin == null)
             {
-                throw new Exception("Pin not found");
+                var tp = GetTagPin(anno);
+
+                if (tp != null)
+                {
+                    annotationView = mapView.DequeueReusableAnnotation(tp.Tag.Id.ToString());
+                    if (annotationView == null)
+                    {
+                        annotationView = new ReviewTagsMKAnnotationView(annotation, tp.Tag.Id.ToString());
+                        annotationView.Image = UIImage.FromBundle("HydrantRed");
+                    }
+                    annotationView.CanShowCallout = true;
+
+                    return annotationView;
+                }
             }
 
             annotationView = mapView.DequeueReusableAnnotation(hydrantPin.Hydrant.HydrantGuid.ToString());
             if (annotationView == null)
             {
                 annotationView = new ReviewTagsMKAnnotationView(annotation, hydrantPin.Hydrant.HydrantGuid.ToString());
-                annotationView.Image = UIImage.FromFile("HydrantGreen");
-                //annotationView.CalloutOffset = new CGPoint(0, 0);
-                //annotationView.LeftCalloutAccessoryView = new UIImageView(UIImage.FromFile("monkey.png"));
-                //annotationView.RightCalloutAccessoryView = UIButton.FromType(UIButtonType.DetailDisclosure);
-                //((ReviewTagsMKAnnotationView)annotationView).Id = hydrantPin.Hydrant.HydrantGuid.ToString();
-                //((ReviewTagsMKAnnotationView)annotationView).Url = customPin.Url;
+                annotationView.Image = UIImage.FromBundle("HydrantGreen");
             }
             annotationView.CanShowCallout = true;
 
@@ -120,6 +130,20 @@ namespace HydrantWiki.iOS.Renderers
                     return pin;
                 }
             }
+
+
+            return null;
+        }
+
+        TagPin GetTagPin(MKPointAnnotation annotation)
+        {
+            var position = new Position(annotation.Coordinate.Latitude, annotation.Coordinate.Longitude);
+
+            if (tagPin.Pin.Position == position)
+            {
+                return tagPin;
+            }
+
             return null;
         }
     }
