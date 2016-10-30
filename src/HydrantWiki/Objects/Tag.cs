@@ -5,7 +5,9 @@ namespace HydrantWiki.Objects
 {
     public class Tag : AbstractObject
     {
-        public Guid ImageGuid { get; set; }
+        public Guid TagId { get; set; }
+
+        public Guid? ImageGuid { get; set; }
 
         public GeoPoint Position { get; set; }
 
@@ -22,7 +24,8 @@ namespace HydrantWiki.Objects
         {
             get
             {
-                if (ThumbnailUrl == null)
+                if (ImageGuid == null
+                    || ThumbnailUrl == null)
                 {
                     return "NoImage";
                 } else

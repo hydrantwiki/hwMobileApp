@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
@@ -11,7 +12,7 @@ namespace HydrantWiki.Forms
     public class HydrantMap : AbstractPage
     {
         private bool m_Loading = false;
-        private Map m_Map;
+        private HydrantsMap m_Map;
         private LocationManager m_Location;
 
         public HydrantMap() : base("Hydrant Map")
@@ -20,16 +21,17 @@ namespace HydrantWiki.Forms
 
             m_Location = new LocationManager();
 
-            m_Map = new Map(MapSpan.FromCenterAndRadius(
-                new Position(37, -122),
-                Distance.FromMiles(100)))
+            m_Map = new HydrantsMap()
             {
                 IsShowingUser = true,
-                HeightRequest = 100,
-                WidthRequest = 960,
+                HeightRequest = HydrantWikiApp.ScreenHeight,
+                WidthRequest = HydrantWikiApp.ScreenWidth,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
             m_Map.PropertyChanged += Map_PropertyChanged;
+            m_Map.MoveToRegion(MapSpan.FromCenterAndRadius(
+                new Position(37, -122),
+                Distance.FromMiles(100)));
 
             OutsideLayout.Children.Add(m_Map);
 
@@ -63,18 +65,24 @@ namespace HydrantWiki.Forms
                     if (hydrants != null)
                     {
                         m_Map.Pins.Clear();
+                        m_Map.NearbyHydrants.Clear();
 
                         foreach (var item in hydrants)
                         {
                             if (item.Position != null)
                             {
-                                var pin = new Pin()
+                                HydrantPin hp = new HydrantPin
                                 {
-                                    Label = "Hydrant"
+                                    Hydrant = item,
+                                    Pin = new Pin
+                                    {
+                                        Label = "Hydrant",
+                                        Position = new Position(item.Position.Latitude, item.Position.Longitude)
+                                    }
                                 };
 
-                                pin.Position = new Position(item.Position.Latitude, item.Position.Longitude);
-                                m_Map.Pins.Add(pin);
+                                m_Map.NearbyHydrants.Add(hp);
+                                m_Map.Pins.Add(hp.Pin);
                             }
                         }
                     }
@@ -101,19 +109,25 @@ namespace HydrantWiki.Forms
 
                     if (hydrants != null)
                     {
+                        m_Map.NearbyHydrants.Clear();
                         m_Map.Pins.Clear();
 
                         foreach (var item in hydrants)
                         {
                             if (item.Position != null)
                             {
-                                var pin = new Pin()
+                                HydrantPin hp = new HydrantPin
                                 {
-                                    Label = "Hydrant"
+                                    Hydrant = item,
+                                    Pin = new Pin
+                                    {
+                                        Label = "Hydrant",
+                                        Position = new Position(item.Position.Latitude, item.Position.Longitude)
+                                    }
                                 };
 
-                                pin.Position = new Position(item.Position.Latitude, item.Position.Longitude);
-                                m_Map.Pins.Add(pin);
+                                m_Map.NearbyHydrants.Add(hp);
+                                m_Map.Pins.Add(hp.Pin);
                             }
                         }
                     }

@@ -23,7 +23,6 @@ namespace HydrantWiki.Forms
         private PositionAverager m_Averager;
 
         private HWHeader m_Header;
-        private HWButtonBar m_ButtonLayout;
         private HWButton CancelButton;
         private HWButton SaveButton;
 
@@ -48,14 +47,23 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(m_Header);
 
-            m_ButtonLayout = new HWButtonBar();
-            OutsideLayout.Children.Add(m_ButtonLayout);
-
-            CancelButton = m_ButtonLayout.Add("Cancel", LayoutOptions.StartAndExpand);
+            CancelButton = new HWButton
+            {
+                Text = "Cancel",
+                TextColor = Color.White,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button))
+            };
             CancelButton.Clicked += CancelButton_Clicked;
+            m_Header.SetLeftButton(CancelButton);
 
-            SaveButton = m_ButtonLayout.Add("Save", LayoutOptions.EndAndExpand);
+            SaveButton = new HWButton
+            {
+                Text = "Save",
+                TextColor = Color.White,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button))
+            };
             SaveButton.Clicked += SaveButton_Clicked;
+            m_Header.SetRightButton(SaveButton);
 
             m_layoutPhoto = new StackLayout
             {
@@ -217,7 +225,7 @@ namespace HydrantWiki.Forms
         {
             HWManager manager = HWManager.GetInstance();
 
-            Guid imageGuid = Guid.NewGuid();
+            Guid? imageGuid = null;
             string filename = null;
 
             GeoPoint average = m_Averager.Average.GetAverage();
@@ -226,6 +234,8 @@ namespace HydrantWiki.Forms
             {
                 if (m_imgHydrant.Source != null)
                 {
+                    imageGuid = Guid.NewGuid();
+
                     string file = string.Format("{0}.jpg", imageGuid);
                     filename = manager.PlatformManager.GetLocalImageFilename(file);
                     await manager.PlatformManager.SaveImage(m_imgHydrant.Source, filename);

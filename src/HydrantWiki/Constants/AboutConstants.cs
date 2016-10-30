@@ -28,6 +28,7 @@ namespace HydrantWiki.Constants
                         <li>NewtonSoft Json</li>
                         <li>XLabs - Xamarin Forms Labs</li> 
                         <li>RestSharp</li>
+                        <li>Hydrant icons were provided by the Maps Icons Collection (mapicons.mapsmarker.com)</li>
                     </ul>
                 </body>
             </html> ";

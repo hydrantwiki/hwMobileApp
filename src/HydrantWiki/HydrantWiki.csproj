@@ -111,6 +111,7 @@
     <Compile Include="ResponseObjects\RejectTagResponse.cs" />
     <Compile Include="ResponseObjects\ApproveTagResponse.cs" />
     <Compile Include="ResponseObjects\MatchTagResponse.cs" />
+    <Compile Include="Controls\HydrantsMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

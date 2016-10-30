@@ -23,8 +23,6 @@ namespace HydrantWiki.Forms
             m_lstTags.ItemSelected += TagSelected;
 
             OutsideLayout.Children.Add(m_lstTags);
-
-            StartRefresh();
         }
 
         private void StartRefresh()
@@ -42,7 +40,6 @@ namespace HydrantWiki.Forms
                 m_lstTags.EndRefresh();
             });
         }
-
 
         private List<TagToReview> GetTagsToReview()
         {
@@ -64,6 +61,13 @@ namespace HydrantWiki.Forms
             form.SetTag(tag);
 
             Navigation.PushModalAsync(form);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            StartRefresh();
         }
     }
 }

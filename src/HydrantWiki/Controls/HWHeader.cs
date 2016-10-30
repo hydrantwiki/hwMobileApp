@@ -65,5 +65,15 @@ namespace HydrantWiki.Controls
                 new Rectangle(0, 30, 70, 25));
             m_Header.Children.Add(button);
         }
+
+        public void SetRightButton(HWButton button)
+        {
+            int left = HydrantWikiApp.ScreenWidth - 70;
+
+            AbsoluteLayout.SetLayoutBounds(
+                button,
+                new Rectangle(left, 30, 70, 25));
+            m_Header.Children.Add(button);
+        }
     }
 }

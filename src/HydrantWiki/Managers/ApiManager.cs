@@ -196,7 +196,7 @@ namespace HydrantWiki.Managers
             string url = string.Format("/api/review/tag/{0}/reject", _tagId);
 
             HWRestRequest request = new HWRestRequest();
-            request.Method = HWRestMethods.Get;
+            request.Method = HWRestMethods.Post;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = url;
             request.Headers.Add("Username", _user.Username);
@@ -216,7 +216,7 @@ namespace HydrantWiki.Managers
             string url = string.Format("/api/review/tag/{0}/approve", _tagId);
 
             HWRestRequest request = new HWRestRequest();
-            request.Method = HWRestMethods.Get;
+            request.Method = HWRestMethods.Post;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = url;
             request.Headers.Add("Username", _user.Username);
@@ -237,7 +237,7 @@ namespace HydrantWiki.Managers
             string url = string.Format("/api/review/tag/{0}/match/{1}", _tagId, _hydrantId);
 
             HWRestRequest request = new HWRestRequest();
-            request.Method = HWRestMethods.Get;
+            request.Method = HWRestMethods.Post;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = url;
             request.Headers.Add("Username", _user.Username);

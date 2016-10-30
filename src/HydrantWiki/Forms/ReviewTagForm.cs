@@ -2,7 +2,9 @@
 using HydrantWiki.Cells;
 using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
+using HydrantWiki.Managers;
 using HydrantWiki.Objects;
+using HydrantWiki.ResponseObjects;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
@@ -172,7 +174,11 @@ namespace HydrantWiki.Forms
             m_Tag = _tag;
 
             m_User.Text = string.Format("User: {0}", _tag.Username);
-            m_Image.Source = ImageSource.FromUri(new System.Uri(m_Tag.ImageUrl));
+            if (m_Tag.ImageGuid != null
+                && m_Tag.ImageUrl != null)
+            {
+                m_Image.Source = ImageSource.FromUri(new System.Uri(m_Tag.ImageUrl));
+            }
             m_Hydrants.ItemsSource = _tag.NearbyHydrants;
 
             foreach (var hydrant in _tag.NearbyHydrants)
@@ -236,17 +242,54 @@ namespace HydrantWiki.Forms
 
         void HydrantMatchClicked(Guid hydrantGuid)
         {
+            MatchTagResponse response = HWManager.GetInstance().ApiManager.MatchTag(
+                HydrantWikiApp.User,
+                m_Tag.TagId,
+                hydrantGuid);
 
+            if (response.Success)
+            {
+                Navigation.PopModalAsync(true);
+            } else {
+                DisplayAlert(
+                    "HydrantWiki",
+                    string.Format("An error occurred - {0}", response.Message),
+                    "Ok");
+            }
         }
 
         void RejectClicked(object sender, EventArgs e)
         {
+            RejectTagResponse response = HWManager.GetInstance().ApiManager.RejectTag(
+                HydrantWikiApp.User,
+                m_Tag.TagId);
 
+            if (response.Success)
+            {
+                Navigation.PopModalAsync(true);
+            } else {
+                DisplayAlert(
+                    "HydrantWiki",
+                    string.Format("An error occurred - {0}", response.Message),
+                    "Ok");
+            }
         }
 
         void ApproveClicked(object sender, EventArgs e)
         {
+            ApproveTagResponse response = HWManager.GetInstance().ApiManager.ApproveTag(
+                HydrantWikiApp.User,
+                m_Tag.TagId);
 
+            if (response.Success)
+            {
+                Navigation.PopModalAsync(true);
+            } else {
+                DisplayAlert(
+                    "HydrantWiki",
+                    string.Format("An error occurred - {0}", response.Message),
+                    "Ok");
+            }
         }
     }
 }
