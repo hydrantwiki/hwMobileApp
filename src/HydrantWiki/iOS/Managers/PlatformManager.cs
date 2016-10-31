@@ -72,8 +72,8 @@ namespace HydrantWiki.iOS.Managers
         {
             get
             {
-                //return "http://mobileapi.hydrantwiki.com";
-                return "http://192.168.50.192:8990";
+                return "http://mobileapi.hydrantwiki.com";
+                //return "http://192.168.50.192:8990";
             }
         }
 

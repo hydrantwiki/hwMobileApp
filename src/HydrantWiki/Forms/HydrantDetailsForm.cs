@@ -8,7 +8,6 @@ namespace HydrantWiki.Forms
     public class HydrantDetailsForm : AbstractPage
     {
         private HWHeader m_Header;
-        private HWButtonBar m_ButtonLayout;
         private HWButton CancelButton;
 
         private Image m_imgMainImage;
@@ -24,10 +23,13 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(m_Header);
 
-            m_ButtonLayout = new HWButtonBar();
-            OutsideLayout.Children.Add(m_ButtonLayout);
-
-            CancelButton = m_ButtonLayout.Add("Cancel", LayoutOptions.StartAndExpand);
+            CancelButton = new HWButton
+            {
+                Text = "Cancel",
+                TextColor = Color.White,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button))
+            };
+            m_Header.SetLeftButton(CancelButton);
             CancelButton.Clicked += CancelButton_Clicked;
 
             Frame imageFrame = new Frame
@@ -36,6 +38,8 @@ namespace HydrantWiki.Forms
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 HasShadow = false,
                 OutlineColor = Color.Black,
+                HeightRequest = HydrantWikiApp.ScreenHeight - 200,
+                WidthRequest = HydrantWikiApp.ScreenWidth - 20,
                 Margin = new Thickness(10, 0, 10, 0)
             };
             OutsideLayout.Children.Add(imageFrame);

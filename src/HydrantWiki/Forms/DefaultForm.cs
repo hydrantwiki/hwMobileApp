@@ -43,8 +43,12 @@ namespace HydrantWiki.Forms
                 HorizontalTextAlignment = TextAlignment.Center,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Text = "My Recent Tags"
+                Text = "My Recent Tags",
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                Margin = new Thickness(0, 10, 0, 10)
+
             };
+            OutsideLayout.Children.Add(m_lblRecent);
 
             m_lstRecentTags = new RecentTagsListView();
             OutsideLayout.Children.Add(m_lstRecentTags);
