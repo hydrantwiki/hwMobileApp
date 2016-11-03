@@ -12,6 +12,7 @@ namespace HydrantWiki.Forms
         private HWTextEntry m_txtPassword;
         private HWHeader m_Header;
         private HWButton m_btnLogin;
+        private HWButton m_btnCreateAccount;
 
         public LoginForm() : base(DisplayConstants.Login)
         {
@@ -44,6 +45,23 @@ namespace HydrantWiki.Forms
             };
             m_btnLogin.Clicked += btnLoginClicked;
             OutsideLayout.Children.Add(m_btnLogin);
+
+            m_btnCreateAccount = new HWButton()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Text = DisplayConstants.CreateAccount,
+                BackgroundColor = Color.White,
+                BorderWidth = 1,
+                BorderColor = Color.Black,
+                Margin = new Thickness(10, 50, 10, 10)
+            };
+            m_btnCreateAccount.Clicked += btnCreateAccountClicked;
+            OutsideLayout.Children.Add(m_btnCreateAccount);
+        }
+
+        void btnCreateAccountClicked(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new CreateAccount());
         }
 
         void btnLoginClicked(object sender, EventArgs e)

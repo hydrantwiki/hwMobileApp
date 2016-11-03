@@ -112,6 +112,7 @@
     <Compile Include="ResponseObjects\ApproveTagResponse.cs" />
     <Compile Include="ResponseObjects\MatchTagResponse.cs" />
     <Compile Include="Controls\HydrantsMap.cs" />
+    <Compile Include="Forms\CreateAccount.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

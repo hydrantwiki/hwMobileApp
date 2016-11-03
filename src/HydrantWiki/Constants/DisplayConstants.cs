@@ -9,6 +9,7 @@ namespace HydrantWiki.Constants
         public const string UsernameAndPasswordRequired = "Username and password are required";
         public const string InvalidUsernameOrPasssword = "Invalid username or password";
 
+        public const string CreateAccount = "Create an Account";
         public const string Login = "Login";
         public const string Username = "Username";
         public const string Password = "Password";
