@@ -29,7 +29,7 @@ namespace HydrantWiki.Forms
             } else {
                 if (padding == null)
                 {
-                    padding = 5;
+                    padding = 0;
                 }
 
                 if (spacing == null)

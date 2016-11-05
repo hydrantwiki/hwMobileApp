@@ -37,7 +37,8 @@ namespace HydrantWiki.Managers
             AuthenticationResponse responseObject =
                 JsonConvert.DeserializeObject<AuthenticationResponse>(response.Body);
 
-            if (responseObject.Success)
+            if (responseObject != null
+                && responseObject.Success)
             {
                 return responseObject.User;
             }
