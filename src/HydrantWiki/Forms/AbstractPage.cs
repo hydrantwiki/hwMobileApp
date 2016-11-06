@@ -47,6 +47,5 @@ namespace HydrantWiki.Forms
 
             Content = OutsideLayout;
         }
-
     }
 }

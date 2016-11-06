@@ -117,6 +117,7 @@ namespace HydrantWiki.Managers
             request.Method = HWRestMethods.Get;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = "/api/tags/mine/count";
+            request.Timeout = 5000;
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
 

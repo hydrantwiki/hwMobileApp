@@ -9,6 +9,8 @@ namespace HydrantWiki.Network
         public HWRestRequest()
         {
             Headers = new Dictionary<string, string>();
+
+            Timeout = 30000;
         }
 
         public string Host { get; set; }
@@ -18,6 +20,8 @@ namespace HydrantWiki.Network
         public string Body { get; set; }
 
         public HWFile File { get; set; }
+
+        public int Timeout { get; set; }
     }
 }
 

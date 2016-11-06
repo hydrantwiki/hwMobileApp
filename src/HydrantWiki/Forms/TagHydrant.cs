@@ -271,7 +271,7 @@ namespace HydrantWiki.Forms
             }
 
             Cleanup();
-            Navigation.PopModalAsync(true);
+            await Navigation.PopModalAsync(true);
         }
 
         private void StartUpdateLocation()

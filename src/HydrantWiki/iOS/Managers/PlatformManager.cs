@@ -72,8 +72,8 @@ namespace HydrantWiki.iOS.Managers
         {
             get
             {
-                //return "https://mobileapi.hydrantwiki.com";
-                return "http://192.168.50.192:8990";
+                return "https://mobileapi.hydrantwiki.com";
+                //return "http://192.168.50.192:8990";
             }
         }
 
@@ -109,6 +109,7 @@ namespace HydrantWiki.iOS.Managers
             RestClient client = new RestClient(_request.Host);
 
             RestRequest request = new RestRequest(_request.Path, GetMethod(_request.Method));
+            request.Timeout = _request.Timeout;
 
             //Process Headers
             foreach (var key in _request.Headers.Keys)

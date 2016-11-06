@@ -82,11 +82,15 @@ namespace HydrantWiki.Forms
         {
             try
             {
-                if (HydrantWikiApp.User != null)
+                HWManager manager = HWManager.GetInstance();
+
+                if (HydrantWikiApp.User != null
+                    && manager.PlatformManager.HasNetworkConnectivity)
                 {
                     var response = HWManager.GetInstance().ApiManager.GetMyTagCount(HydrantWikiApp.User);
 
-                    if (response.Success)
+                    if (response != null
+                        && response.Success)
                     {
                         HWManager.GetInstance().SettingManager.SetTagCount(response.TagCount);
 
@@ -97,10 +101,7 @@ namespace HydrantWiki.Forms
 
                         return;
                     }
-                } else {
-                    return;
                 }
-
             }
             catch (Exception ex)
             {

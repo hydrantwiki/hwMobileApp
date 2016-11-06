@@ -126,12 +126,15 @@ namespace HydrantWiki.iOS.Helpers
         {
             NetworkReachabilityFlags flags;
             bool defaultNetworkAvailable = IsNetworkAvailable(out flags);
-            if (defaultNetworkAvailable && ((flags & NetworkReachabilityFlags.IsDirect) != 0))
+
+            if (defaultNetworkAvailable
+                && ((flags & NetworkReachabilityFlags.IsDirect) != 0))
                 return NetworkStatus.NotReachable;
             else if ((flags & NetworkReachabilityFlags.IsWWAN) != 0)
                 return NetworkStatus.ReachableViaCarrierDataNetwork;
             else if (flags == 0)
                 return NetworkStatus.NotReachable;
+
             return NetworkStatus.ReachableViaWiFiNetwork;
         }
 
