@@ -32,6 +32,7 @@ namespace HydrantWiki.Managers
             request.Path = "/api/authorize";
             request.Headers.Add("Username", _username);
             request.Headers.Add("Password", _password);
+            request.Timeout = 3000;
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
             AuthenticationResponse responseObject =
