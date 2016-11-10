@@ -47,6 +47,48 @@ namespace HydrantWiki.Managers
             return null;
         }
 
+        public bool UsernameAvailable(string _requestedUsername)
+        {
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = "/api/user/isavailable/" + _requestedUsername;
+            request.Timeout = 2000;
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            AvailableResponse responseObject =
+                JsonConvert.DeserializeObject<AvailableResponse>(response.Body);
+
+            if (responseObject != null
+                && responseObject.Success)
+            {
+                return responseObject.Available;
+            }
+
+            return false;
+        }
+
+        public bool EmailInUse(string _emailAddress)
+        {
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Get;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = "/api/user/email/" + _emailAddress;
+            request.Timeout = 2000;
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            AvailableResponse responseObject =
+                JsonConvert.DeserializeObject<AvailableResponse>(response.Body);
+
+            if (responseObject != null
+                && responseObject.Success)
+            {
+                return responseObject.Available;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Saves the tag tot he server
         /// </summary>

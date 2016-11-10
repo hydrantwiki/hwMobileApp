@@ -113,6 +113,7 @@
     <Compile Include="ResponseObjects\MatchTagResponse.cs" />
     <Compile Include="Controls\HydrantsMap.cs" />
     <Compile Include="Forms\CreateAccount.cs" />
+    <Compile Include="Delegates\TextChangedDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

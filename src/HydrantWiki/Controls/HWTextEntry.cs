@@ -1,4 +1,5 @@
 ﻿using HydrantWiki.Constants;
+using HydrantWiki.Delegates;
 using Xamarin.Forms;
 
 namespace HydrantWiki.Controls
@@ -8,6 +9,7 @@ namespace HydrantWiki.Controls
         private HWLabel m_lblTitle;
         private Entry m_txtEntry;
         private Grid m_EntryGrid;
+        public event TextChanged TextChanged;
 
         public HWTextEntry()
         {
@@ -41,10 +43,20 @@ namespace HydrantWiki.Controls
             {
                 Keyboard = Keyboard.Plain
             };
-
+            m_txtEntry.TextChanged += EntryChanged;
             m_EntryGrid.Children.Add(m_txtEntry, 1, 0);
 
             Content = m_EntryGrid;
+        }
+
+        void EntryChanged(object sender, TextChangedEventArgs e)
+        {
+            var changed = TextChanged;
+
+            if (changed != null)
+            {
+                changed(sender, e);
+            }
         }
 
         public string Title
