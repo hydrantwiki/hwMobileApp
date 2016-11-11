@@ -73,7 +73,7 @@ namespace HydrantWiki.Managers
             HWRestRequest request = new HWRestRequest();
             request.Method = HWRestMethods.Get;
             request.Host = m_HWManager.PlatformManager.ApiHost;
-            request.Path = "/api/user/email/" + _emailAddress;
+            request.Path = "/api/user/inuse/" + _emailAddress;
             request.Timeout = 2000;
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
