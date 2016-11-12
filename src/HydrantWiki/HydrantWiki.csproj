@@ -114,6 +114,8 @@
     <Compile Include="Controls\HydrantsMap.cs" />
     <Compile Include="Forms\CreateAccount.cs" />
     <Compile Include="Delegates\TextChangedDelegate.cs" />
+    <Compile Include="ResponseObjects\CreateAccountResponse.cs" />
+    <Compile Include="Objects\CreateAccount.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

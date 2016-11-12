@@ -295,5 +295,33 @@ namespace HydrantWiki.Managers
             return responseObject;
         }
 
+        public CreateAccountResponse CreateAccount(
+            string _username,
+            string _email,
+            string _password)
+        {
+            string url = string.Format("/api/user/create");
+
+            CreateAccount newAccount = new CreateAccount
+            {
+                Username = _username,
+                Email = _email,
+                Password = _password
+            };
+            string json = JsonConvert.SerializeObject(newAccount);
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Post;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = url;
+            request.Timeout = 3000;
+            request.Body = json;
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            CreateAccountResponse responseObject =
+                JsonConvert.DeserializeObject<CreateAccountResponse>(response.Body);
+
+            return responseObject;
+        }
     }
 }

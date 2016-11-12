@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
+using HydrantWiki.ResponseObjects;
 using Xamarin.Forms;
 
 namespace HydrantWiki.Forms
@@ -175,7 +176,6 @@ namespace HydrantWiki.Forms
             } else {
                 btnCreateAccount.IsEnabled = false;
             }
-
         }
 
         void Email_TextChanged(object sender, TextChangedEventArgs e)
@@ -264,6 +264,31 @@ namespace HydrantWiki.Forms
         void CreateAccount_Clicked(object sender, EventArgs e)
         {
 
+            string username = txtUsername.Text;
+            string email = txtEmail.Text;
+            string password1 = txtPassword1.Text;
+            string password2 = txtPassword2.Text;
+
+            if (password1 != null
+                && password1.Length >= 8
+                && password1.Equals(password2)
+                && username != null
+                && email != null)
+            {
+                CreateAccountResponse response = HWManager.GetInstance().ApiManager.CreateAccount(username, email, password1);
+
+                if (!string.IsNullOrEmpty(response.Message))
+                {
+                    DisplayAlert("HydrantWiki", response.Message, "Ok");
+                }
+
+                if (response.Success)
+                {
+                    Navigation.PopModalAsync(true);
+                }
+            } else {
+                DisplayAlert("HydrantWiki", "User data not complete", "Ok");
+            }
         }
 
         void Cancel_Clicked(object sender, EventArgs e)
