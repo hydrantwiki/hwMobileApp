@@ -89,6 +89,8 @@ namespace HydrantWiki.Managers
             return false;
         }
 
+        public
+
         /// <summary>
         /// Saves the tag tot he server
         /// </summary>

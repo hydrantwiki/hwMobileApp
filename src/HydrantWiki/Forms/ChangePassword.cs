@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace HydrantWiki.Forms
 {
-    public class CreateAccount : AbstractPage
+    public class ChangePassword : AbstractPage
     {
         HWHeader m_Header;
         HWButton m_btnCancel;
@@ -17,8 +17,8 @@ namespace HydrantWiki.Forms
         HWLabel lblPickUsername;
         HWTextEntry txtUsername;
 
-        HWLabel lblEnterEmail;
-        HWTextEntry txtEmail;
+        HWLabel lblExistingPassword;
+        HWTextEntry txtExistingPassword;
 
         HWLabel lblPassword1;
         HWTextEntry txtPassword1;
@@ -26,18 +26,14 @@ namespace HydrantWiki.Forms
         HWLabel lblPassword2;
         HWTextEntry txtPassword2;
 
-        HWButton btnCreateAccount;
+        HWButton btnChangePassword;
 
-        bool usernameAvailable;
-        bool emailAvailable;
         bool passwordsMatch;
 
-        public CreateAccount() : base("Create Account")
+        public ChangePassword() : base("Change Password")
         {
-            m_Header = new HWHeader("Create Account");
+            m_Header = new HWHeader("Change Password");
             OutsideLayout.Children.Add(m_Header);
-            usernameAvailable = false;
-            emailAvailable = false;
             passwordsMatch = false;
 
             m_btnCancel = new HWButton
@@ -59,45 +55,37 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(InsideLayout);
 
-            lblPickUsername = new HWLabel
-            {
-                Text = "Pick your username",
-                FontAttributes = FontAttributes.Bold,
-                HorizontalTextAlignment = TextAlignment.Start
-            };
-            InsideLayout.Children.Add(lblPickUsername);
-
             txtUsername = new HWTextEntry
             {
-                Title = "Username"
+                Title = "Username",
+                Text = HydrantWikiApp.User.Username,
+                IsEnabled = false
             };
-            txtUsername.TextChanged += Username_TextChanged;
             InsideLayout.Children.Add(txtUsername);
 
-            lblEnterEmail = new HWLabel
+            lblExistingPassword = new HWLabel
             {
-                Text = "Enter your email",
+                Text = "Enter your Existing Password",
                 FontAttributes = FontAttributes.Bold,
                 HorizontalTextAlignment = TextAlignment.Start
             };
-            InsideLayout.Children.Add(lblEnterEmail);
+            InsideLayout.Children.Add(lblExistingPassword);
 
-            txtEmail = new HWTextEntry
+            txtExistingPassword = new HWTextEntry
             {
-                Title = "Email"
+                Title = "Password"
             };
-            txtEmail.TextChanged += Email_TextChanged;
-            InsideLayout.Children.Add(txtEmail);
+            InsideLayout.Children.Add(txtExistingPassword);
 
             lblPassword1 = new HWLabel
             {
-                Text = "Enter Password"
+                Text = "Enter New Password"
             };
             InsideLayout.Children.Add(lblPassword1);
 
             txtPassword1 = new HWTextEntry
             {
-                Title = "Password",
+                Title = "New Password",
                 IsPassword = true
             };
             txtPassword1.TextChanged += Password_TextChanged;
@@ -105,7 +93,7 @@ namespace HydrantWiki.Forms
 
             lblPassword2 = new HWLabel
             {
-                Text = "Verify Password"
+                Text = "Verify New Password"
             };
             InsideLayout.Children.Add(lblPassword2);
 
@@ -117,113 +105,27 @@ namespace HydrantWiki.Forms
             txtPassword2.TextChanged += Password_TextChanged;
             InsideLayout.Children.Add(txtPassword2);
 
-            btnCreateAccount = new HWButton
+            btnChangePassword = new HWButton
             {
-                Text = "Create Account",
+                Text = "Change Password",
                 BorderColor = Color.Black,
                 BorderWidth = 1,
                 BackgroundColor = Color.White,
                 IsEnabled = false,
                 Margin = new Thickness(0, 20, 0, 0)
             };
-            btnCreateAccount.Clicked += CreateAccount_Clicked;
-            InsideLayout.Children.Add(btnCreateAccount);
+            btnChangePassword.Clicked += ChangePassword_Clicked;
+            InsideLayout.Children.Add(btnChangePassword);
         }
 
-        void Username_TextChanged(object sender, TextChangedEventArgs e)
+        void EnableChangePasswordButton()
         {
-            var taskCheckUsername = Task.Factory.StartNew(() => CheckUsername());
-        }
-
-        void CheckUsername()
-        {
-            string username = txtUsername.Text;
-            string message;
-            usernameAvailable = false;
-
-            if (username.Length == 0)
+            if (passwordsMatch)
             {
-                message = "Enter your email";
-            } else if (username.Length < 6)
-            {
-                message = "Pick your username (Too short)";
+                btnChangePassword.IsEnabled = true;
             } else {
-                HWManager manager = HWManager.GetInstance();
-
-                try
-                {
-                    bool available = manager.ApiManager.UsernameAvailable(username);
-
-                    if (available)
-                    {
-                        usernameAvailable = true;
-                        message = "Pick your username (Available)";
-                    } else {
-                        message = "Pick your username (Not Available)";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    message = "Pick your username";
-                }
+                btnChangePassword.IsEnabled = false;
             }
-
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                lblPickUsername.Text = message;
-                EnableCreateButton();
-            });
-        }
-
-        void EnableCreateButton()
-        {
-            if (usernameAvailable && emailAvailable && passwordsMatch)
-            {
-                btnCreateAccount.IsEnabled = true;
-            } else {
-                btnCreateAccount.IsEnabled = false;
-            }
-        }
-
-        void Email_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var taskCheckEmail = Task.Factory.StartNew(() => CheckEmail());
-        }
-
-        void CheckEmail()
-        {
-            string email = txtEmail.Text;
-            string message;
-            emailAvailable = false;
-
-            if (email.Length == 0)
-            {
-                message = "Enter your email";
-            } else {
-                if (email.Contains("@")
-                    && email.Contains("."))
-                {
-                    HWManager manager = HWManager.GetInstance();
-
-                    bool available = manager.ApiManager.EmailInUse(email);
-
-                    if (available)
-                    {
-                        emailAvailable = true;
-                        message = "Enter your email (Available)";
-                    } else {
-                        message = "Enter your email (Not Available)";
-                    }
-                } else {
-                    message = "Enter your email";
-                }
-            }
-
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                lblEnterEmail.Text = message;
-                EnableCreateButton();
-            });
         }
 
         void Password_TextChanged(object sender, TextChangedEventArgs e)
@@ -270,14 +172,14 @@ namespace HydrantWiki.Forms
                     lblPassword2.Text = message2;
                 }
 
-                EnableCreateButton();
+                EnableChangePasswordButton();
             });
         }
 
-        async void CreateAccount_Clicked(object sender, EventArgs e)
+        async void ChangePassword_Clicked(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
-            string email = txtEmail.Text;
+            string existingPassword = txtExistingPassword.Text;
             string password1 = txtPassword1.Text;
             string password2 = txtPassword2.Text;
 
@@ -285,7 +187,7 @@ namespace HydrantWiki.Forms
                 && password1.Length >= 8
                 && password1.Equals(password2)
                 && username != null
-                && email != null)
+                && existingPassword != null)
             {
                 try
                 {

@@ -116,6 +116,9 @@
     <Compile Include="Delegates\TextChangedDelegate.cs" />
     <Compile Include="ResponseObjects\CreateAccountResponse.cs" />
     <Compile Include="Objects\CreateAccount.cs" />
+    <Compile Include="Forms\ChangePassword.cs" />
+    <Compile Include="ResponseObjects\ChangePasswordResponse.cs" />
+    <Compile Include="Objects\ChangePassword.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
