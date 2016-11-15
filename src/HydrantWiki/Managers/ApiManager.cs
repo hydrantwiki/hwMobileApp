@@ -89,7 +89,11 @@ namespace HydrantWiki.Managers
             return false;
         }
 
-        public
+        public ChangePasswordResponse ChangePassword(
+            string _username,
+            string _existingPassword,
+            string _newPassword)
+
 
         /// <summary>
         /// Saves the tag tot he server

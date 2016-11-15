@@ -191,7 +191,8 @@ namespace HydrantWiki.Forms
             {
                 try
                 {
-                    CreateAccountResponse response = HWManager.GetInstance().ApiManager.CreateAccount(username, email, password1);
+                    ChangePasswordResponse response =
+                        HWManager.GetInstance().ApiManager.ChangePassword(username, existingPassword, password1);
 
                     if (!string.IsNullOrEmpty(response.Message))
                     {
