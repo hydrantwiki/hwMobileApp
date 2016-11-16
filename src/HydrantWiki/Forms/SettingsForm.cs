@@ -12,6 +12,7 @@ namespace HydrantWiki.Forms
     public class SettingsForm : AbstractPage
     {
         private HWButton btnLogout;
+        private HWButton btnChangePassword;
         private HWLabel lblUnsynced;
         private HWButton btnSync;
 
@@ -46,13 +47,25 @@ namespace HydrantWiki.Forms
             btnSync.Clicked += Sync_Clicked;
             m_InsideLayout.Children.Add(btnSync);
 
+            btnChangePassword = new HWButton
+            {
+                Text = "Change Password",
+                BackgroundColor = Color.White,
+                BorderWidth = 1,
+                BorderColor = Color.Black,
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+            btnChangePassword.Clicked += ChangePassword_Clicked;
+            m_InsideLayout.Children.Add(btnChangePassword);
+
             btnLogout = new HWButton
             {
                 Text = "Logout",
                 BackgroundColor = Color.White,
                 BorderWidth = 1,
                 BorderColor = Color.Black,
-                Margin = new Thickness(0, 10, 0, 0)
+                Margin = new Thickness(0, 10, 0, 0),
+                VerticalOptions = LayoutOptions.End
             };
             btnLogout.Clicked += Logout_Clicked;
             m_InsideLayout.Children.Add(btnLogout);
@@ -87,6 +100,12 @@ namespace HydrantWiki.Forms
                     }
                 });
             }
+        }
+
+        void ChangePassword_Clicked(object sender, EventArgs e)
+        {
+            ChangePassword cp = new ChangePassword();
+            Navigation.PushModalAsync(cp);
         }
 
         void Sync_Clicked(object sender, EventArgs e)

@@ -14,9 +14,6 @@ namespace HydrantWiki.Forms
 
         StackLayout InsideLayout;
 
-        HWLabel lblPickUsername;
-        HWTextEntry txtUsername;
-
         HWLabel lblExistingPassword;
         HWTextEntry txtExistingPassword;
 
@@ -55,14 +52,6 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(InsideLayout);
 
-            txtUsername = new HWTextEntry
-            {
-                Title = "Username",
-                Text = HydrantWikiApp.User.Username,
-                IsEnabled = false
-            };
-            InsideLayout.Children.Add(txtUsername);
-
             lblExistingPassword = new HWLabel
             {
                 Text = "Enter your Existing Password",
@@ -73,7 +62,7 @@ namespace HydrantWiki.Forms
 
             txtExistingPassword = new HWTextEntry
             {
-                Title = "Password"
+                Title = "Existing"
             };
             InsideLayout.Children.Add(txtExistingPassword);
 
@@ -85,7 +74,7 @@ namespace HydrantWiki.Forms
 
             txtPassword1 = new HWTextEntry
             {
-                Title = "New Password",
+                Title = "New",
                 IsPassword = true
             };
             txtPassword1.TextChanged += Password_TextChanged;
@@ -99,7 +88,7 @@ namespace HydrantWiki.Forms
 
             txtPassword2 = new HWTextEntry
             {
-                Title = "Password",
+                Title = "Verify",
                 IsPassword = true
             };
             txtPassword2.TextChanged += Password_TextChanged;
@@ -178,7 +167,6 @@ namespace HydrantWiki.Forms
 
         async void ChangePassword_Clicked(object sender, EventArgs e)
         {
-            string username = txtUsername.Text;
             string existingPassword = txtExistingPassword.Text;
             string password1 = txtPassword1.Text;
             string password2 = txtPassword2.Text;
@@ -186,7 +174,6 @@ namespace HydrantWiki.Forms
             if (password1 != null
                 && password1.Length >= 8
                 && password1.Equals(password2)
-                && username != null
                 && existingPassword != null)
             {
                 try
