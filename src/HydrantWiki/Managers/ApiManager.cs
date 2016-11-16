@@ -90,10 +90,39 @@ namespace HydrantWiki.Managers
         }
 
         public ChangePasswordResponse ChangePassword(
-            string _username,
+            User _user,
             string _existingPassword,
             string _newPassword)
+        {
+            ChangePasswordBody cpb = new ChangePasswordBody
+            {
+                Username = _user.Username,
+                ExistingPassword = _existingPassword,
+                NewPassword = _newPassword
+            };
 
+            string body = JsonConvert.SerializeObject(cpb);
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Post;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = "/api/user/password";
+            request.Headers.Add("Username", _user.Username);
+            request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Body = body;
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+
+            if (response.Status == HWResponseStatus.Completed)
+            {
+                ChangePasswordResponse responseObject =
+                    JsonConvert.DeserializeObject<ChangePasswordResponse>(response.Body);
+
+                return responseObject;
+            } else {
+                throw new Exception(response.ErrorMessage);
+            }
+        }
 
         /// <summary>
         /// Saves the tag tot he server

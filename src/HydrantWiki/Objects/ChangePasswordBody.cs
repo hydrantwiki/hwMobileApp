@@ -1,7 +1,7 @@
 ﻿using System;
 namespace HydrantWiki.Objects
 {
-    public class ChangePassword
+    public class ChangePasswordBody
     {
         public string Username { get; set; }
 

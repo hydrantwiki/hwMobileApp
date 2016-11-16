@@ -192,7 +192,7 @@ namespace HydrantWiki.Forms
                 try
                 {
                     ChangePasswordResponse response =
-                        HWManager.GetInstance().ApiManager.ChangePassword(username, existingPassword, password1);
+                        HWManager.GetInstance().ApiManager.ChangePassword(HydrantWikiApp.User, existingPassword, password1);
 
                     if (!string.IsNullOrEmpty(response.Message))
                     {

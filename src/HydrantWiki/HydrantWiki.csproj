@@ -118,7 +118,7 @@
     <Compile Include="Objects\CreateAccount.cs" />
     <Compile Include="Forms\ChangePassword.cs" />
     <Compile Include="ResponseObjects\ChangePasswordResponse.cs" />
-    <Compile Include="Objects\ChangePassword.cs" />
+    <Compile Include="Objects\ChangePasswordBody.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />
