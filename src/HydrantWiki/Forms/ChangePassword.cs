@@ -62,7 +62,8 @@ namespace HydrantWiki.Forms
 
             txtExistingPassword = new HWTextEntry
             {
-                Title = "Existing"
+                Title = "Existing",
+                IsPassword = true
             };
             InsideLayout.Children.Add(txtExistingPassword);
 

@@ -12,6 +12,7 @@ namespace HydrantWiki.Forms
         private HWTextEntry m_txtPassword;
         private HWHeader m_Header;
         private HWButton m_btnLogin;
+        private HWButton m_btnForgotPassword;
         private HWButton m_btnCreateAccount;
 
         public LoginForm() : base(DisplayConstants.Login)
@@ -46,6 +47,18 @@ namespace HydrantWiki.Forms
             m_btnLogin.Clicked += btnLoginClicked;
             OutsideLayout.Children.Add(m_btnLogin);
 
+            m_btnForgotPassword = new HWButton()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Text = DisplayConstants.ForgotPassword,
+                BackgroundColor = Color.White,
+                BorderWidth = 1,
+                BorderColor = Color.Black,
+                Margin = new Thickness(10, 50, 10, 10)
+            };
+            m_btnForgotPassword.Clicked += btnForgotPasswordClicked;
+            OutsideLayout.Children.Add(m_btnForgotPassword);
+
             m_btnCreateAccount = new HWButton()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -53,7 +66,7 @@ namespace HydrantWiki.Forms
                 BackgroundColor = Color.White,
                 BorderWidth = 1,
                 BorderColor = Color.Black,
-                Margin = new Thickness(10, 50, 10, 10)
+                Margin = new Thickness(10, 10, 10, 10)
             };
             m_btnCreateAccount.Clicked += btnCreateAccountClicked;
             OutsideLayout.Children.Add(m_btnCreateAccount);
@@ -62,6 +75,11 @@ namespace HydrantWiki.Forms
         void btnCreateAccountClicked(object sender, EventArgs e)
         {
             Navigation.PushModalAsync(new CreateAccount());
+        }
+
+        void btnForgotPasswordClicked(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new ForgotPassword());
         }
 
         void btnLoginClicked(object sender, EventArgs e)

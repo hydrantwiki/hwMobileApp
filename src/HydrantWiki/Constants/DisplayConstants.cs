@@ -10,6 +10,7 @@ namespace HydrantWiki.Constants
         public const string InvalidUsernameOrPasssword = "Invalid username or password";
 
         public const string CreateAccount = "Create an Account";
+        public const string ForgotPassword = "Forgot Password";
         public const string Login = "Login";
         public const string Username = "Username";
         public const string Password = "Password";
