@@ -8,7 +8,7 @@ namespace HydrantWiki.Forms
     {
         WebView m_webAbout;
 
-        public About() : base("About HydrantWiki")
+        public About() : base(DisplayConstants.FormAbout)
         {
             m_webAbout = new WebView()
             {

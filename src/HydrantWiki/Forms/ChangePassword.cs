@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
 using HydrantWiki.ResponseObjects;
@@ -27,15 +28,15 @@ namespace HydrantWiki.Forms
 
         bool passwordsMatch;
 
-        public ChangePassword() : base("Change Password")
+        public ChangePassword() : base(DisplayConstants.FormChangePassword)
         {
-            m_Header = new HWHeader("Change Password");
+            m_Header = new HWHeader(DisplayConstants.FormChangePassword);
             OutsideLayout.Children.Add(m_Header);
             passwordsMatch = false;
 
             m_btnCancel = new HWButton
             {
-                Text = "Cancel",
+                Text = DisplayConstants.Cancel,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.White
@@ -54,7 +55,7 @@ namespace HydrantWiki.Forms
 
             lblExistingPassword = new HWLabel
             {
-                Text = "Enter your Existing Password",
+                Text = DisplayConstants.EnterExistingPassword,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalTextAlignment = TextAlignment.Start
             };
@@ -62,20 +63,20 @@ namespace HydrantWiki.Forms
 
             txtExistingPassword = new HWTextEntry
             {
-                Title = "Existing",
+                Title = DisplayConstants.Existing,
                 IsPassword = true
             };
             InsideLayout.Children.Add(txtExistingPassword);
 
             lblPassword1 = new HWLabel
             {
-                Text = "Enter New Password"
+                Text = DisplayConstants.EnterNewPassword
             };
             InsideLayout.Children.Add(lblPassword1);
 
             txtPassword1 = new HWTextEntry
             {
-                Title = "New",
+                Title = DisplayConstants.New,
                 IsPassword = true
             };
             txtPassword1.TextChanged += Password_TextChanged;
@@ -83,13 +84,13 @@ namespace HydrantWiki.Forms
 
             lblPassword2 = new HWLabel
             {
-                Text = "Verify New Password"
+                Text = DisplayConstants.VerifyNewPassword
             };
             InsideLayout.Children.Add(lblPassword2);
 
             txtPassword2 = new HWTextEntry
             {
-                Title = "Verify",
+                Title = DisplayConstants.Verify,
                 IsPassword = true
             };
             txtPassword2.TextChanged += Password_TextChanged;
@@ -97,7 +98,7 @@ namespace HydrantWiki.Forms
 
             btnChangePassword = new HWButton
             {
-                Text = "Change Password",
+                Text = DisplayConstants.ChangePassword,
                 BorderColor = Color.Black,
                 BorderWidth = 1,
                 BackgroundColor = Color.White,
@@ -121,8 +122,8 @@ namespace HydrantWiki.Forms
         void Password_TextChanged(object sender, TextChangedEventArgs e)
         {
             passwordsMatch = false;
-            string message1 = "Enter Password";
-            string message2 = "Verify Password";
+            string message1 = DisplayConstants.EnterNewPassword;
+            string message2 = DisplayConstants.VerifyNewPassword;
 
             string pwd1 = txtPassword1.Text;
             string pwd2 = txtPassword2.Text;
@@ -133,20 +134,20 @@ namespace HydrantWiki.Forms
                 //Both aren't null
                 if (pwd1.Length < 8)
                 {
-                    message1 = "Enter Password (Too Short)";
+                    message1 = DisplayConstants.EnterNewPassword + " " + DisplayConstants.TooShort;
                 } else {
                     if (pwd1.Equals(pwd2))
                     {
                         passwordsMatch = true;
-                        message2 = "Verify Password (Matching)";
+                        message2 = DisplayConstants.VerifyNewPassword + " " + DisplayConstants.Matching;
                     } else {
-                        message2 = "Verify Password (Not Matching)";
+                        message2 = DisplayConstants.VerifyNewPassword + " " + DisplayConstants.NotMatching;
                     }
                 }
             } else {
                 if (pwd1.Length < 8)
                 {
-                    message1 = "Enter Password (Too short)";
+                    message1 = DisplayConstants.EnterNewPassword + " " + DisplayConstants.TooShort;
                 }
             }
 
@@ -184,7 +185,10 @@ namespace HydrantWiki.Forms
 
                     if (!string.IsNullOrEmpty(response.Message))
                     {
-                        await DisplayAlert("HydrantWiki", response.Message, "Ok");
+                        await DisplayAlert(
+                            DisplayConstants.AppName,
+                            response.Message,
+                            DisplayConstants.OK);
                     }
 
                     if (response.Success)
@@ -194,10 +198,16 @@ namespace HydrantWiki.Forms
                 }
                 catch (Exception ex)
                 {
-                    await DisplayAlert("HydrantWiki", "An error occured processing the request", "Ok");
+                    await DisplayAlert(
+                        DisplayConstants.AppName,
+                        DisplayConstants.WebRequestError,
+                        DisplayConstants.OK);
                 }
             } else {
-                await DisplayAlert("HydrantWiki", "User data not complete", "Ok");
+                await DisplayAlert(
+                    DisplayConstants.AppName,
+                    DisplayConstants.UserDataNotComplete,
+                    DisplayConstants.OK);
             }
         }
 

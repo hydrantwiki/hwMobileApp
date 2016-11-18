@@ -12,15 +12,14 @@ using Foundation;
 using UIKit;
 using CoreGraphics;
 using System.Drawing;
+using System.Linq;
 
 namespace HydrantWiki.iOS.Managers
 {
     public class PlatformManager : IPlatformManager
     {
-
         public PlatformManager()
         {
-
             string dataFolder = DataFolder;
 
             if (!Directory.Exists(dataFolder))

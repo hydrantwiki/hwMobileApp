@@ -15,10 +15,6 @@ namespace HydrantWiki.Objects
 
         public List<Hydrant> NearbyHydrants { get; set; }
 
-        public string ImageUrl { get; set; }
-
-        public string ThumbnailUrl { get; set; }
-
         public string DisplayUsername
         {
             get

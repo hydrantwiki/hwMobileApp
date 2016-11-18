@@ -62,7 +62,7 @@ namespace HydrantWiki.Forms
             m_btnCreateAccount = new HWButton()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Text = DisplayConstants.CreateAccount,
+                Text = DisplayConstants.CreateAnAccount,
                 BackgroundColor = Color.White,
                 BorderWidth = 1,
                 BorderColor = Color.Black,

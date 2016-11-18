@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
 using HydrantWiki.ResponseObjects;
@@ -32,9 +33,9 @@ namespace HydrantWiki.Forms
         bool emailAvailable;
         bool passwordsMatch;
 
-        public CreateAccount() : base("Create Account")
+        public CreateAccount() : base(DisplayConstants.FormCreateAccount)
         {
-            m_Header = new HWHeader("Create Account");
+            m_Header = new HWHeader(DisplayConstants.FormCreateAccount);
             OutsideLayout.Children.Add(m_Header);
             usernameAvailable = false;
             emailAvailable = false;
@@ -42,7 +43,7 @@ namespace HydrantWiki.Forms
 
             m_btnCancel = new HWButton
             {
-                Text = "Cancel",
+                Text = DisplayConstants.Cancel,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.White
@@ -61,7 +62,7 @@ namespace HydrantWiki.Forms
 
             lblPickUsername = new HWLabel
             {
-                Text = "Pick your username",
+                Text = DisplayConstants.PickUsername,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalTextAlignment = TextAlignment.Start
             };
@@ -69,14 +70,14 @@ namespace HydrantWiki.Forms
 
             txtUsername = new HWTextEntry
             {
-                Title = "Username"
+                Title = DisplayConstants.Username
             };
             txtUsername.TextChanged += Username_TextChanged;
             InsideLayout.Children.Add(txtUsername);
 
             lblEnterEmail = new HWLabel
             {
-                Text = "Enter your email",
+                Text = DisplayConstants.EnterEmail,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalTextAlignment = TextAlignment.Start
             };
@@ -84,20 +85,20 @@ namespace HydrantWiki.Forms
 
             txtEmail = new HWTextEntry
             {
-                Title = "Email"
+                Title = DisplayConstants.Email
             };
             txtEmail.TextChanged += Email_TextChanged;
             InsideLayout.Children.Add(txtEmail);
 
             lblPassword1 = new HWLabel
             {
-                Text = "Enter Password"
+                Text = DisplayConstants.EnterPassword
             };
             InsideLayout.Children.Add(lblPassword1);
 
             txtPassword1 = new HWTextEntry
             {
-                Title = "Password",
+                Title = DisplayConstants.Password,
                 IsPassword = true
             };
             txtPassword1.TextChanged += Password_TextChanged;
@@ -105,13 +106,13 @@ namespace HydrantWiki.Forms
 
             lblPassword2 = new HWLabel
             {
-                Text = "Verify Password"
+                Text = DisplayConstants.VerifyPassword
             };
             InsideLayout.Children.Add(lblPassword2);
 
             txtPassword2 = new HWTextEntry
             {
-                Title = "Password",
+                Title = DisplayConstants.Password,
                 IsPassword = true
             };
             txtPassword2.TextChanged += Password_TextChanged;
@@ -119,7 +120,7 @@ namespace HydrantWiki.Forms
 
             btnCreateAccount = new HWButton
             {
-                Text = "Create Account",
+                Text = DisplayConstants.CreateAccount,
                 BorderColor = Color.Black,
                 BorderWidth = 1,
                 BackgroundColor = Color.White,
@@ -143,10 +144,10 @@ namespace HydrantWiki.Forms
 
             if (username.Length == 0)
             {
-                message = "Enter your email";
+                message = DisplayConstants.PickUsername;
             } else if (username.Length < 6)
             {
-                message = "Pick your username (Too short)";
+                message = DisplayConstants.PickUsername + " " + DisplayConstants.TooShort;
             } else {
                 HWManager manager = HWManager.GetInstance();
 
@@ -157,14 +158,14 @@ namespace HydrantWiki.Forms
                     if (available)
                     {
                         usernameAvailable = true;
-                        message = "Pick your username (Available)";
+                        message = DisplayConstants.PickUsername + " " + DisplayConstants.Available;
                     } else {
-                        message = "Pick your username (Not Available)";
+                        message = DisplayConstants.PickUsername + " " + DisplayConstants.NotAvailable; ;
                     }
                 }
                 catch (Exception ex)
                 {
-                    message = "Pick your username";
+                    message = DisplayConstants.PickUsername;
                 }
             }
 
@@ -198,7 +199,7 @@ namespace HydrantWiki.Forms
 
             if (email.Length == 0)
             {
-                message = "Enter your email";
+                message = DisplayConstants.EnterEmail;
             } else {
                 if (email.Contains("@")
                     && email.Contains("."))
@@ -210,12 +211,12 @@ namespace HydrantWiki.Forms
                     if (available)
                     {
                         emailAvailable = true;
-                        message = "Enter your email (Available)";
+                        message = DisplayConstants.EnterEmail + " " + DisplayConstants.Available;
                     } else {
-                        message = "Enter your email (Not Available)";
+                        message = DisplayConstants.EnterEmail + " " + DisplayConstants.NotAvailable;
                     }
                 } else {
-                    message = "Enter your email";
+                    message = DisplayConstants.EnterEmail;
                 }
             }
 
@@ -229,8 +230,8 @@ namespace HydrantWiki.Forms
         void Password_TextChanged(object sender, TextChangedEventArgs e)
         {
             passwordsMatch = false;
-            string message1 = "Enter Password";
-            string message2 = "Verify Password";
+            string message1 = DisplayConstants.EnterPassword;
+            string message2 = DisplayConstants.VerifyPassword;
 
             string pwd1 = txtPassword1.Text;
             string pwd2 = txtPassword2.Text;
@@ -241,20 +242,20 @@ namespace HydrantWiki.Forms
                 //Both aren't null
                 if (pwd1.Length < 8)
                 {
-                    message1 = "Enter Password (Too Short)";
+                    message1 = DisplayConstants.EnterPassword + " " + DisplayConstants.TooShort;
                 } else {
                     if (pwd1.Equals(pwd2))
                     {
                         passwordsMatch = true;
-                        message2 = "Verify Password (Matching)";
+                        message2 = DisplayConstants.EnterPassword + " " + DisplayConstants.Matching;
                     } else {
-                        message2 = "Verify Password (Not Matching)";
+                        message2 = DisplayConstants.EnterPassword + " " + DisplayConstants.NotMatching;
                     }
                 }
             } else {
                 if (pwd1.Length < 8)
                 {
-                    message1 = "Enter Password (Too short)";
+                    message1 = DisplayConstants.EnterPassword + " " + DisplayConstants.TooShort;
                 }
             }
 
@@ -293,7 +294,10 @@ namespace HydrantWiki.Forms
 
                     if (!string.IsNullOrEmpty(response.Message))
                     {
-                        await DisplayAlert("HydrantWiki", response.Message, "Ok");
+                        await DisplayAlert(
+                            DisplayConstants.AppName,
+                            response.Message,
+                            DisplayConstants.OK);
                     }
 
                     if (response.Success)
@@ -303,10 +307,16 @@ namespace HydrantWiki.Forms
                 }
                 catch (Exception ex)
                 {
-                    await DisplayAlert("HydrantWiki", "An error occured processing the request", "Ok");
+                    await DisplayAlert(
+                        DisplayConstants.AppName,
+                        DisplayConstants.WebRequestError,
+                        DisplayConstants.OK);
                 }
             } else {
-                await DisplayAlert("HydrantWiki", "User data not complete", "Ok");
+                await DisplayAlert(
+                    DisplayConstants.AppName,
+                    DisplayConstants.UserDataNotComplete,
+                    DisplayConstants.OK);
             }
         }
 

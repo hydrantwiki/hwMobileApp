@@ -34,5 +34,6 @@ namespace HydrantWiki.Interfaces
         string DataFolder { get; }
 
         string ImageFolder { get; }
+
     }
 }
