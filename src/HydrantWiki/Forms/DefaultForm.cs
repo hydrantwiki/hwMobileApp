@@ -13,7 +13,7 @@ namespace HydrantWiki.Forms
     {
         private RecentTagsListView m_lstRecentTags;
         private HWLabel m_lblTags;
-        private HWButton m_btnTagHydrant;
+        private HWFormButton m_btnTagHydrant;
         private HWLabel m_lblRecent;
 
         public DefaultForm() : base(DisplayConstants.FormHome)
@@ -27,13 +27,10 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(m_lblTags);
 
-            m_btnTagHydrant = new HWButton
+            m_btnTagHydrant = new HWFormButton
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Text = DisplayConstants.TagHydrant,
-                BackgroundColor = Color.White,
-                BorderWidth = 1,
-                BorderColor = Color.Black,
                 Margin = new Thickness(10, 10, 10, 10)
             };
             m_btnTagHydrant.Clicked += TagHydrant_Clicked;

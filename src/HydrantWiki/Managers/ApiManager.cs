@@ -24,13 +24,13 @@ namespace HydrantWiki.Managers
         /// </summary>
         /// <param name="_username">Username.</param>
         /// <param name="_password">Password.</param>
-        public User Authenticate(string _username, string _password)
+        public User Authenticate(string _email, string _password)
         {
             HWRestRequest request = new HWRestRequest();
             request.Method = HWRestMethods.Post;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = "/api/authorize";
-            request.Headers.Add("Username", _username);
+            request.Headers.Add("Email", _email);
             request.Headers.Add("Password", _password);
             request.Timeout = 3000;
 
@@ -357,6 +357,14 @@ namespace HydrantWiki.Managers
                 JsonConvert.DeserializeObject<CreateAccountResponse>(response.Body);
 
             return responseObject;
+        }
+
+        public void Log(string message)
+        {
+            Guid installId = m_HWManager.SettingManager.GetInstallId();
+
+
+
         }
     }
 }

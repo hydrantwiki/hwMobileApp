@@ -13,7 +13,7 @@ namespace HydrantWiki.Forms
                                int? spacing = null)
         {
             Title = title;
-            BackgroundColor = Color.FromHex(UIConstants.DetailFormBackgroundColor);
+            BackgroundColor = Color.FromHex(UIConstants.AbstractFormBackground);
 
             if (Device.Idiom == TargetIdiom.Phone)
             {

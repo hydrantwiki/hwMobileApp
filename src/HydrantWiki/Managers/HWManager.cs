@@ -94,9 +94,9 @@ namespace HydrantWiki.Managers
             return true;
         }
 
-        public bool Login(string username, string password)
+        public bool Login(string email, string password)
         {
-            User user = m_ApiManager.Authenticate(username, password);
+            User user = m_ApiManager.Authenticate(email, password);
 
             if (user != null)
             {

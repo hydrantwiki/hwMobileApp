@@ -9,7 +9,7 @@ namespace HydrantWiki.Controls
 
         public HWButtonBar()
         {
-            BackgroundColor = Color.FromHex(UIConstants.ButtonBarColor);
+            BackgroundColor = Color.FromHex(UIConstants.HWButtonBarColor);
 
             m_Buttons = new StackLayout
             {
@@ -43,7 +43,7 @@ namespace HydrantWiki.Controls
                 HorizontalOptions = _horizontalOptions,
                 VerticalOptions = LayoutOptions.Center,
                 WidthRequest = _width,
-                TextColor = Color.FromHex(UIConstants.ButtonBarTextColor),
+                TextColor = Color.FromHex(UIConstants.HWButtonBarTextColor),
                 FontAttributes = FontAttributes.Bold,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button))
             };

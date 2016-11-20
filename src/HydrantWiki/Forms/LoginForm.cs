@@ -8,24 +8,25 @@ namespace HydrantWiki.Forms
 {
     public class LoginForm : AbstractPage
     {
-        private HWTextEntry m_txtUsername;
+        private HWTextEntry m_txtEmail;
         private HWTextEntry m_txtPassword;
         private HWHeader m_Header;
-        private HWButton m_btnLogin;
-        private HWButton m_btnForgotPassword;
-        private HWButton m_btnCreateAccount;
+        private HWFormButton m_btnLogin;
+        private HWFormButton m_btnForgotPassword;
+        private HWFormButton m_btnCreateAccount;
+        private ContentView spacer;
 
         public LoginForm() : base(DisplayConstants.Login)
         {
             m_Header = new HWHeader(DisplayConstants.Login);
             OutsideLayout.Children.Add(m_Header);
 
-            m_txtUsername = new HWTextEntry()
+            m_txtEmail = new HWTextEntry()
             {
-                Title = DisplayConstants.Username,
-                Placeholder = DisplayConstants.UsernameInstruction
+                Title = DisplayConstants.Email,
+                Placeholder = DisplayConstants.EmailInstruction
             };
-            OutsideLayout.Children.Add(m_txtUsername);
+            OutsideLayout.Children.Add(m_txtEmail);
 
             m_txtPassword = new HWTextEntry()
             {
@@ -35,37 +36,35 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(m_txtPassword);
 
-            m_btnLogin = new HWButton()
+            m_btnLogin = new HWFormButton()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Text = DisplayConstants.Login,
-                BackgroundColor = Color.White,
-                BorderWidth = 1,
-                BorderColor = Color.Black,
                 Margin = new Thickness(10, 10, 10, 10)
             };
             m_btnLogin.Clicked += btnLoginClicked;
             OutsideLayout.Children.Add(m_btnLogin);
 
-            m_btnForgotPassword = new HWButton()
+            spacer = new ContentView
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            OutsideLayout.Children.Add(spacer);
+
+            m_btnForgotPassword = new HWFormButton()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Text = DisplayConstants.ForgotPassword,
-                BackgroundColor = Color.White,
-                BorderWidth = 1,
-                BorderColor = Color.Black,
-                Margin = new Thickness(10, 50, 10, 10)
+                Margin = new Thickness(10, 10, 10, 10)
             };
             m_btnForgotPassword.Clicked += btnForgotPasswordClicked;
             OutsideLayout.Children.Add(m_btnForgotPassword);
 
-            m_btnCreateAccount = new HWButton()
+            m_btnCreateAccount = new HWFormButton()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Text = DisplayConstants.CreateAnAccount,
-                BackgroundColor = Color.White,
-                BorderWidth = 1,
-                BorderColor = Color.Black,
                 Margin = new Thickness(10, 10, 10, 10)
             };
             m_btnCreateAccount.Clicked += btnCreateAccountClicked;
@@ -84,10 +83,10 @@ namespace HydrantWiki.Forms
 
         void btnLoginClicked(object sender, EventArgs e)
         {
-            string username = m_txtUsername.Text;
+            string email = m_txtEmail.Text;
             string password = m_txtPassword.Text;
 
-            if (string.IsNullOrWhiteSpace(username)
+            if (string.IsNullOrWhiteSpace(email)
                 || string.IsNullOrWhiteSpace(password))
             {
                 DisplayAlert(
@@ -95,7 +94,7 @@ namespace HydrantWiki.Forms
                     DisplayConstants.UsernameAndPasswordRequired,
                     DisplayConstants.OK);
             } else {
-                bool result = HWManager.GetInstance().Login(username, password);
+                bool result = HWManager.GetInstance().Login(email, password);
 
                 if (result)
                 {

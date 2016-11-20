@@ -20,7 +20,7 @@ namespace HydrantWiki.Cells
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label))
             };
             m_lblCellText.SetBinding(Label.TextProperty, "Title");
-            m_lblCellText.TextColor = Color.FromHex(UIConstants.MenuListTextColor);
+            m_lblCellText.TextColor = Color.FromHex(UIConstants.MenuPageListTextColor);
             m_lblCellText.VerticalTextAlignment = TextAlignment.Center;
             m_Layout.Children.Add(m_lblCellText);
 

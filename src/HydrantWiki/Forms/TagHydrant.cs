@@ -29,7 +29,7 @@ namespace HydrantWiki.Forms
 
         private StackLayout m_layoutPhoto;
         private Image m_imgHydrant;
-        private HWButton m_btnTakePhoto;
+        private HWFormButton m_btnTakePhoto;
         private HWLabel m_lblCount;
         private HWLabel m_lblLatitude;
         private HWLabel m_lblLongitude;
@@ -42,7 +42,7 @@ namespace HydrantWiki.Forms
             m_MediaPicker = m_MediaPicker ?? device.MediaPicker;
 
 
-            m_Header = new HWHeader("Hydrant Details")
+            m_Header = new HWHeader(DisplayConstants.FormTagHydrant)
             {
                 Margin = new Thickness(0, 0, 0, 0)
             };
@@ -95,16 +95,12 @@ namespace HydrantWiki.Forms
             };
             imageFrame.Content = m_imgHydrant;
 
-            m_btnTakePhoto = new HWButton
+            m_btnTakePhoto = new HWFormButton
             {
                 Text = DisplayConstants.TakePhoto,
                 VerticalOptions = LayoutOptions.Center,
                 WidthRequest = 80,
                 HeightRequest = 40,
-                BorderColor = Color.Black,
-                BorderWidth = 1,
-                BackgroundColor = Color.White,
-                FontAttributes = FontAttributes.Bold,
                 FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Button))
             };
             m_btnTakePhoto.Clicked += TakePhoto_Clicked;

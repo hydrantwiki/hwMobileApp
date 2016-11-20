@@ -41,7 +41,7 @@ namespace HydrantWiki.Controls
             BoxView line = new BoxView
             {
                 HeightRequest = 1,
-                Color = Color.FromHex(UIConstants.LineColor),
+                Color = Color.FromHex(UIConstants.HeaderLineColor),
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
 

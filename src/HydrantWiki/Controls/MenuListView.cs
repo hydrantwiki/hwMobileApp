@@ -12,7 +12,7 @@ namespace HydrantWiki.Controls
     {
         public MenuListView()
         {
-            BackgroundColor = Color.FromHex(UIConstants.MenuListColor);
+            BackgroundColor = Color.FromHex(UIConstants.MenuPageListBackgroundColor);
 
             ItemTemplate = new DataTemplate(typeof(MenuCell));
 

@@ -27,7 +27,7 @@ namespace HydrantWiki.Forms
         HWLabel lblPassword2;
         HWTextEntry txtPassword2;
 
-        HWButton btnCreateAccount;
+        HWFormButton btnCreateAccount;
 
         bool usernameAvailable;
         bool emailAvailable;
@@ -118,12 +118,9 @@ namespace HydrantWiki.Forms
             txtPassword2.TextChanged += Password_TextChanged;
             InsideLayout.Children.Add(txtPassword2);
 
-            btnCreateAccount = new HWButton
+            btnCreateAccount = new HWFormButton
             {
                 Text = DisplayConstants.CreateAccount,
-                BorderColor = Color.Black,
-                BorderWidth = 1,
-                BackgroundColor = Color.White,
                 IsEnabled = false,
                 Margin = new Thickness(0, 20, 0, 0)
             };

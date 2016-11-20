@@ -12,10 +12,11 @@ namespace HydrantWiki.Forms
 {
     public class SettingsForm : AbstractPage
     {
-        private HWButton btnLogout;
-        private HWButton btnChangePassword;
+        private HWFormButton btnLogout;
+        private HWFormButton btnChangePassword;
         private HWLabel lblUnsynced;
-        private HWButton btnSync;
+        private HWFormButton btnSync;
+        private ContentView spacer;
 
         private StackLayout m_InsideLayout;
 
@@ -37,34 +38,32 @@ namespace HydrantWiki.Forms
             };
             m_InsideLayout.Children.Add(lblUnsynced);
 
-            btnSync = new HWButton
+            btnSync = new HWFormButton
             {
                 Text = DisplayConstants.SyncTags,
-                BackgroundColor = Color.White,
-                BorderWidth = 1,
-                BorderColor = Color.Black,
                 IsEnabled = false
             };
             btnSync.Clicked += Sync_Clicked;
             m_InsideLayout.Children.Add(btnSync);
 
-            btnChangePassword = new HWButton
+            spacer = new ContentView
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            m_InsideLayout.Children.Add(spacer);
+
+            btnChangePassword = new HWFormButton
             {
                 Text = DisplayConstants.ChangePassword,
-                BackgroundColor = Color.White,
-                BorderWidth = 1,
-                BorderColor = Color.Black,
                 Margin = new Thickness(0, 10, 0, 0)
             };
             btnChangePassword.Clicked += ChangePassword_Clicked;
             m_InsideLayout.Children.Add(btnChangePassword);
 
-            btnLogout = new HWButton
+            btnLogout = new HWFormButton
             {
                 Text = DisplayConstants.Logout,
-                BackgroundColor = Color.White,
-                BorderWidth = 1,
-                BorderColor = Color.Black,
                 Margin = new Thickness(0, 10, 0, 0),
                 VerticalOptions = LayoutOptions.End
             };

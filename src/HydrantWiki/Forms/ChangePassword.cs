@@ -24,7 +24,7 @@ namespace HydrantWiki.Forms
         HWLabel lblPassword2;
         HWTextEntry txtPassword2;
 
-        HWButton btnChangePassword;
+        HWFormButton btnChangePassword;
 
         bool passwordsMatch;
 
@@ -96,12 +96,9 @@ namespace HydrantWiki.Forms
             txtPassword2.TextChanged += Password_TextChanged;
             InsideLayout.Children.Add(txtPassword2);
 
-            btnChangePassword = new HWButton
+            btnChangePassword = new HWFormButton
             {
                 Text = DisplayConstants.ChangePassword,
-                BorderColor = Color.Black,
-                BorderWidth = 1,
-                BackgroundColor = Color.White,
                 IsEnabled = false,
                 Margin = new Thickness(0, 20, 0, 0)
             };

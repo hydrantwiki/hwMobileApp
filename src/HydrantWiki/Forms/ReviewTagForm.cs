@@ -15,16 +15,13 @@ namespace HydrantWiki.Forms
     {
         private TagToReview m_Tag;
         private HWHeader m_Header;
-        private HWButtonBar m_Bar;
         private HWButton m_Cancel;
 
         private HWLabel m_User;
 
-        private Grid m_Buttons;
-        private HWButton m_Approve;
-        private HWButton m_Reject;
+        private HWFormButton m_Approve;
+        private HWFormButton m_Reject;
 
-        private Grid m_Middle;
         private ReviewTagMap m_Map;
         private Image m_Image;
 
@@ -57,31 +54,25 @@ namespace HydrantWiki.Forms
 
             int left1 = (HydrantWikiApp.ScreenWidth - 200) / 4;
 
-            m_Reject = new HWButton
+            m_Reject = new HWFormButton
             {
                 Text = DisplayConstants.Reject,
                 WidthRequest = 100,
                 HeightRequest = 30,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                BorderColor = Color.Black,
-                BorderWidth = 1,
-                BackgroundColor = Color.White
+                VerticalOptions = LayoutOptions.Center
             };
             m_Reject.Clicked += RejectClicked;
             AbsoluteLayout.SetLayoutBounds(m_Reject, new Rectangle(left1, 10, 100, 30));
             layout.Children.Add(m_Reject);
 
-            m_Approve = new HWButton
+            m_Approve = new HWFormButton
             {
                 Text = DisplayConstants.Approve,
                 WidthRequest = 100,
                 HeightRequest = 30,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                BorderColor = Color.Black,
-                BorderWidth = 1,
-                BackgroundColor = Color.White
+                VerticalOptions = LayoutOptions.Center
             };
             m_Approve.Clicked += ApproveClicked;
             AbsoluteLayout.SetLayoutBounds(m_Approve, new Rectangle(3 * left1 + 100, 10, 100, 30));

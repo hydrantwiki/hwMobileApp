@@ -133,9 +133,9 @@ namespace HydrantWiki.Controls
 
                 if (base.IsEnabled)
                 {
-                    m_txtEntry.BackgroundColor = Color.FromHex(UIConstants.TextBackgroundEnabled);
+                    m_txtEntry.BackgroundColor = Color.FromHex(UIConstants.HWTextEntryBackgroundEnabled);
                 } else {
-                    m_txtEntry.BackgroundColor = Color.FromHex(UIConstants.TextBackgroundDisabled);
+                    m_txtEntry.BackgroundColor = Color.FromHex(UIConstants.HWTextEntryBackgroundDisabled);
                 }
             }
         }
