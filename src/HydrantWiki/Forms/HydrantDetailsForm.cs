@@ -1,4 +1,5 @@
-﻿using HydrantWiki.Controls;
+﻿using HydrantWiki.Constants;
+using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
 using HydrantWiki.Objects;
 using Xamarin.Forms;
@@ -15,9 +16,9 @@ namespace HydrantWiki.Forms
         private HWLabel m_lblLatitude;
         private HWLabel m_lblLongitude;
 
-        public HydrantDetailsForm() : base("Hydrant Details")
+        public HydrantDetailsForm() : base(DisplayConstants.FormHydrantDetails)
         {
-            m_Header = new HWHeader("Hydrant Details")
+            m_Header = new HWHeader(DisplayConstants.FormHydrantDetails)
             {
                 Margin = new Thickness(0, 0, 0, 0)
             };
@@ -25,7 +26,7 @@ namespace HydrantWiki.Forms
 
             CancelButton = new HWButton
             {
-                Text = "Cancel",
+                Text = DisplayConstants.Cancel,
                 TextColor = Color.White,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button))
             };
@@ -97,7 +98,7 @@ namespace HydrantWiki.Forms
                 m_imgMainImage.Source = ImageSource.FromUri(new System.Uri(_hydrant.ImageUrl));
             }
 
-            m_lblUsername.Text = string.Format("Username: {0}", _hydrant.Username);
+            m_lblUsername.Text = string.Format(DisplayConstants.UsernameDisplay, _hydrant.Username);
 
             if (_hydrant.Position != null)
             {

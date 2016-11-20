@@ -1,4 +1,5 @@
 ﻿using System;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using Xamarin.Forms;
 
@@ -9,14 +10,14 @@ namespace HydrantWiki.Forms
         HWHeader m_Header;
         HWButton m_btnCancel;
 
-        public ForgotPassword() : base("Forgot Password")
+        public ForgotPassword() : base(DisplayConstants.FormForgotPassword)
         {
-            m_Header = new HWHeader("Forgot Password");
+            m_Header = new HWHeader(DisplayConstants.FormForgotPassword);
             OutsideLayout.Children.Add(m_Header);
 
             m_btnCancel = new HWButton
             {
-                Text = "Cancel",
+                Text = DisplayConstants.Cancel,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.White

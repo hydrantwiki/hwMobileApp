@@ -17,7 +17,7 @@ namespace HydrantWiki.Forms
         {
             m_App = _app;
 
-            Title = "HydrantWiki";
+            Title = DisplayConstants.AppName;
 
             var menuPage = new MenuPage();
             menuPage.Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuOption);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
@@ -15,7 +16,7 @@ namespace HydrantWiki.Forms
         private LocationManager m_Location;
         private List<Hydrant> m_Hydrants = null;
 
-        public NearbyHydrants() : base("Nearby Hydrants")
+        public NearbyHydrants() : base(DisplayConstants.FormNearbyHydrants)
         {
             m_Location = new LocationManager();
 

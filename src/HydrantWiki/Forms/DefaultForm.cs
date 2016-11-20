@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
@@ -15,13 +16,13 @@ namespace HydrantWiki.Forms
         private HWButton m_btnTagHydrant;
         private HWLabel m_lblRecent;
 
-        public DefaultForm() : base("Home")
+        public DefaultForm() : base(DisplayConstants.FormHome)
         {
             m_lblTags = new HWLabel
             {
                 HorizontalTextAlignment = TextAlignment.Center,
                 VerticalTextAlignment = TextAlignment.Center,
-                Text = "Loading Tag Count",
+                Text = DisplayConstants.LoadingTagCount,
                 Margin = new Thickness(0, 10, 0, 10)
             };
             OutsideLayout.Children.Add(m_lblTags);
@@ -29,7 +30,7 @@ namespace HydrantWiki.Forms
             m_btnTagHydrant = new HWButton
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Text = "Tag Hydrant",
+                Text = DisplayConstants.TagHydrant,
                 BackgroundColor = Color.White,
                 BorderWidth = 1,
                 BorderColor = Color.Black,
@@ -43,7 +44,7 @@ namespace HydrantWiki.Forms
                 HorizontalTextAlignment = TextAlignment.Center,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Text = "My Recent Tags",
+                Text = DisplayConstants.MyRecentTags,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 Margin = new Thickness(0, 10, 0, 10)
 
@@ -96,7 +97,7 @@ namespace HydrantWiki.Forms
 
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            m_lblTags.Text = string.Format("Total Tags Collected - {0}", response.TagCount);
+                            m_lblTags.Text = string.Format(DisplayConstants.TotalTagsCollected, response.TagCount);
                         });
 
                         return;
@@ -113,7 +114,7 @@ namespace HydrantWiki.Forms
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                m_lblTags.Text = string.Format("Total Tags Collected - {0} (Cached)", count);
+                m_lblTags.Text = string.Format(DisplayConstants.TotalTagsCollectedCached, count);
             });
         }
     }

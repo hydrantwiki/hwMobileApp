@@ -1,5 +1,6 @@
 ﻿using System;
 using HydrantWiki.Cells;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
 using HydrantWiki.Managers;
@@ -32,14 +33,14 @@ namespace HydrantWiki.Forms
         private ReviewTagHydrantsListView m_Hydrants;
 
 
-        public ReviewTagForm() : base("Review Tag")
+        public ReviewTagForm() : base(DisplayConstants.FormReviewTag)
         {
-            m_Header = new HWHeader("Review Tag");
+            m_Header = new HWHeader(DisplayConstants.FormReviewTag);
             OutsideLayout.Children.Add(m_Header);
 
             m_Cancel = new HWButton
             {
-                Text = "Cancel",
+                Text = DisplayConstants.Cancel,
                 TextColor = Color.White,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button)),
 
@@ -58,7 +59,7 @@ namespace HydrantWiki.Forms
 
             m_Reject = new HWButton
             {
-                Text = "Reject",
+                Text = DisplayConstants.Reject,
                 WidthRequest = 100,
                 HeightRequest = 30,
                 HorizontalOptions = LayoutOptions.Center,
@@ -73,7 +74,7 @@ namespace HydrantWiki.Forms
 
             m_Approve = new HWButton
             {
-                Text = "Approve",
+                Text = DisplayConstants.Approve,
                 WidthRequest = 100,
                 HeightRequest = 30,
                 HorizontalOptions = LayoutOptions.Center,
@@ -148,7 +149,7 @@ namespace HydrantWiki.Forms
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 HorizontalTextAlignment = TextAlignment.Start,
                 VerticalTextAlignment = TextAlignment.Center,
-                Text = "Nearby Hydrants",
+                Text = DisplayConstants.FormNearbyHydrants,
                 Margin = new Thickness(10, 5, 10, 10)
             };
             AbsoluteLayout.SetLayoutBounds(m_Nearby, new Rectangle(0, 80 + middleHeight, AbsoluteLayout.AutoSize, 30));
@@ -191,7 +192,7 @@ namespace HydrantWiki.Forms
                         Pin = new Pin
                         {
                             Type = PinType.Place,
-                            Label = "Hydrant",
+                            Label = DisplayConstants.Hydrant,
                             Position = new Position(hydrant.Position.Latitude, hydrant.Position.Longitude)
                         }
                     };
@@ -210,7 +211,7 @@ namespace HydrantWiki.Forms
                 Pin pin = new Pin()
                 {
                     Type = PinType.Generic,
-                    Label = "New Tag",
+                    Label = DisplayConstants.NewTag,
                     Position = new Position(m_Tag.Position.Latitude, m_Tag.Position.Longitude)
                 };
 
@@ -252,9 +253,9 @@ namespace HydrantWiki.Forms
                 Navigation.PopModalAsync(true);
             } else {
                 DisplayAlert(
-                    "HydrantWiki",
+                    DisplayConstants.AppName,
                     string.Format("An error occurred - {0}", response.Message),
-                    "Ok");
+                    DisplayConstants.OK);
             }
         }
 
@@ -269,9 +270,9 @@ namespace HydrantWiki.Forms
                 Navigation.PopModalAsync(true);
             } else {
                 DisplayAlert(
-                    "HydrantWiki",
+                    DisplayConstants.AppName,
                     string.Format("An error occurred - {0}", response.Message),
-                    "Ok");
+                    DisplayConstants.OK);
             }
         }
 
@@ -286,9 +287,9 @@ namespace HydrantWiki.Forms
                 Navigation.PopModalAsync(true);
             } else {
                 DisplayAlert(
-                    "HydrantWiki",
+                    DisplayConstants.AppName,
                     string.Format("An error occurred - {0}", response.Message),
-                    "Ok");
+                    DisplayConstants.OK);
             }
         }
     }

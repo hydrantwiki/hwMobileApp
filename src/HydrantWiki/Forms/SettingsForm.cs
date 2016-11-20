@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
@@ -18,7 +19,7 @@ namespace HydrantWiki.Forms
 
         private StackLayout m_InsideLayout;
 
-        public SettingsForm() : base("Settings")
+        public SettingsForm() : base(DisplayConstants.FormSettings)
         {
             m_InsideLayout = new StackLayout
             {
@@ -31,14 +32,14 @@ namespace HydrantWiki.Forms
 
             lblUnsynced = new HWLabel
             {
-                Text = "Tags unsent: ?",
+                Text = DisplayConstants.TagsUnsent,
                 HorizontalTextAlignment = TextAlignment.Center
             };
             m_InsideLayout.Children.Add(lblUnsynced);
 
             btnSync = new HWButton
             {
-                Text = "Sync Tags",
+                Text = DisplayConstants.SyncTags,
                 BackgroundColor = Color.White,
                 BorderWidth = 1,
                 BorderColor = Color.Black,
@@ -49,7 +50,7 @@ namespace HydrantWiki.Forms
 
             btnChangePassword = new HWButton
             {
-                Text = "Change Password",
+                Text = DisplayConstants.ChangePassword,
                 BackgroundColor = Color.White,
                 BorderWidth = 1,
                 BorderColor = Color.Black,
@@ -60,7 +61,7 @@ namespace HydrantWiki.Forms
 
             btnLogout = new HWButton
             {
-                Text = "Logout",
+                Text = DisplayConstants.Logout,
                 BackgroundColor = Color.White,
                 BorderWidth = 1,
                 BorderColor = Color.Black,
@@ -72,11 +73,11 @@ namespace HydrantWiki.Forms
 
             if (HWManager.GetInstance().PlatformManager.HasNetworkConnectivity)
             {
-                btnSync.Text = "Sync Tags";
+                btnSync.Text = DisplayConstants.SyncTags;
                 btnSync.IsEnabled = true;
             } else
             {
-                btnSync.Text = "Sync Tags - No Network";
+                btnSync.Text = DisplayConstants.SyncTagsNoNetwork;
                 btnSync.IsEnabled = false;
             }
 
@@ -91,7 +92,7 @@ namespace HydrantWiki.Forms
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    lblUnsynced.Text = string.Format("Tags unsent: {0}", tags.Count);
+                    lblUnsynced.Text = string.Format(DisplayConstants.TagsUnsentNumber, tags.Count);
                     if (tags.Count > 0)
                     {
                         btnSync.IsEnabled = true;

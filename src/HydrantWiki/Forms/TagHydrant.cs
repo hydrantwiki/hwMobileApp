@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
 using HydrantWiki.Managers;
@@ -34,7 +35,7 @@ namespace HydrantWiki.Forms
         private HWLabel m_lblLongitude;
 
         public TagHydrant()
-            : base("Tag Hydrant")
+            : base(DisplayConstants.FormTagHydrant)
         {
             m_MediaPicker = DependencyService.Get<IMediaPicker>();
             var device = Resolver.Resolve<IDevice>();
@@ -49,7 +50,7 @@ namespace HydrantWiki.Forms
 
             CancelButton = new HWButton
             {
-                Text = "Cancel",
+                Text = DisplayConstants.Cancel,
                 TextColor = Color.White,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button))
             };
@@ -58,7 +59,7 @@ namespace HydrantWiki.Forms
 
             SaveButton = new HWButton
             {
-                Text = "Save",
+                Text = DisplayConstants.Save,
                 TextColor = Color.White,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Button))
             };
@@ -96,7 +97,7 @@ namespace HydrantWiki.Forms
 
             m_btnTakePhoto = new HWButton
             {
-                Text = "Take Photo",
+                Text = DisplayConstants.TakePhoto,
                 VerticalOptions = LayoutOptions.Center,
                 WidthRequest = 80,
                 HeightRequest = 40,
@@ -129,21 +130,21 @@ namespace HydrantWiki.Forms
 
             m_lblCount = new HWLabel
             {
-                Text = "Position Count:",
+                Text = DisplayConstants.PositionCount,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             lableLayout.Children.Add(m_lblCount);
 
             m_lblLatitude = new HWLabel
             {
-                Text = "Latitude:",
+                Text = DisplayConstants.Latitude,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             lableLayout.Children.Add(m_lblLatitude);
 
             m_lblLongitude = new HWLabel
             {
-                Text = "Longitude:",
+                Text = DisplayConstants.Longitude,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             lableLayout.Children.Add(m_lblLongitude);
@@ -162,7 +163,10 @@ namespace HydrantWiki.Forms
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    m_lblCount.Text = string.Format("Position Count: {0}", position.CountOfPositions);
+                    m_lblCount.Text = string.Format(
+                        DisplayConstants.PositionCountNumber,
+                        position.CountOfPositions);
+
                     m_lblLatitude.Text = position.Latitude.AsLatitude();
                     m_lblLongitude.Text = position.Longitude.AsLongitude();
                 });

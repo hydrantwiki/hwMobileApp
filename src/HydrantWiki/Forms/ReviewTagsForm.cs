@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
@@ -13,7 +14,7 @@ namespace HydrantWiki.Forms
     {
         private ReviewTagListView m_lstTags;
 
-        public ReviewTagsForm() : base("Review Tags")
+        public ReviewTagsForm() : base(DisplayConstants.FormReviewTags)
         {
             m_lstTags = new ReviewTagListView
             {

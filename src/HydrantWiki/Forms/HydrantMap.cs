@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
 using HydrantWiki.Managers;
@@ -15,7 +16,7 @@ namespace HydrantWiki.Forms
         private HydrantsMap m_Map;
         private LocationManager m_Location;
 
-        public HydrantMap() : base("Hydrant Map")
+        public HydrantMap() : base(DisplayConstants.FormHydrantMap)
         {
             m_Loading = true;
 
@@ -76,7 +77,7 @@ namespace HydrantWiki.Forms
                                     Hydrant = item,
                                     Pin = new Pin
                                     {
-                                        Label = "Hydrant",
+                                        Label = DisplayConstants.Hydrant,
                                         Position = new Position(item.Position.Latitude, item.Position.Longitude)
                                     }
                                 };
@@ -121,7 +122,7 @@ namespace HydrantWiki.Forms
                                     Hydrant = item,
                                     Pin = new Pin
                                     {
-                                        Label = "Hydrant",
+                                        Label = DisplayConstants.Hydrant,
                                         Position = new Position(item.Position.Latitude, item.Position.Longitude)
                                     }
                                 };

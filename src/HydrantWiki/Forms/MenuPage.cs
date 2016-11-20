@@ -11,7 +11,7 @@ namespace HydrantWiki.Forms
         public MenuPage()
         {
             //Icon = "settings.png";
-            Title = "Menu"; // The Title property must be set.
+            Title = DisplayConstants.Menu;
             BackgroundColor = Color.FromHex(UIConstants.MenuTitleColor);
 
             Menu = new MenuListView();
@@ -22,7 +22,7 @@ namespace HydrantWiki.Forms
                 Content = new HWLabel
                 {
                     TextColor = Color.FromHex(UIConstants.MenuTitleTextColor),
-                    Text = "MENU",
+                    Text = DisplayConstants.Menu,
                     FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                     FontAttributes = FontAttributes.Bold
                 }
