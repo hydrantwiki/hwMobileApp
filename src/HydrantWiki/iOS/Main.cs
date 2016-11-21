@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
-using UIKit;
-using XLabs.Forms;
+﻿using UIKit;
 
 namespace HydrantWiki.iOS
 {

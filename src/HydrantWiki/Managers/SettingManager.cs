@@ -124,16 +124,23 @@ namespace HydrantWiki.Managers
 
         public Guid GetInstallId()
         {
-            Guid? id = GetGuidSetting(SettingConstants.InstallId);
-
-            if (id == null)
+            try
             {
-                id = Guid.NewGuid();
+                Guid? id = GetGuidSetting(SettingConstants.InstallId);
 
-                SetSetting(SettingConstants.InstallId, id.Value);
+                if (id == null)
+                {
+                    id = Guid.NewGuid();
+
+                    SetSetting(SettingConstants.InstallId, id.Value);
+                }
+
+                return id.Value;
             }
-
-            return id.Value;
+            catch
+            {
+                return Guid.Empty;
+            }
         }
 
         public string GetUsername()

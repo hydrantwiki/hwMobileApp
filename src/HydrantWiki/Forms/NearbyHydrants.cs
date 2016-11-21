@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HydrantWiki.Constants;
 using HydrantWiki.Controls;
@@ -28,16 +27,19 @@ namespace HydrantWiki.Forms
             m_lstNearby.RefreshCommand = new Command(StartRefresh);
             m_lstNearby.ItemSelected += Nearby_ItemSelected;
             OutsideLayout.Children.Add(m_lstNearby);
+
+            HWManager.GetInstance().ApiManager.Log(LogLevels.Info,
+                               string.Format("NearbyHydrants viewed by {0}", HydrantWikiApp.User.Username));
         }
 
         private void StartUpdateLocation()
         {
-            Task t = Task.Factory.StartNew(() => UpdateLocation());
+            Task.Factory.StartNew(() => UpdateLocation());
         }
 
         private void StartRefresh()
         {
-            Task t = Task.Factory.StartNew(() => Refresh());
+            Task.Factory.StartNew(() => Refresh());
         }
 
         private async Task Refresh()
@@ -55,6 +57,9 @@ namespace HydrantWiki.Forms
             GeoPoint position = await m_Location.GetLocation();
 
             m_Hydrants = GetHydrants(position);
+
+            HWManager.GetInstance().ApiManager.Log(LogLevels.Info,
+                   string.Format("NearbyHydrants refreshed by {0}", HydrantWikiApp.User.Username));
 
             Device.BeginInvokeOnMainThread(() =>
             {

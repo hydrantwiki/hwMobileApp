@@ -1,5 +1,4 @@
-﻿using System;
-namespace HydrantWiki.Network
+﻿namespace HydrantWiki.Network
 {
     public enum HWRestMethods
     {

@@ -122,6 +122,8 @@
     <Compile Include="Forms\ForgotPassword.cs" />
     <Compile Include="Controls\HWFormButton.cs" />
     <Compile Include="Objects\AppConfiguration.cs" />
+    <Compile Include="Objects\LogglyMessage.cs" />
+    <Compile Include="Constants\LogLevels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

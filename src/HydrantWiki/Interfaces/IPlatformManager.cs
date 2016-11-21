@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HydrantWiki.Network;
-using HydrantWiki.Objects;
 using Xamarin.Forms;
 
 namespace HydrantWiki.Interfaces

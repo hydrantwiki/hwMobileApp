@@ -1,5 +1,4 @@
-﻿using System;
-using HydrantWiki.Objects;
+﻿using HydrantWiki.Objects;
 
 namespace HydrantWiki.Delegates
 {

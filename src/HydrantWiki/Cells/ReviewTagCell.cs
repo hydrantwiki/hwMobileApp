@@ -1,5 +1,4 @@
-﻿using System;
-using HydrantWiki.Controls;
+﻿using HydrantWiki.Controls;
 using Xamarin.Forms;
 
 namespace HydrantWiki.Cells
@@ -13,7 +12,6 @@ namespace HydrantWiki.Cells
         private HWLabel m_lblUserInfo;
         private HWLabel m_lblLatitude;
         private HWLabel m_lblLongitude;
-        private HWLabel m_lblDistance;
 
         public ReviewTagCell()
         {

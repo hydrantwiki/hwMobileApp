@@ -2,7 +2,6 @@
 using HydrantWiki.Cells;
 using HydrantWiki.Constants;
 using HydrantWiki.Controls;
-using HydrantWiki.Helpers;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
 using HydrantWiki.ResponseObjects;
@@ -169,7 +168,7 @@ namespace HydrantWiki.Forms
             if (m_Tag.ImageGuid != null
                 && m_Tag.ImageUrl != null)
             {
-                m_Image.Source = ImageSource.FromUri(new System.Uri(m_Tag.ImageUrl));
+                m_Image.Source = ImageSource.FromUri(new Uri(m_Tag.ImageUrl));
             }
             m_Hydrants.ItemsSource = _tag.NearbyHydrants;
 
@@ -252,12 +251,17 @@ namespace HydrantWiki.Forms
 
         void RejectClicked(object sender, EventArgs e)
         {
-            RejectTagResponse response = HWManager.GetInstance().ApiManager.RejectTag(
+            HWManager manager = HWManager.GetInstance();
+
+            RejectTagResponse response = manager.ApiManager.RejectTag(
                 HydrantWikiApp.User,
                 m_Tag.TagId);
 
             if (response.Success)
             {
+                manager.ApiManager.Log(LogLevels.Info,
+                                       string.Format("Tag Rejected by {0}", HydrantWikiApp.User.Username));
+
                 Navigation.PopModalAsync(true);
             } else {
                 DisplayAlert(
@@ -269,12 +273,17 @@ namespace HydrantWiki.Forms
 
         void ApproveClicked(object sender, EventArgs e)
         {
-            ApproveTagResponse response = HWManager.GetInstance().ApiManager.ApproveTag(
+            HWManager manager = HWManager.GetInstance();
+
+            ApproveTagResponse response = manager.ApiManager.ApproveTag(
                 HydrantWikiApp.User,
                 m_Tag.TagId);
 
             if (response.Success)
             {
+                manager.ApiManager.Log(LogLevels.Info,
+                                       string.Format("Tag Approved by {0}", HydrantWikiApp.User.Username));
+
                 Navigation.PopModalAsync(true);
             } else {
                 DisplayAlert(

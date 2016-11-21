@@ -80,7 +80,7 @@ namespace HydrantWiki.Forms
                 btnSync.IsEnabled = false;
             }
 
-            Task t = Task.Factory.StartNew(() => LoadTagCount());
+            Task.Factory.StartNew(() => LoadTagCount());
         }
 
         void LoadTagCount()
@@ -134,10 +134,12 @@ namespace HydrantWiki.Forms
 
                         tag.SentToServer = true;
                         manager.Persist(tag);
+
+                        manager.ApiManager.Log(LogLevels.Info, "Manual Sync by {0}");
                     }
                     catch (Exception ex)
                     {
-                        //TODO - Log Error
+                        manager.ApiManager.Log(LogLevels.Exception, ex.ToString());
                     }
                 }
             }
@@ -147,6 +149,9 @@ namespace HydrantWiki.Forms
 
         void Logout_Clicked(object sender, EventArgs e)
         {
+            HWManager.GetInstance().ApiManager.Log(LogLevels.Info,
+                   string.Format("Logout by {0}", HydrantWikiApp.User.Username));
+
             HWManager.GetInstance().SettingManager.ClearUser();
 
             LoginForm login = new LoginForm();

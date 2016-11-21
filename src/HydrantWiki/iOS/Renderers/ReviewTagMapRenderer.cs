@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CoreGraphics;
 using HydrantWiki.Controls;
 using HydrantWiki.iOS.Renderers;

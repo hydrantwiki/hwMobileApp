@@ -12,7 +12,6 @@ using Foundation;
 using UIKit;
 using CoreGraphics;
 using System.Drawing;
-using System.Linq;
 
 namespace HydrantWiki.iOS.Managers
 {
@@ -71,8 +70,8 @@ namespace HydrantWiki.iOS.Managers
         {
             get
             {
-                //return "https://mobileapi.hydrantwiki.com";
-                return "http://192.168.50.192:8990";
+                AppConfiguration appConfig = AppConfiguration.GetInstance();
+                return appConfig.ApiUrl;
             }
         }
 
@@ -119,7 +118,7 @@ namespace HydrantWiki.iOS.Managers
             //Add Body
             if (_request.Body != null)
             {
-                request.AddParameter("application/json", _request.Body, ParameterType.RequestBody);
+                request.AddParameter(_request.ContentType, _request.Body, ParameterType.RequestBody);
             }
 
             if (_request.File != null
@@ -246,7 +245,7 @@ namespace HydrantWiki.iOS.Managers
             UIImage image;
             try
             {
-                image = new UIKit.UIImage(Foundation.NSData.FromArray(data));
+                image = new UIImage(NSData.FromArray(data));
             }
             catch (Exception e)
             {

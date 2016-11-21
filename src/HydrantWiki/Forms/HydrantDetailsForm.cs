@@ -1,6 +1,7 @@
 ﻿using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Helpers;
+using HydrantWiki.Managers;
 using HydrantWiki.Objects;
 using Xamarin.Forms;
 
@@ -106,6 +107,8 @@ namespace HydrantWiki.Forms
                 m_lblLongitude.Text = _hydrant.Position.Longitude.AsLongitude();
             }
 
+            HWManager.GetInstance().ApiManager.Log(LogLevels.Info,
+                                                   string.Format("Hydrant viewed by {0}", HydrantWikiApp.User.Username));
         }
     }
 }

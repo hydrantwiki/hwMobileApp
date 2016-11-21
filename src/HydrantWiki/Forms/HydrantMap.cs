@@ -37,11 +37,14 @@ namespace HydrantWiki.Forms
             OutsideLayout.Children.Add(m_Map);
 
             m_Loading = false;
+
+            HWManager.GetInstance().ApiManager.Log(LogLevels.Info,
+                                                   string.Format("Map viewed by {0}", HydrantWikiApp.User.Username));
         }
 
         private void StartUpdateLocation()
         {
-            Task t = Task.Factory.StartNew(() => UpdateLocation());
+            Task.Factory.StartNew(() => UpdateLocation());
         }
 
         void Map_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -49,7 +52,7 @@ namespace HydrantWiki.Forms
             if (!m_Loading
                 && e.PropertyName == "VisibleRegion")
             {
-                Task t = Task.Factory.StartNew(() => UpdateCurrentView());
+                Task.Factory.StartNew(() => UpdateCurrentView());
             }
         }
 

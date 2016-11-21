@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using Foundation;
+using HydrantWiki.Constants;
 using HydrantWiki.iOS.Managers;
+using HydrantWiki.Managers;
 using LiteDB;
 using LiteDB.Platform;
 using UIKit;
@@ -30,6 +30,8 @@ namespace HydrantWiki.iOS
             HydrantWikiApp.ScreenWidth = (int)UIScreen.MainScreen.Bounds.Width;
             HydrantWikiApp.ScreenHeight = (int)UIScreen.MainScreen.Bounds.Height;
 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             return base.FinishedLaunching(app, options);
         }
 
@@ -56,6 +58,18 @@ namespace HydrantWiki.iOS
                 .Register<IDependencyContainer>(t => resolverContainer);
 
             Resolver.SetResolver(resolverContainer.GetResolver());
+        }
+
+        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            try
+            {
+                HWManager.GetInstance().ApiManager.Log(LogLevels.Exception, e.ToString());
+            }
+            catch
+            {
+                //Eat exception
+            }
         }
     }
 }

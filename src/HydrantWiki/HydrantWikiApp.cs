@@ -1,5 +1,4 @@
-﻿using System;
-using HydrantWiki.Forms;
+﻿using HydrantWiki.Forms;
 using HydrantWiki.Interfaces;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;

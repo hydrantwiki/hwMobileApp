@@ -130,7 +130,7 @@ namespace HydrantWiki.Forms
 
         void Username_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var taskCheckUsername = Task.Factory.StartNew(() => CheckUsername());
+            Task.Factory.StartNew(() => CheckUsername());
         }
 
         void CheckUsername()
@@ -157,11 +157,12 @@ namespace HydrantWiki.Forms
                         usernameAvailable = true;
                         message = DisplayConstants.PickUsername + " " + DisplayConstants.Available;
                     } else {
-                        message = DisplayConstants.PickUsername + " " + DisplayConstants.NotAvailable; ;
+                        message = DisplayConstants.PickUsername + " " + DisplayConstants.NotAvailable;
                     }
                 }
                 catch (Exception ex)
                 {
+                    manager.ApiManager.Log(LogLevels.Exception, ex.ToString());
                     message = DisplayConstants.PickUsername;
                 }
             }
@@ -185,7 +186,7 @@ namespace HydrantWiki.Forms
 
         void Email_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var taskCheckEmail = Task.Factory.StartNew(() => CheckEmail());
+            Task.Factory.StartNew(() => CheckEmail());
         }
 
         void CheckEmail()
@@ -279,6 +280,8 @@ namespace HydrantWiki.Forms
             string password1 = txtPassword1.Text;
             string password2 = txtPassword2.Text;
 
+            HWManager manager = HWManager.GetInstance();
+
             if (password1 != null
                 && password1.Length >= 8
                 && password1.Equals(password2)
@@ -287,7 +290,7 @@ namespace HydrantWiki.Forms
             {
                 try
                 {
-                    CreateAccountResponse response = HWManager.GetInstance().ApiManager.CreateAccount(username, email, password1);
+                    CreateAccountResponse response = manager.ApiManager.CreateAccount(username, email, password1);
 
                     if (!string.IsNullOrEmpty(response.Message))
                     {
@@ -304,6 +307,8 @@ namespace HydrantWiki.Forms
                 }
                 catch (Exception ex)
                 {
+                    manager.ApiManager.Log(LogLevels.Exception, ex.ToString());
+
                     await DisplayAlert(
                         DisplayConstants.AppName,
                         DisplayConstants.WebRequestError,

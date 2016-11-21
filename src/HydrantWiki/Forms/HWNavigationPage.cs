@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HydrantWiki.Constants;
 using HydrantWiki.Interfaces;
 using Xamarin.Forms;

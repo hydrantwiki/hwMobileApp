@@ -4,7 +4,6 @@ using HydrantWiki.Network;
 using HydrantWiki.Objects;
 using HydrantWiki.ResponseObjects;
 using Newtonsoft.Json;
-using Xamarin.Forms;
 
 namespace HydrantWiki.Managers
 {
@@ -22,7 +21,7 @@ namespace HydrantWiki.Managers
         /// the username, display name, and an authorization token
         /// to be used on subsequent calls
         /// </summary>
-        /// <param name="_username">Username.</param>
+        /// <param name="_email">Email.</param>
         /// <param name="_password">Password.</param>
         public User Authenticate(string _email, string _password)
         {
@@ -359,11 +358,35 @@ namespace HydrantWiki.Managers
             return responseObject;
         }
 
-        public void Log(string message)
+        public void Log(string prefix, string _message)
         {
-            Guid installId = m_HWManager.SettingManager.GetInstallId();
+            try
+            {
+                Guid installId = m_HWManager.SettingManager.GetInstallId();
+                var config = AppConfiguration.GetInstance();
+
+                LogglyMessage lm = new LogglyMessage
+                {
+                    from = installId.ToString(),
+                    message = prefix + ": " + _message
+                };
+                string json = JsonConvert.SerializeObject(lm);
 
 
+                HWRestRequest request = new HWRestRequest();
+                request.Method = HWRestMethods.Post;
+                request.Host = config.LogglyHost;
+                request.Path = string.Format(config.LogglyResource, config.LogglyToken);
+                request.Timeout = 3000;
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.Body = json;
+
+                m_HWManager.PlatformManager.SendRestRequest(request);
+            }
+            catch
+            {
+                //Eat error
+            }
 
         }
     }

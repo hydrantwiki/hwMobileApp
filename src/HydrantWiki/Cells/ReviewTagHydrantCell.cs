@@ -1,10 +1,8 @@
 ﻿using System;
-using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Delegates;
 using HydrantWiki.Objects;
 using Xamarin.Forms;
-using XLabs.Forms.Controls;
 
 namespace HydrantWiki.Cells
 {

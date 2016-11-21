@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 
 namespace HydrantWiki.Network
 {
@@ -9,12 +7,13 @@ namespace HydrantWiki.Network
         public HWRestRequest()
         {
             Headers = new Dictionary<string, string>();
-
+            ContentType = "application/json";
             Timeout = 30000;
         }
 
         public string Host { get; set; }
         public string Path { get; set; }
+        public string ContentType { get; set; }
         public HWRestMethods Method { get; set; }
         public Dictionary<string, string> Headers { get; set; }
         public string Body { get; set; }

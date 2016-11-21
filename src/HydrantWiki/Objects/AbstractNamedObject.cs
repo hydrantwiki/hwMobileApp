@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HydrantWiki.Objects
+﻿namespace HydrantWiki.Objects
 {
     public class AbstractNamedObject : AbstractObject
     {

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using HydrantWiki.Daos;
 using HydrantWiki.Interfaces;
 using HydrantWiki.Objects;
 using LiteDB;
+using HydrantWiki.Constants;
 
 namespace HydrantWiki.Managers
 {
@@ -102,6 +101,9 @@ namespace HydrantWiki.Managers
             {
                 m_SettingManager.SetUser(user);
                 HydrantWikiApp.User = user;
+
+                ApiManager.Log(LogLevels.Info,
+                               string.Format("Login by {0}", HydrantWikiApp.User.Username));
 
                 return true;
             } else {

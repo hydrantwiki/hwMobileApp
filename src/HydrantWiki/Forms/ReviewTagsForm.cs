@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HydrantWiki.Constants;
 using HydrantWiki.Controls;
@@ -24,11 +23,14 @@ namespace HydrantWiki.Forms
             m_lstTags.ItemSelected += TagSelected;
 
             OutsideLayout.Children.Add(m_lstTags);
+
+            HWManager.GetInstance().ApiManager.Log(LogLevels.Info,
+                   string.Format("Review Tags viewed by {0}", HydrantWikiApp.User.Username));
         }
 
         private void StartRefresh()
         {
-            Task t = Task.Factory.StartNew(() => Refresh());
+            Task.Factory.StartNew(() => Refresh());
         }
 
         private void Refresh()

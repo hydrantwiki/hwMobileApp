@@ -1,5 +1,4 @@
-﻿using System;
-namespace HydrantWiki.ResponseObjects
+﻿namespace HydrantWiki.ResponseObjects
 {
     public class TagCountResponse
     {

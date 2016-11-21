@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using System.Collections.Generic;
 using HydrantWiki.Constants;
 using HydrantWiki.Cells;

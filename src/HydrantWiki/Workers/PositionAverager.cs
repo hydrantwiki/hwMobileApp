@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HydrantWiki.Delegates;
 using HydrantWiki.Managers;
 using HydrantWiki.Objects;
@@ -35,6 +34,11 @@ namespace HydrantWiki.Workers
                 if (updated != null)
                 {
                     updated(m_Average.GetAverage());
+                }
+
+                if (m_Cancelled)
+                {
+                    break;
                 }
 
                 await Task.Delay(250);

@@ -1,5 +1,4 @@
-﻿using System;
-namespace HydrantWiki.Constants
+﻿namespace HydrantWiki.Constants
 {
     public static class DisplayConstants
     {

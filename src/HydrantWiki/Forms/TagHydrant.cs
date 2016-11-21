@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using HydrantWiki.Constants;
 using HydrantWiki.Controls;
@@ -215,7 +214,7 @@ namespace HydrantWiki.Forms
             m_Location = null;
         }
 
-        void CancelButton_Clicked(object sender, System.EventArgs e)
+        void CancelButton_Clicked(object sender, EventArgs e)
         {
             Cleanup();
             Navigation.PopModalAsync(true);
@@ -267,6 +266,9 @@ namespace HydrantWiki.Forms
 
                     tag.SentToServer = true;
                     manager.Persist(tag);
+
+                    manager.ApiManager.Log(LogLevels.Info,
+                                           string.Format("Tag Saved by {0}", HydrantWikiApp.User.Username));
                 }
             }
 

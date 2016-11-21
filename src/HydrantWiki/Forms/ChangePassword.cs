@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using HydrantWiki.Constants;
 using HydrantWiki.Controls;
 using HydrantWiki.Managers;
@@ -170,6 +169,8 @@ namespace HydrantWiki.Forms
             string password1 = txtPassword1.Text;
             string password2 = txtPassword2.Text;
 
+            HWManager manager = HWManager.GetInstance();
+
             if (password1 != null
                 && password1.Length >= 8
                 && password1.Equals(password2)
@@ -178,7 +179,7 @@ namespace HydrantWiki.Forms
                 try
                 {
                     ChangePasswordResponse response =
-                        HWManager.GetInstance().ApiManager.ChangePassword(HydrantWikiApp.User, existingPassword, password1);
+                        manager.ApiManager.ChangePassword(HydrantWikiApp.User, existingPassword, password1);
 
                     if (!string.IsNullOrEmpty(response.Message))
                     {
@@ -190,11 +191,16 @@ namespace HydrantWiki.Forms
 
                     if (response.Success)
                     {
+                        manager.ApiManager.Log(LogLevels.Info,
+                                               string.Format("Password Changed by {0}", HydrantWikiApp.User.Username));
+
                         await Navigation.PopModalAsync(true);
                     }
                 }
                 catch (Exception ex)
                 {
+                    manager.ApiManager.Log(LogLevels.Exception, ex.ToString());
+
                     await DisplayAlert(
                         DisplayConstants.AppName,
                         DisplayConstants.WebRequestError,

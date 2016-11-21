@@ -56,9 +56,9 @@ namespace HydrantWiki.Forms
         {
             base.OnAppearing();
 
-            var tagCountTask = Task.Factory.StartNew(() => LoadTagCount());
+            Task.Factory.StartNew(() => LoadTagCount());
 
-            var recentTagsTask = Task.Factory.StartNew(() => LoadRecentTags());
+            Task.Factory.StartNew(() => LoadRecentTags());
         }
 
         void TagHydrant_Clicked(object sender, EventArgs e)
@@ -78,10 +78,10 @@ namespace HydrantWiki.Forms
 
         private void LoadTagCount()
         {
+            HWManager manager = HWManager.GetInstance();
+
             try
             {
-                HWManager manager = HWManager.GetInstance();
-
                 if (HydrantWikiApp.User != null
                     && manager.PlatformManager.HasNetworkConnectivity)
                 {
@@ -90,7 +90,7 @@ namespace HydrantWiki.Forms
                     if (response != null
                         && response.Success)
                     {
-                        HWManager.GetInstance().SettingManager.SetTagCount(response.TagCount);
+                        manager.SettingManager.SetTagCount(response.TagCount);
 
                         Device.BeginInvokeOnMainThread(() =>
                         {
@@ -103,7 +103,7 @@ namespace HydrantWiki.Forms
             }
             catch (Exception ex)
             {
-                //TODO - Log exception
+                manager.ApiManager.Log(LogLevels.Exception, ex.ToString());
             }
 
             //Failed to get the count so pull the cached value

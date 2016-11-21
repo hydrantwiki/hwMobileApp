@@ -1,5 +1,4 @@
-﻿using System;
-using HydrantWiki.Cells;
+﻿using HydrantWiki.Cells;
 using Xamarin.Forms;
 
 namespace HydrantWiki.Controls

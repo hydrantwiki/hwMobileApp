@@ -1,5 +1,4 @@
-﻿using System;
-namespace HydrantWiki.Objects
+﻿namespace HydrantWiki.Objects
 {
     public class CreateAccount
     {
