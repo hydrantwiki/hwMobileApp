@@ -77,7 +77,7 @@ namespace HydrantWiki.iOS.Managers
 
         public string GetLocalImageFilename(string _filename)
         {
-            string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //string rootAppFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string jpgFilename = Path.Combine(ImageFolder, _filename);
             return jpgFilename;
         }

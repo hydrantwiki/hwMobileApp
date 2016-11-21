@@ -30,7 +30,7 @@ namespace HydrantWiki
             User = manager.SettingManager.GetUser();
 
             // The root page of your application
-            MainPage = new MainForm(this);
+            MainPage = new MainForm();
         }
 
         public IPlatformManager PlatformManager

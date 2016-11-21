@@ -16,7 +16,6 @@ namespace HydrantWiki.iOS.Renderers
     {
         UIView customPinView;
         List<HydrantPin> hydrantPins;
-        TagPin tagPin;
 
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
@@ -81,8 +80,8 @@ namespace HydrantWiki.iOS.Renderers
 
         void OnDidSelectAnnotationView(object sender, MKAnnotationViewEventArgs e)
         {
-            var customView = e.View as HydrantsMKAnnotationView;
-            customPinView = new UIView();
+            //var customView = e.View as HydrantsMKAnnotationView;
+            //customPinView = new UIView();
 
         }
 

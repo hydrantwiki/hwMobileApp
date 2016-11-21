@@ -11,12 +11,9 @@ namespace HydrantWiki.Forms
     public class MainForm : MasterDetailPage, IMainForm
     {
         public bool FiredAppStarted = false;
-        private HydrantWikiApp m_App;
 
-        public MainForm(HydrantWikiApp _app)
+        public MainForm()
         {
-            m_App = _app;
-
             Title = DisplayConstants.AppName;
 
             var menuPage = new MenuPage();

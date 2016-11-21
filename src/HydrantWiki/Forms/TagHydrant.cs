@@ -278,7 +278,7 @@ namespace HydrantWiki.Forms
 
         private void StartUpdateLocation()
         {
-            Task t = Task.Factory.StartNew(() => m_Averager.Start());
+            Task.Factory.StartNew(() => m_Averager.Start());
         }
     }
 }

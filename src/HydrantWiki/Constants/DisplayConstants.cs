@@ -90,5 +90,11 @@
         public const string Longitude = "Longitude:";
         public const string PositionCountNumber = "Position Count: {0}";
 
+        /* Forgot Password */
+        public const string ResetPassword = "Request Password Reset";
+        public const string CheckEmail = "Check your email for reset code";
+        public const string Code = "Reset Code";
+        public const string SetPassword = "Set New Password";
+
     }
 }
