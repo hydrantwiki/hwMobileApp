@@ -27,6 +27,7 @@ namespace HydrantWiki.Objects
         }
 
         public string ApiUrl { get; set; }
+        public string ApiAccessKey { get; set; }
         public string LogglyHost { get; set; }
         public string LogglyToken { get; set; }
         public string LogglyResource { get; set; }

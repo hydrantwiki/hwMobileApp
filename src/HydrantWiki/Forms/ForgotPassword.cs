@@ -183,7 +183,24 @@ namespace HydrantWiki.Forms
 
         void RequestReset_Clicked(object sender, EventArgs e)
         {
+            Task.Factory.StartNew(() => RequestReset());
+        }
 
+        void RequestReset()
+        {
+            HWManager manager = HWManager.GetInstance();
+
+            bool result = manager.ApiManager.RequestPasswordReset(txtEmail.Text);
+
+            if (result)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    DisplayAlert(DisplayConstants.AppName,
+                                 DisplayConstants.CheckEmail,
+                                 DisplayConstants.OK);
+                });
+            }
         }
 
         private void EnablePhase2()
@@ -265,6 +282,7 @@ namespace HydrantWiki.Forms
         async void SetPassword_Clicked(object sender, EventArgs e)
         {
             string email = txtEmail.Text;
+            string code = txtCode.Text;
             string password1 = txtPassword1.Text;
             string password2 = txtPassword2.Text;
 
@@ -277,20 +295,19 @@ namespace HydrantWiki.Forms
             {
                 try
                 {
-                    //CreateAccountResponse response = manager.ApiManager.CreateAccount(username, email, password1);
+                    var response = manager.ApiManager.ResetPassword(email, code, password1);
 
-                    //if (!string.IsNullOrEmpty(response.Message))
-                    //{
-                    //    await DisplayAlert(
-                    //        DisplayConstants.AppName,
-                    //        response.Message,
-                    //        DisplayConstants.OK);
-                    //}
+                    if (response.Success)
+                    {
+                        await Navigation.PopModalAsync(true);
+                    } else
+                    {
+                        await DisplayAlert(
+                            DisplayConstants.AppName,
+                            response.Message,
+                            DisplayConstants.OK);
+                    }
 
-                    //if (response.Success)
-                    //{
-                    //    await Navigation.PopModalAsync(true);
-                    //}
                 }
                 catch (Exception ex)
                 {

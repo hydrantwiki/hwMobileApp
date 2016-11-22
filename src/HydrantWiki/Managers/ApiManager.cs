@@ -10,10 +10,12 @@ namespace HydrantWiki.Managers
     public class ApiManager
     {
         private HWManager m_HWManager;
+        private AppConfiguration m_AppConfig;
 
         public ApiManager(HWManager _manager)
         {
             m_HWManager = _manager;
+            m_AppConfig = AppConfiguration.GetInstance();
         }
 
         /// <summary>
@@ -25,12 +27,19 @@ namespace HydrantWiki.Managers
         /// <param name="_password">Password.</param>
         public User Authenticate(string _email, string _password)
         {
+            AuthObject auth = new AuthObject
+            {
+                Email = _email,
+                Password = _password,
+                InstallId = m_HWManager.SettingManager.GetInstallId()
+            };
+
             HWRestRequest request = new HWRestRequest();
             request.Method = HWRestMethods.Post;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = "/api/authorize";
-            request.Headers.Add("Email", _email);
-            request.Headers.Add("Password", _password);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
+            request.Body = JsonConvert.SerializeObject(auth);
             request.Timeout = 3000;
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
@@ -46,12 +55,66 @@ namespace HydrantWiki.Managers
             return null;
         }
 
+        public bool RequestPasswordReset(string _email)
+        {
+            ResetRequest rr = new ResetRequest
+            {
+                Email = _email,
+                InstallId = m_HWManager.SettingManager.GetInstallId()
+            };
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Post;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = "/api/user/resetpasswordrequest";
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
+            request.Body = JsonConvert.SerializeObject(rr);
+            request.Timeout = 2000;
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            PasswordResetResponse responseObject =
+                JsonConvert.DeserializeObject<PasswordResetResponse>(response.Body);
+
+            if (responseObject != null)
+            {
+                return responseObject.Success;
+            }
+
+            return false;
+        }
+
+        public PasswordResetResponse ResetPassword(string _email, string _code, string _newPassword)
+        {
+            ResetPassword rr = new ResetPassword
+            {
+                Email = _email,
+                Code = _code,
+                NewPassword = _newPassword,
+                InstallId = m_HWManager.SettingManager.GetInstallId()
+            };
+
+            HWRestRequest request = new HWRestRequest();
+            request.Method = HWRestMethods.Post;
+            request.Host = m_HWManager.PlatformManager.ApiHost;
+            request.Path = "/api/user/resetpassword";
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
+            request.Body = JsonConvert.SerializeObject(rr);
+            request.Timeout = 2000;
+
+            var response = m_HWManager.PlatformManager.SendRestRequest(request);
+            PasswordResetResponse responseObject =
+                JsonConvert.DeserializeObject<PasswordResetResponse>(response.Body);
+
+            return responseObject;
+        }
+
         public bool UsernameAvailable(string _requestedUsername)
         {
             HWRestRequest request = new HWRestRequest();
             request.Method = HWRestMethods.Get;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = "/api/user/isavailable/" + _requestedUsername;
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
             request.Timeout = 2000;
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
@@ -73,6 +136,7 @@ namespace HydrantWiki.Managers
             request.Method = HWRestMethods.Get;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = "/api/user/inuse/" + _emailAddress;
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
             request.Timeout = 2000;
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
@@ -108,6 +172,7 @@ namespace HydrantWiki.Managers
             request.Path = "/api/user/password";
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
             request.Body = body;
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
@@ -139,6 +204,7 @@ namespace HydrantWiki.Managers
             request.Path = "/api/tag";
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
             request.Body = body;
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
@@ -168,6 +234,7 @@ namespace HydrantWiki.Managers
             request.Path = "/api/image";
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
 
             HWFile file = new HWFile
             {
@@ -197,6 +264,7 @@ namespace HydrantWiki.Managers
             request.Timeout = 5000;
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
             TagCountResponse responseObject =
@@ -216,6 +284,7 @@ namespace HydrantWiki.Managers
             request.Path = url;
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
             HydrantQueryResponse responseObject =
@@ -231,7 +300,6 @@ namespace HydrantWiki.Managers
             double _minLongitude,
             double _maxLongitude)
         {
-
             string url = string.Format("/api/hydrants/box/{0}/{1}/{2}/{3}", _maxLatitude, _minLatitude, _maxLongitude, _minLongitude);
 
             HWRestRequest request = new HWRestRequest();
@@ -240,6 +308,7 @@ namespace HydrantWiki.Managers
             request.Path = url;
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
             HydrantQueryResponse responseObject =
@@ -251,7 +320,6 @@ namespace HydrantWiki.Managers
         public TagsToReviewResponse GetTagsToReview(
             User _user)
         {
-
             string url = string.Format("/api/review/tags");
 
             HWRestRequest request = new HWRestRequest();
@@ -260,6 +328,7 @@ namespace HydrantWiki.Managers
             request.Path = url;
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
             TagsToReviewResponse responseObject =
@@ -280,6 +349,7 @@ namespace HydrantWiki.Managers
             request.Path = url;
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
             RejectTagResponse responseObject =
@@ -300,6 +370,7 @@ namespace HydrantWiki.Managers
             request.Path = url;
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
             ApproveTagResponse responseObject =
@@ -321,6 +392,7 @@ namespace HydrantWiki.Managers
             request.Path = url;
             request.Headers.Add("Username", _user.Username);
             request.Headers.Add("AuthorizationToken", _user.AuthorizationToken);
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
 
             var response = m_HWManager.PlatformManager.SendRestRequest(request);
             MatchTagResponse responseObject =
@@ -348,6 +420,7 @@ namespace HydrantWiki.Managers
             request.Method = HWRestMethods.Post;
             request.Host = m_HWManager.PlatformManager.ApiHost;
             request.Path = url;
+            request.Headers.Add("ApiAccessKey", m_AppConfig.ApiAccessKey);
             request.Timeout = 3000;
             request.Body = json;
 

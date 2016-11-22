@@ -64,8 +64,8 @@
         public const string Login = "Login";
         public const string EmailInstruction = "Enter email";
         public const string PasswordInstruction = "Enter password";
-        public const string UsernameAndPasswordRequired = "Username and password are required";
-        public const string InvalidUsernameOrPasssword = "Invalid username or password";
+        public const string UsernameAndPasswordRequired = "Email and password are required";
+        public const string InvalidUsernameOrPasssword = "Invalid email or password";
 
         /* Hydrant Details */
         public const string UsernameDisplay = "Username: {0}";

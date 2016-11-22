@@ -124,6 +124,10 @@
     <Compile Include="Objects\AppConfiguration.cs" />
     <Compile Include="Objects\LogglyMessage.cs" />
     <Compile Include="Constants\LogLevels.cs" />
+    <Compile Include="Objects\AuthObject.cs" />
+    <Compile Include="Objects\ResetRequest.cs" />
+    <Compile Include="ResponseObjects\PasswordResetResponse.cs" />
+    <Compile Include="Objects\ResetPassword.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

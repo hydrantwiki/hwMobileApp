@@ -8,12 +8,12 @@ namespace HydrantWiki.Forms
 {
     public class LoginForm : AbstractPage
     {
-        private HWTextEntry m_txtEmail;
-        private HWTextEntry m_txtPassword;
+        private HWTextEntry txtEmail;
+        private HWTextEntry txtPassword;
         private HWHeader m_Header;
-        private HWFormButton m_btnLogin;
-        private HWFormButton m_btnForgotPassword;
-        private HWFormButton m_btnCreateAccount;
+        private HWFormButton btnLogin;
+        private HWFormButton btnForgotPassword;
+        private HWFormButton btnCreateAccount;
         private ContentView spacer;
 
         public LoginForm() : base(DisplayConstants.Login)
@@ -21,29 +21,31 @@ namespace HydrantWiki.Forms
             m_Header = new HWHeader(DisplayConstants.Login);
             OutsideLayout.Children.Add(m_Header);
 
-            m_txtEmail = new HWTextEntry()
+            txtEmail = new HWTextEntry()
             {
                 Title = DisplayConstants.Email,
                 Placeholder = DisplayConstants.EmailInstruction
             };
-            OutsideLayout.Children.Add(m_txtEmail);
+            txtEmail.TextChanged += Email_TextChanged;
+            OutsideLayout.Children.Add(txtEmail);
 
-            m_txtPassword = new HWTextEntry()
+            txtPassword = new HWTextEntry()
             {
                 Title = DisplayConstants.Password,
                 Placeholder = DisplayConstants.PasswordInstruction,
                 IsPassword = true
             };
-            OutsideLayout.Children.Add(m_txtPassword);
+            OutsideLayout.Children.Add(txtPassword);
 
-            m_btnLogin = new HWFormButton()
+            btnLogin = new HWFormButton()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Text = DisplayConstants.Login,
-                Margin = new Thickness(10, 10, 10, 10)
+                Margin = new Thickness(10, 10, 10, 10),
+                IsEnabled = false
             };
-            m_btnLogin.Clicked += btnLoginClicked;
-            OutsideLayout.Children.Add(m_btnLogin);
+            btnLogin.Clicked += btnLoginClicked;
+            OutsideLayout.Children.Add(btnLogin);
 
             spacer = new ContentView
             {
@@ -52,23 +54,34 @@ namespace HydrantWiki.Forms
             };
             OutsideLayout.Children.Add(spacer);
 
-            m_btnForgotPassword = new HWFormButton()
+            btnForgotPassword = new HWFormButton()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Text = DisplayConstants.ForgotPassword,
                 Margin = new Thickness(10, 10, 10, 10)
             };
-            m_btnForgotPassword.Clicked += btnForgotPasswordClicked;
-            OutsideLayout.Children.Add(m_btnForgotPassword);
+            btnForgotPassword.Clicked += btnForgotPasswordClicked;
+            OutsideLayout.Children.Add(btnForgotPassword);
 
-            m_btnCreateAccount = new HWFormButton()
+            btnCreateAccount = new HWFormButton()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Text = DisplayConstants.CreateAnAccount,
                 Margin = new Thickness(10, 10, 10, 10)
             };
-            m_btnCreateAccount.Clicked += btnCreateAccountClicked;
-            OutsideLayout.Children.Add(m_btnCreateAccount);
+            btnCreateAccount.Clicked += btnCreateAccountClicked;
+            OutsideLayout.Children.Add(btnCreateAccount);
+        }
+
+        void Email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string email = txtEmail.Text;
+
+            if (email.Contains("@")
+                && email.Contains("."))
+            {
+                btnLogin.IsEnabled = true;
+            }
         }
 
         void btnCreateAccountClicked(object sender, EventArgs e)
@@ -83,8 +96,8 @@ namespace HydrantWiki.Forms
 
         void btnLoginClicked(object sender, EventArgs e)
         {
-            string email = m_txtEmail.Text;
-            string password = m_txtPassword.Text;
+            string email = txtEmail.Text;
+            string password = txtPassword.Text;
 
             if (string.IsNullOrWhiteSpace(email)
                 || string.IsNullOrWhiteSpace(password))

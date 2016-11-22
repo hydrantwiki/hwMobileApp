@@ -97,7 +97,7 @@ namespace HydrantWiki.iOS.Managers
             {
                 Console.WriteLine("saved as " + jpgFilename);
             } else {
-                Console.WriteLine("NOT saved as " + jpgFilename + " because" + err.LocalizedDescription);
+                Console.WriteLine("NOT saved as " + jpgFilename + " because " + err.LocalizedDescription);
             }
         }
 
